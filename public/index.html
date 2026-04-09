@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aion &mdash; Your Open Health Companion</title>
+<meta name="description" content="Aion is an open source health companion. It consolidates your health data and helps you understand it with AI that runs on your own devices. Private by default.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #050508;
+  --surface: #0a0a0f;
+  --surface-2: #0e0e16;
+  --border: rgba(255,255,255,0.05);
+  --text: #e4e4ec;
+  --sub: #9090a8;
+  --dim: #50506a;
+  --faint: #2a2a40;
+  --brand: #10b981;
+  --brand-soft: rgba(16,185,129,0.10);
+  --accent: #818cf8;
+  --accent-soft: rgba(129,140,248,0.10);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased;font-size:16px}
+a{color:var(--brand);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:'JetBrains Mono',monospace;font-size:0.82em;background:var(--surface-2);padding:2px 6px;border-radius:4px;border:1px solid var(--border)}
+pre{font-family:'JetBrains Mono',monospace;font-size:0.78rem;line-height:1.6;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem;overflow-x:auto;position:relative}
+pre .copy-btn{position:absolute;top:10px;right:10px;background:var(--surface-2);border:1px solid var(--border);color:var(--dim);padding:4px 10px;border-radius:6px;font-size:0.65rem;cursor:pointer;opacity:0;transition:opacity 0.2s}
+pre:hover .copy-btn{opacity:1}
+pre .copy-btn:hover{color:var(--text)}
+
+.w{max-width:1060px;margin:0 auto;padding:0 2rem}
+section{padding:6rem 0}
+.label{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--brand);font-weight:600;margin-bottom:0.75rem}
+h2{font-size:1.8rem;font-weight:800;letter-spacing:-0.025em;line-height:1.2;margin-bottom:0.75rem}
+.lead{font-size:1rem;color:var(--sub);max-width:560px;line-height:1.7}
+
+/* Buttons */
+.btn{padding:0.75rem 1.75rem;border-radius:10px;font-weight:600;font-size:0.85rem;cursor:pointer;border:none;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.5rem}
+.btn-p{background:var(--brand);color:#fff}
+.btn-p:hover{background:#0ea572;transform:translateY(-1px);box-shadow:0 8px 24px rgba(16,185,129,0.2);text-decoration:none}
+.btn-s{background:transparent;color:var(--text);border:1px solid var(--faint)}
+.btn-s:hover{border-color:var(--dim);transform:translateY(-1px);text-decoration:none}
+
+/* Hero */
+.hero{padding:9rem 0 5rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40%;left:-30%;width:160%;height:160%;background:radial-gradient(ellipse at 50% 40%,rgba(16,185,129,0.04) 0%,transparent 55%);pointer-events:none}
+.hero-ey{font-size:0.72rem;color:var(--dim);font-weight:500;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1.25rem;position:relative}
+.hero h1{font-size:clamp(2.2rem,5.5vw,3.8rem);font-weight:800;letter-spacing:-0.035em;line-height:1.08;margin-bottom:1.75rem;position:relative}
+.hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--brand),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-p{font-size:1.1rem;color:var(--sub);max-width:540px;margin:0 auto 2.5rem;position:relative;line-height:1.7;font-weight:300}
+.hero-btns{display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;position:relative}
+
+/* Divider */
+.div-line{border:none;border-top:1px solid var(--border);margin:0}
+
+/* Pillars */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:2.5rem 0;border-radius:16px;overflow:hidden;border:1px solid var(--border)}
+.pillar{background:var(--surface);padding:2.25rem 2rem;position:relative}
+.pillar h3{font-size:0.95rem;font-weight:700;margin-bottom:0.5rem}
+.pillar p{font-size:0.82rem;color:var(--sub);line-height:1.6}
+.pillar-n{font-size:2rem;font-weight:800;color:var(--faint);margin-bottom:0.75rem;line-height:1}
+@media(max-width:900px){.pillars{grid-template-columns:repeat(2,1fr)!important}}
+@media(max-width:768px){.pillars{grid-template-columns:1fr!important}}
+
+/* Arch */
+.arch{display:grid;grid-template-columns:1fr 60px 1fr;gap:0;align-items:stretch;margin:2.5rem 0;border-radius:16px;overflow:hidden;border:1px solid var(--border)}
+.arch-side{background:var(--surface);padding:2rem}
+.arch-side h3{font-size:0.95rem;font-weight:700;margin-bottom:0.35rem}
+.arch-side .tag{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;font-weight:600;margin-bottom:0.75rem}
+.arch-side p{font-size:0.8rem;color:var(--sub);line-height:1.6;margin-bottom:0.75rem}
+.arch-list{font-size:0.75rem;color:var(--sub);display:flex;flex-direction:column;gap:0.35rem}
+.arch-list span{display:flex;align-items:baseline;gap:0.35rem}
+.arch-list strong{color:var(--text);font-weight:500}
+.arch-mid{background:var(--surface-2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.25rem;font-size:1.1rem;color:var(--dim)}
+.arch-mid .lbl{font-size:0.55rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--faint)}
+@media(max-width:640px){.arch{grid-template-columns:1fr}.arch-mid{padding:1rem;flex-direction:row}}
+
+/* Demo */
+.demo-wrap{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin:2rem 0}
+.demo-bar{display:flex;align-items:center;gap:6px;padding:0.7rem 1rem;border-bottom:1px solid var(--border);background:var(--surface-2)}
+.demo-dot{width:9px;height:9px;border-radius:50%}
+.demo-bar-t{font-size:0.7rem;color:var(--dim);margin-left:0.5rem;font-family:'JetBrains Mono',monospace}
+.demo-body{padding:1.25rem;font-family:'JetBrains Mono',monospace;font-size:0.78rem;min-height:280px}
+.demo-row{display:flex;gap:0.5rem;margin-top:1rem}
+.demo-sel,.demo-in{padding:0.55rem 0.7rem;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:0.78rem}
+.demo-in{flex:1}
+.demo-in:focus{outline:none;border-color:var(--brand)}
+.demo-go{padding:0.55rem 1rem;border:none;border-radius:8px;background:var(--brand);color:#fff;font-weight:600;cursor:pointer;font-size:0.78rem}
+.demo-go:hover{background:#0ea572}
+.demo-out{white-space:pre-wrap;word-break:break-all}
+.dl{padding:2px 0}
+.dl.sys{color:var(--dim)}
+.dl.tx{color:var(--accent)}
+.dl.rx{color:var(--brand)}
+.dl.err{color:#ef4444}
+
+/* Grid */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+@media(max-width:640px){.grid-2{grid-template-columns:1fr}}
+
+/* Footer */
+footer{padding:3rem 0;border-top:1px solid var(--border);text-align:center;color:var(--faint);font-size:0.78rem}
+footer a{color:var(--dim)}
+footer strong{color:var(--dim);font-weight:600}
+
+.grad{background:linear-gradient(135deg,var(--brand),#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav style="position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(5,5,8,0.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0.7rem 0;">
+  <div class="w" style="display:flex;align-items:center;justify-content:space-between;">
+    <div style="font-weight:800;font-size:1rem;letter-spacing:-0.01em;">Aion</div>
+    <div style="display:flex;gap:2rem;font-size:0.82rem;align-items:center;">
+      <a href="#how-it-works" style="color:var(--dim);">How It Works</a>
+      <a href="#demo" style="color:var(--dim);">Demo</a>
+      <a href="https://github.com/easpencer/Aion" class="btn-s" style="padding:0.35rem 0.85rem;font-size:0.75rem;border-radius:8px;">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="w">
+    <div class="hero-ey">Aion Core &middot; Open Source</div>
+    <h1>Your health data,<br>understood <em>privately</em></h1>
+    <p class="hero-p">Aion brings together your health data from Apple Health, Google Health Connect, and wearables &mdash; then helps you make sense of it with AI that runs entirely on your own devices.</p>
+    <div class="hero-btns">
+      <a href="#demo" class="btn btn-p">See the Demo</a>
+      <a href="https://github.com/easpencer/Aion" class="btn btn-s">Source Code</a>
+    </div>
+  </div>
+</section>
+
+<hr class="div-line">
+
+<!-- THREE PILLARS -->
+<section>
+  <div class="w">
+    <div class="label">What Aion Does</div>
+
+    <div class="pillars" style="grid-template-columns:repeat(4,1fr)">
+      <div class="pillar">
+        <div class="pillar-n">1</div>
+        <h3>Consolidate</h3>
+        <p>Pull health data from every source &mdash; HealthKit, Health Connect, Withings, Dexcom, clinical records &mdash; into a single encrypted FHIR R4 store on your phone.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-n">2</div>
+        <h3>Understand</h3>
+        <p>On-device AI models explore your data &mdash; medications, vitals, labs, conditions &mdash; and answer health questions without anything leaving your device.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-n">3</div>
+        <h3>Act</h3>
+        <p>Agentic AI with tool calling. The AI can search the web, open links, set reminders, share content, and query your health data &mdash; with your permission at every step.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-n">4</div>
+        <h3>Bridge</h3>
+        <p>When you want more compute, bridge your data to your PC over WiFi or USB. TLS-encrypted, audit-logged, with real-time subscriptions. Run Ollama, Claude Code, Python scripts &mdash; still your network, still your data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works" style="background:var(--surface-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="w">
+    <div class="label">How It Works</div>
+    <h2>AI on your phone. Bigger AI on your PC.</h2>
+    <p class="lead" style="margin-bottom:2rem;">Aion runs Edge Language Models directly on your device for private analysis. The local bridge lets your PC access the same data for deeper work with more powerful models.</p>
+
+    <div class="arch">
+      <div class="arch-side">
+        <h3>Your Phone</h3>
+        <div class="tag" style="color:var(--brand);">On-device AI</div>
+        <p>Health data from every source, encrypted at rest. Edge Language Models analyze your full context &mdash; conditions, medications, vitals, labs &mdash; without anything leaving your device.</p>
+        <div class="arch-list">
+          <span><strong>Bundled model</strong> &mdash; works immediately after install</span>
+          <span><strong>Downloadable models</strong> &mdash; medical-specialized, deeper reasoning</span>
+          <span><strong>Apple Foundation Models</strong> &mdash; native on iOS 26+</span>
+          <span><strong>Emergency patterns</strong> &mdash; works offline, no model required</span>
+        </div>
+      </div>
+      <div class="arch-mid">
+        <span>&#8596;</span>
+        <div class="lbl">LAN</div>
+      </div>
+      <div class="arch-side">
+        <h3>Your PC</h3>
+        <div class="tag" style="color:var(--accent);">Deeper analysis</div>
+        <p>Your phone serves FHIR data over your local network via TLS-encrypted WebSocket. Authenticate with a pairing code, query anything, subscribe to real-time changes &mdash; with de-identification and audit logging on by default.</p>
+        <div class="arch-list">
+          <span><strong>Ollama</strong> &mdash; llama, mistral, gemma on your hardware</span>
+          <span><strong>Claude Code</strong> &mdash; MCP server with 4 health tools</span>
+          <span><strong>Scripts</strong> &mdash; Python, Node.js, anything that speaks WebSocket</span>
+          <span><strong>Export</strong> &mdash; FHIR Bundle or CSV, de-identified by default</span>
+          <span><strong>Real-time</strong> &mdash; filtered subscriptions push changes as they happen</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:1.5rem;">
+      <span style="display:inline-block;padding:0.4rem 1rem;border-radius:8px;background:var(--brand-soft);color:var(--brand);font-size:0.75rem;font-weight:500;">
+        TLS encrypted. De-identified by default. Audit-logged. Full fidelity is opt-in.
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- AGENTIC AI -->
+<section>
+  <div class="w">
+    <div class="label">Agentic AI</div>
+    <h2>AI that can take action &mdash; with your permission</h2>
+    <p class="lead" style="margin-bottom:2rem;">Aion's agent uses a ReAct loop (Reason &rarr; Act &rarr; Observe &rarr; Repeat) to answer complex health questions by calling tools. Every action goes through a tiered consent system.</p>
+
+    <div class="pillars" style="grid-template-columns:repeat(3,1fr)">
+      <div class="pillar">
+        <div class="pillar-n" style="font-size:1.2rem">&#x1F50D;</div>
+        <h3>Tool Calling</h3>
+        <p>The AI can search the web, query your health data (FHIR), look up drug interactions, search medical evidence, open URLs, set reminders, and share content.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-n" style="font-size:1.2rem">&#x1F512;</div>
+        <h3>Tiered Consent</h3>
+        <p><strong>Auto</strong> &mdash; read-only tools run silently. <strong>Inform</strong> &mdash; shows what&rsquo;s happening. <strong>Explicit</strong> &mdash; requires your tap to proceed. <strong>Prohibited</strong> &mdash; never runs.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-n" style="font-size:1.2rem">&#x1F511;</div>
+        <h3>Bring Your Own Key</h3>
+        <p>Use your own API key for Claude, GPT-4, Gemini, or <strong>any</strong> OpenAI-compatible endpoint (Groq, Together, Ollama, Mistral, LM Studio). Keys never leave your device.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:2rem;">
+      <div style="font-size:0.78rem;color:var(--dim);margin-bottom:0.5rem;font-weight:500;">How the agent loop works</div>
+      <pre><button class="copy-btn" onclick="cc(this)">Copy</button><code>User: "What's my blood pressure trend and should I be concerned?"
+                    &darr;
+    &#9312; Agent calls <strong>query_vitals</strong>(days=30) &rarr; gets BP readings
+    &#9313; Agent calls <strong>compute_trend</strong>(coding="8480-6") &rarr; "trending up"
+    &#9314; Agent calls <strong>search_health_evidence</strong>("hypertension management")
+    &#9315; Agent synthesizes: "Your systolic BP has risen from 122 to 138
+       over the past month. This is Stage 1 hypertension per ACC/AHA.
+       Consider discussing with your provider at your next visit."</code></pre>
+    </div>
+
+    <h3 style="margin-top:2.5rem;font-size:1.1rem;">Recommended PC Models for the Bridge</h3>
+    <p class="lead" style="margin-bottom:1rem;">When bridging to your PC, these models work well with Aion's tool-calling agent via Ollama:</p>
+
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:2px;border-radius:12px;overflow:hidden;border:1px solid var(--border);">
+      <div class="pillar">
+        <h3>Best Quality</h3>
+        <div class="arch-list" style="gap:0.5rem;">
+          <span><strong>Qwen 3 32B</strong> &mdash; Excellent tool calling, health reasoning. ~20GB VRAM.</span>
+          <span><strong>Llama 3.3 70B</strong> &mdash; Top-tier general reasoning. ~40GB VRAM (quantized).</span>
+          <span><strong>Mistral Large 2</strong> &mdash; Strong multilingual + function calling. ~24GB.</span>
+        </div>
+      </div>
+      <div class="pillar">
+        <h3>Best Value (runs on most PCs)</h3>
+        <div class="arch-list" style="gap:0.5rem;">
+          <span><strong>Qwen 3 8B</strong> &mdash; Best 8B for tool calling. Fits 8GB VRAM. Recommended.</span>
+          <span><strong>Llama 3.1 8B</strong> &mdash; Solid all-rounder. 8GB VRAM.</span>
+          <span><strong>Gemma 3 4B</strong> &mdash; Runs on CPU. Good for laptops without GPU.</span>
+          <span><strong>Phi-4 14B</strong> &mdash; Microsoft's reasoning model. 10GB VRAM.</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:1rem;font-size:0.78rem;color:var(--dim);">
+      Install any model: <code>ollama pull qwen3:8b</code> &mdash; Aion auto-detects available models when you connect the bridge.
+    </div>
+  </div>
+</section>
+
+<hr class="div-line">
+
+<!-- DEMO -->
+<section id="demo">
+  <div class="w">
+    <div class="label">Interactive Demo</div>
+    <h2>Try the bridge protocol</h2>
+    <p class="lead" style="margin-bottom:1.5rem;">This simulates connecting to Aion's bridge. Authenticate, query health data, or ask a question.</p>
+
+    <div class="demo-wrap">
+      <div class="demo-bar">
+        <div class="demo-dot" style="background:#ef4444"></div>
+        <div class="demo-dot" style="background:#f59e0b"></div>
+        <div class="demo-dot" style="background:#10b981"></div>
+        <span class="demo-bar-t">aion bridge</span>
+      </div>
+      <div class="demo-body">
+        <div id="out" class="demo-out"></div>
+        <div class="demo-row">
+          <select id="pre" class="demo-sel" style="min-width:170px" onchange="loadP()">
+            <option value="">Choose a command&hellip;</option>
+            <option value="auth">1. Authenticate</option>
+            <option value="query-vitals">2. Query Vitals</option>
+            <option value="query-conditions">3. Query Conditions</option>
+            <option value="query-meds">4. Query Medications</option>
+            <option value="get-resource">5. Get Single Resource</option>
+            <option value="subscribe">6. Subscribe to Changes</option>
+            <option value="analyze">7. Ask a Question</option>
+            <option value="export">8. Export Data</option>
+            <option value="audit">9. View Audit Log</option>
+          </select>
+          <input type="text" id="inp" class="demo-in" placeholder="Select a command or type JSON&hellip;" onkeydown="if(event.key==='Enter')go()">
+          <button class="demo-go" onclick="go()">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="div-line">
+
+<!-- FOR DEVELOPERS -->
+<section>
+  <div class="w">
+    <div class="label">For Developers</div>
+    <h2>Connect in a few lines</h2>
+    <p class="lead" style="margin-bottom:2rem;">The bridge speaks WebSocket with JSON messages. Authenticate with the pairing code shown on your phone, then query any FHIR resource type.</p>
+
+    <div class="grid-2">
+      <div>
+        <div style="font-size:0.78rem;color:var(--dim);margin-bottom:0.5rem;font-weight:500;">Python</div>
+        <pre><button class="copy-btn" onclick="cc(this)">Copy</button><code>import asyncio, json, websockets
+
+async def main():
+    async with websockets.connect(
+        "wss://your-phone:8420"
+    ) as ws:
+        await ws.send(json.dumps({
+            "type": "auth",
+            "payload": {"pairingCode": "123456"}
+        }))
+        auth = json.loads(await ws.recv())
+
+        await ws.send(json.dumps({
+            "type": "query",
+            "payload": {
+                "resourceType": "Observation",
+                "category": "vital-signs"
+            }
+        }))
+        data = json.loads(await ws.recv())
+        for e in data["payload"]["entry"]:
+            r = e["resource"]
+            print(r["code"]["text"],
+                  r.get("valueQuantity",{}).get("value"))
+
+asyncio.run(main())</code></pre>
+      </div>
+      <div>
+        <div style="font-size:0.78rem;color:var(--dim);margin-bottom:0.5rem;font-weight:500;">JavaScript</div>
+        <pre><button class="copy-btn" onclick="cc(this)">Copy</button><code>const ws = new WebSocket(
+  "wss://your-phone:8420"
+);
+
+ws.onopen = () => {
+  ws.send(JSON.stringify({
+    type: "auth",
+    payload: { pairingCode: "123456" }
+  }));
+};
+
+ws.onmessage = (e) => {
+  const msg = JSON.parse(e.data);
+
+  if (msg.payload?.authenticated) {
+    ws.send(JSON.stringify({
+      type: "query",
+      payload: {
+        resourceType: "Condition"
+      }
+    }));
+  }
+
+  if (msg.payload?.entry) {
+    for (const e of msg.payload.entry)
+      console.log(e.resource.code?.text);
+  }
+};</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FULL APP -->
+<section style="background:linear-gradient(180deg,var(--surface-2),var(--bg));border-top:1px solid var(--border);">
+  <div class="w" style="text-align:center;">
+    <div class="label">Full Experience</div>
+    <h2>There's more to Aion</h2>
+    <p style="color:var(--sub);max-width:560px;margin:0.5rem auto 1.5rem;font-size:0.95rem;">Aion Core is the open source foundation. The full Aion app adds health briefings, clinical reasoning across multiple AI models, action plans, voice interaction, agentic tool calling, emergency monitoring, and more.</p>
+    <a href="https://aion-web-production.up.railway.app" class="btn btn-s" style="font-size:0.9rem;">Try the Full App &rarr;</a>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section style="text-align:center;padding:5rem 0;">
+  <div class="w">
+    <h2>Your health data. <span class="grad">Your companion.</span></h2>
+    <p style="color:var(--sub);margin-bottom:2rem;">Open source. Private by default.</p>
+    <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+      <a href="https://github.com/easpencer/Aion" class="btn btn-p">Get the Source</a>
+      <a href="https://github.com/easpencer/Aion/blob/main/aion-web/docs/LOCAL_BRIDGE.md" class="btn btn-s">Bridge Docs</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="w">
+    <p><strong>Aion</strong> &middot; Your open health companion &middot; <a href="https://github.com/easpencer/Aion">GitHub</a></p>
+  </div>
+</footer>
+
+<script>
+const M={
+  auth:{type:'result',payload:{authenticated:true,deidentify:true,tls:true}},
+  'query-vitals':{type:'result',payload:{resourceType:'Observation',total:5,entry:[
+    {resource:{resourceType:'Observation',code:{text:'Heart Rate'},valueQuantity:{value:72,unit:'bpm'},effectiveDateTime:'2026-04-07T08:30:00Z'}},
+    {resource:{resourceType:'Observation',code:{text:'Blood Pressure'},valueQuantity:{value:128,unit:'mmHg'},effectiveDateTime:'2026-04-07T08:30:00Z'}},
+    {resource:{resourceType:'Observation',code:{text:'SpO2'},valueQuantity:{value:98,unit:'%'},effectiveDateTime:'2026-04-07T08:30:00Z'}},
+    {resource:{resourceType:'Observation',code:{text:'Body Temperature'},valueQuantity:{value:36.7,unit:'\u00b0C'},effectiveDateTime:'2026-04-06T22:00:00Z'}},
+    {resource:{resourceType:'Observation',code:{text:'Respiratory Rate'},valueQuantity:{value:16,unit:'/min'},effectiveDateTime:'2026-04-06T22:00:00Z'}},
+  ]}},
+  'query-conditions':{type:'result',payload:{resourceType:'Condition',total:3,entry:[
+    {resource:{resourceType:'Condition',code:{text:'Type 2 Diabetes Mellitus'},clinicalStatus:{coding:[{code:'active'}]}}},
+    {resource:{resourceType:'Condition',code:{text:'Essential Hypertension'},clinicalStatus:{coding:[{code:'active'}]}}},
+    {resource:{resourceType:'Condition',code:{text:'Chronic Kidney Disease Stage 2'},clinicalStatus:{coding:[{code:'active'}]}}},
+  ]}},
+  'query-meds':{type:'result',payload:{resourceType:'MedicationRequest',total:3,entry:[
+    {resource:{resourceType:'MedicationRequest',medicationCodeableConcept:{text:'Metformin 1000mg'},dosageInstruction:[{text:'Twice daily'}]}},
+    {resource:{resourceType:'MedicationRequest',medicationCodeableConcept:{text:'Lisinopril 20mg'},dosageInstruction:[{text:'Once daily'}]}},
+    {resource:{resourceType:'MedicationRequest',medicationCodeableConcept:{text:'Atorvastatin 40mg'},dosageInstruction:[{text:'Once daily at bedtime'}]}},
+  ]}},
+  analyze:{type:'result',payload:{answer:'Based on the available data:\n\n\u2022 Blood pressure is 128 mmHg systolic \u2014 slightly above the typical 120 target. Worth discussing with your provider, especially given the hypertension diagnosis.\n\n\u2022 You have three active conditions (diabetes, hypertension, CKD stage 2) that are interrelated. Good glucose and blood pressure control can help protect kidney function.\n\n\u2022 Current medications (Metformin, Lisinopril, Atorvastatin) are a standard combination for this profile. No known interactions between them.\n\n\u2022 Consider asking about your latest HbA1c and eGFR at your next visit.',provider:'ollama',model:'llama3.2'}},
+  export:{type:'result',payload:{format:'bundle',total:266,data:{resourceType:'Bundle',type:'collection',total:266}}},
+  'get-resource':{type:'result',payload:{resource:{resourceType:'Observation',id:'obs-hr-001',code:{text:'Heart Rate'},valueQuantity:{value:72,unit:'bpm'},effectiveDateTime:'2026-04-07T08:30:00Z',status:'final'}}},
+  subscribe:{type:'result',payload:{subscribed:true,resourceTypes:'all'}},
+  audit:{type:'result',payload:{total:4,entries:[
+    {timestamp:'2026-04-09T10:01:00Z',clientId:'pc-1',type:'auth',resultCount:1},
+    {timestamp:'2026-04-09T10:01:05Z',clientId:'pc-1',type:'query',resourceType:'Observation',resultCount:5},
+    {timestamp:'2026-04-09T10:01:12Z',clientId:'pc-1',type:'query',resourceType:'Condition',resultCount:3},
+    {timestamp:'2026-04-09T10:01:20Z',clientId:'pc-1',type:'export',resourceType:'*',resultCount:266},
+  ]}},
+};
+const P={
+  auth:'{"type":"auth","payload":{"pairingCode":"123456"}}',
+  'query-vitals':'{"type":"query","payload":{"resourceType":"Observation","category":"vital-signs","limit":5}}',
+  'query-conditions':'{"type":"query","payload":{"resourceType":"Condition","limit":10}}',
+  'query-meds':'{"type":"query","payload":{"resourceType":"MedicationRequest","limit":10}}',
+  analyze:'{"type":"analyze","payload":{"question":"What should I know before my next doctor visit?"}}',
+  export:'{"type":"export","payload":{"format":"bundle"}}',
+  'get-resource':'{"type":"get","payload":{"resourceType":"Observation","id":"obs-hr-001"}}',
+  subscribe:'{"type":"subscribe","payload":{"resourceTypes":["Observation","Condition"]}}',
+  audit:'{"type":"audit","payload":{"limit":10}}',
+};
+let auth=false;const O=document.getElementById('out');
+function al(t,c){const d=document.createElement('div');d.className='dl '+c;d.textContent=t;O.appendChild(d);O.parentElement.scrollTop=O.parentElement.scrollHeight}
+function loadP(){const s=document.getElementById('pre');if(P[s.value])document.getElementById('inp').value=P[s.value]}
+function go(){
+  const i=document.getElementById('inp'),r=i.value.trim();if(!r)return;
+  al('\u2192 '+r,'tx');i.value='';
+  let m;try{m=JSON.parse(r)}catch{al('\u2717 Invalid JSON','err');return}
+  let k='';
+  if(m.type==='auth')k='auth';
+  else if(m.type==='query'){
+    const rt=m.payload?.resourceType,c=m.payload?.category;
+    if(rt==='Observation'&&c==='vital-signs')k='query-vitals';
+    else if(rt==='Condition')k='query-conditions';
+    else if(rt==='MedicationRequest')k='query-meds';
+    else{al('\u2190 {"type":"result","payload":{"total":0,"entry":[]}}','rx');return}
+  }
+  else if(m.type==='get')k='get-resource';
+  else if(m.type==='subscribe')k='subscribe';
+  else if(m.type==='unsubscribe'){al('\u2190 {"type":"result","payload":{"unsubscribed":true}}','rx');return}
+  else if(m.type==='analyze')k='analyze';
+  else if(m.type==='export')k='export';
+  else if(m.type==='audit')k='audit';
+  else if(m.type==='ping'){al('\u2190 {"type":"pong"}','rx');return}
+  if(!auth&&m.type!=='auth'){al('\u2190 {"type":"error","payload":{"code":"UNAUTHORIZED"}}','err');return}
+  setTimeout(()=>{
+    const d=M[k];if(!d){al('\u2190 Unknown command','err');return}
+    if(m.type==='auth'&&d.payload.authenticated)auth=true;
+    if(m.type==='analyze'){
+      al('\u2190 Analysis:','sys');
+      d.payload.answer.split('\n').forEach(l=>al('  '+l,'rx'));
+    }else if(m.type==='export'){
+      al('\u2190 Exported '+d.payload.total+' resources as FHIR Bundle','rx');
+    }else if(m.type==='get'&&d.payload?.resource){
+      const r=d.payload.resource,n=r.code?.text||r.resourceType;
+      const v=r.valueQuantity?': '+r.valueQuantity.value+' '+r.valueQuantity.unit:'';
+      al('\u2190 '+r.resourceType+'/'+r.id,'sys');
+      al('  '+n+v+' ('+r.status+')','rx');
+    }else if(m.type==='subscribe'){
+      al('\u2190 Subscribed to changes: '+(d.payload.resourceTypes==='all'?'all types':d.payload.resourceTypes.join(', ')),'rx');
+    }else if(m.type==='audit'&&d.payload?.entries){
+      al('\u2190 Audit log ('+d.payload.total+' total entries):','sys');
+      d.payload.entries.forEach(e=>{
+        al('  '+e.timestamp.slice(11,19)+' '+e.type+(e.resourceType?' ['+e.resourceType+']':'')+(e.resultCount!=null?' \u2192 '+e.resultCount+' results':''),'rx');
+      });
+    }else if(d.payload?.entry){
+      al('\u2190 '+d.payload.total+' '+d.payload.resourceType+' resources:','sys');
+      d.payload.entry.forEach(e=>{
+        const r=e.resource,n=r.code?.text||r.medicationCodeableConcept?.text||r.resourceType;
+        const v=r.valueQuantity?': '+r.valueQuantity.value+' '+r.valueQuantity.unit:'';
+        const dose=r.dosageInstruction?.[0]?.text?' \u2014 '+r.dosageInstruction[0].text:'';
+        const st=r.clinicalStatus?.coding?.[0]?.code?' ['+r.clinicalStatus.coding[0].code+']':'';
+        al('  \u2022 '+n+v+dose+st,'rx');
+      });
+    }else{al('\u2190 '+JSON.stringify(d,null,2),'rx')}
+  },k==='analyze'?1200:250);
+}
+function cc(b){const c=b.closest('pre').querySelector('code').textContent;navigator.clipboard.writeText(c);b.textContent='Copied!';setTimeout(()=>b.textContent='Copy',1200)}
+al('Connected to Aion Bridge (simulated). TLS encrypted.','sys');
+al('Protocol: wss:// \u2022 Auth: pairing code \u2022 Audit: enabled','sys');
+al('Select a command above to begin.','sys');
+al('','sys');
+</script>
+</body>
+</html>
