@@ -60,6 +60,11 @@ function bridgeSend(msg) {
 
 function connectToBridge(url, code) {
   return new Promise((resolve, reject) => {
+    // Validate URL scheme
+    if (!url.startsWith('ws://') && !url.startsWith('wss://')) {
+      reject(new Error('Invalid URL scheme. Use ws:// or wss://'));
+      return;
+    }
     if (ws) { try { ws.close(); } catch {} }
     authenticated = false;
     connectError = null;
