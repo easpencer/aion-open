@@ -1,13 +1,18 @@
 {
   "name": "aion-open",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "Aion Open — Your health data, your tools, your rules",
+  "type": "module",
+  "description": "Aion Bridge — Developer console, REST API, and CLI for your health data",
+  "bin": {
+    "aion-bridge": "./cli.js"
+  },
   "scripts": {
-    "start": "npx serve public -s -l tcp://0.0.0.0:${PORT:-3000}",
-    "dev": "npx serve public -s -l 3000"
+    "start": "node server.js",
+    "dev": "node server.js"
   },
   "dependencies": {
-    "serve": "^14.2.4"
+    "express": "^4.21.0",
+    "ws": "^8.18.0"
   }
 }
