@@ -41,7 +41,9 @@ pre:hover .cpb{opacity:1}.cpb:hover{color:var(--txt)}
 .card{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;padding:1.75rem}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+@media(max-width:900px){.grid-4{grid-template-columns:repeat(2,1fr)!important}}
 @media(max-width:800px){.grid-2,.grid-3{grid-template-columns:1fr}}
+@media(max-width:600px){.grid-4{grid-template-columns:1fr!important}}
 .method{font-family:var(--mono);font-size:.65rem;font-weight:600;padding:.15rem .45rem;border-radius:4px;display:inline-block;min-width:38px;text-align:center}
 .method.get{background:var(--gr-d);color:var(--gr)}.method.post{background:var(--ac-d);color:var(--ac)}
 .step-n{width:28px;height:28px;border-radius:50%;background:var(--gr-d);color:var(--gr);font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -154,19 +156,50 @@ footer{padding:1.5rem 0;border-top:1px solid var(--bdr);text-align:center;font-s
 <!-- ═══════════ HERO ═══════════ -->
 <section class="hero">
 <div class="w">
-  <div class="hero-tag">Aion Bridge &middot; Open Source</div>
-  <h1>Your health data<br>as an <em>API</em></h1>
-  <p class="hero-p">Turn your phone into a private FHIR server. Query health data via REST, browse in the console, build apps &mdash; TLS encrypted, de-identified by default, never leaves your network.</p>
+  <div class="hero-tag">Aion Core &middot; Open Source</div>
+  <h1>Your health data,<br>understood <em>privately</em></h1>
+  <p class="hero-p">Aion consolidates your health data from every source, runs AI on your own devices, and bridges it to your PC when you need more power. Open source. Nothing leaves your network.</p>
   <div class="hero-btns">
-    <a href="#console" class="btn btn-p">Open Console</a>
-    <a href="https://github.com/easpencer/aion-open" class="btn btn-s">GitHub</a>
-    <a href="https://github.com/easpencer/Aion/blob/main/aion-web/docs/LOCAL_BRIDGE.md" class="btn btn-s">Docs</a>
+    <a href="#how-to" class="btn btn-p">Get Started</a>
+    <a href="#console" class="btn btn-s">Developer Console</a>
+    <a href="https://github.com/easpencer/Aion" class="btn btn-s">Source Code</a>
   </div>
 </div>
 </section>
 <hr class="sep">
 
-<!-- ═══════════ THREE WAYS ═══════════ -->
+<!-- ═══════════ FOUR PILLARS ═══════════ -->
+<section>
+<div class="w">
+  <div class="lbl">What Aion Does</div>
+  <h2>Four pillars</h2>
+  <div class="grid-4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;border-radius:12px;overflow:hidden;border:1px solid var(--bdr);margin-top:1.5rem">
+    <div class="card" style="border-radius:0;border:none">
+      <div style="font-size:1.8rem;font-weight:800;color:var(--faint);margin-bottom:.5rem">1</div>
+      <h3>Consolidate</h3>
+      <p style="font-size:.78rem;color:var(--sub)">Pull health data from every source &mdash; Apple HealthKit, Google Health Connect, wearables, clinical records &mdash; into a single encrypted FHIR R4 store on your phone.</p>
+    </div>
+    <div class="card" style="border-radius:0;border:none">
+      <div style="font-size:1.8rem;font-weight:800;color:var(--faint);margin-bottom:.5rem">2</div>
+      <h3>Understand</h3>
+      <p style="font-size:.78rem;color:var(--sub)">On-device AI models explore your data &mdash; medications, vitals, labs, conditions &mdash; and answer health questions without anything leaving your device.</p>
+    </div>
+    <div class="card" style="border-radius:0;border:none">
+      <div style="font-size:1.8rem;font-weight:800;color:var(--faint);margin-bottom:.5rem">3</div>
+      <h3>Act</h3>
+      <p style="font-size:.78rem;color:var(--sub)">Agentic AI with tool calling. Search the web, set reminders, look up drug interactions, share content &mdash; with tiered consent at every step.</p>
+    </div>
+    <div class="card" style="border-radius:0;border:none">
+      <div style="font-size:1.8rem;font-weight:800;color:var(--faint);margin-bottom:.5rem">4</div>
+      <h3>Bridge</h3>
+      <p style="font-size:.78rem;color:var(--sub)">When you want more compute, bridge your data to your PC over WiFi or USB. Run Ollama, Claude Code, Python scripts &mdash; still your network, still your data.</p>
+    </div>
+  </div>
+</div>
+</section>
+<hr class="sep">
+
+<!-- ═══════════ THREE ACCESS METHODS ═══════════ -->
 <section>
 <div class="w">
   <div class="lbl">Three ways to use it</div>
@@ -230,6 +263,70 @@ footer{padding:1.5rem 0;border-top:1px solid var(--bdr);text-align:center;font-s
 </div>
 </section>
 
+<!-- ═══════════ ON-DEVICE AI ═══════════ -->
+<section>
+<div class="w">
+  <div class="lbl">Privacy-First AI</div>
+  <h2>AI that runs on your devices</h2>
+  <p class="lead" style="margin-bottom:1.5rem">Two tiers of intelligence. Both keep your data private.</p>
+  <div class="grid-2">
+    <div class="card">
+      <h3>On Your Phone</h3>
+      <p style="font-size:.8rem;color:var(--sub);margin-bottom:.75rem">Edge Language Models run directly on your device. Analyze vitals, medications, conditions, and labs without any data leaving your phone.</p>
+      <div style="font-size:.75rem;color:var(--sub);display:flex;flex-direction:column;gap:.3rem">
+        <span><strong style="color:var(--txt)">Bundled model</strong> &mdash; works immediately after install</span>
+        <span><strong style="color:var(--txt)">Downloadable models</strong> &mdash; medical-specialized, deeper reasoning</span>
+        <span><strong style="color:var(--txt)">Emergency patterns</strong> &mdash; works offline, no model required</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3>On Your PC (via Bridge)</h3>
+      <p style="font-size:.8rem;color:var(--sub);margin-bottom:.75rem">When you need more power, the bridge serves your FHIR data to local PC models. Run bigger models, complex analysis, or build custom tools.</p>
+      <div style="font-size:.75rem;color:var(--sub);display:flex;flex-direction:column;gap:.3rem">
+        <span><strong style="color:var(--txt)">Ollama</strong> &mdash; Qwen 3, Llama 3.3, Gemma, Phi-4 on your hardware</span>
+        <span><strong style="color:var(--txt)">Claude Code</strong> &mdash; MCP server with 4 health data tools</span>
+        <span><strong style="color:var(--txt)">Any HTTP client</strong> &mdash; Python, Node.js, Jupyter, custom apps</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<hr class="sep">
+
+<!-- ═══════════ WHAT YOU CAN BUILD ═══════════ -->
+<section style="background:var(--s2);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr)">
+<div class="w">
+  <div class="lbl">Use Cases</div>
+  <h2>What you can build</h2>
+  <div class="grid-3" style="margin-top:1.5rem">
+    <div class="card" style="background:var(--s1)">
+      <h3 style="font-size:.88rem">Health dashboards</h3>
+      <p style="font-size:.75rem;color:var(--sub)">Build a custom web dashboard for your vitals, medications, conditions. Query the REST API from React, Vue, or plain HTML.</p>
+    </div>
+    <div class="card" style="background:var(--s1)">
+      <h3 style="font-size:.88rem">Jupyter notebooks</h3>
+      <p style="font-size:.75rem;color:var(--sub)">Pull observations into pandas DataFrames. Visualize trends, run statistical analysis, train models &mdash; all from your own data.</p>
+    </div>
+    <div class="card" style="background:var(--s1)">
+      <h3 style="font-size:.88rem">Claude Code integration</h3>
+      <p style="font-size:.75rem;color:var(--sub)">Add the MCP server to Claude Code. Ask "What&rsquo;s my BP trend?" and Claude queries your real health data to answer.</p>
+    </div>
+    <div class="card" style="background:var(--s1)">
+      <h3 style="font-size:.88rem">Automated monitoring</h3>
+      <p style="font-size:.75rem;color:var(--sub)">Write cron scripts that check your latest vitals via the API. Send alerts to Slack, email, or any webhook when thresholds are crossed.</p>
+    </div>
+    <div class="card" style="background:var(--s1)">
+      <h3 style="font-size:.88rem">Clinical data export</h3>
+      <p style="font-size:.75rem;color:var(--sub)">Export your full FHIR bundle or CSV. Share with your doctor, import into research tools, or back up your health history.</p>
+    </div>
+    <div class="card" style="background:var(--s1)">
+      <h3 style="font-size:.88rem">Voice + AI agents</h3>
+      <p style="font-size:.75rem;color:var(--sub)">Combine the bridge with Ollama and a TTS engine. Build a voice assistant that knows your health context and responds naturally.</p>
+    </div>
+  </div>
+</div>
+</section>
+
 <!-- ═══════════ QUICK START ═══════════ -->
 <section>
 <div class="w">
@@ -241,7 +338,7 @@ footer{padding:1.5rem 0;border-top:1px solid var(--bdr);text-align:center;font-s
       <div class="step-n">1</div>
       <div style="flex:1">
         <h3 style="font-size:.88rem">Enable bridge on your phone</h3>
-        <p style="font-size:.78rem;color:var(--sub)">Open Aion &rarr; Settings &rarr; Local Bridge &rarr; Toggle ON. Note the <strong>pairing code</strong> and <strong>IP address</strong>.</p>
+        <p style="font-size:.78rem;color:var(--sub)">Open Aion &rarr; Settings &rarr; AI &amp; Developer tab &rarr; scroll to <strong>Local Bridge</strong> &rarr; Toggle ON. Note the <strong>6-digit pairing code</strong> and <strong>connection URL</strong> (e.g. <code>wss://192.168.1.42:8420</code>). Choose WiFi or USB mode.</p>
       </div>
     </div>
 
@@ -275,13 +372,26 @@ curl -X POST http://localhost:3000/api/analyze \
     <div style="display:flex;gap:1rem;align-items:flex-start">
       <div class="step-n">4</div>
       <div style="flex:1">
-        <h3 style="font-size:.88rem">Or use the CLI</h3>
-        <pre style="margin-top:.4rem"><button class="cpb" onclick="cpb(this)">Copy</button>./cli.js query Observation --category vital-signs --limit 20
+        <h3 style="font-size:.88rem">Or use the CLI (in another terminal)</h3>
+        <pre style="margin-top:.4rem"><button class="cpb" onclick="cpb(this)">Copy</button># Requires the server from step 2 running in another terminal
+./cli.js query Observation --category vital-signs --limit 20
 ./cli.js get Observation obs-hr-001
 ./cli.js analyze "Should I be concerned about my blood pressure?"
 ./cli.js export --format bundle > health.json</pre>
       </div>
     </div>
+  </div>
+
+  <div class="card" style="margin-top:1.5rem;max-width:700px">
+    <h3 style="font-size:.88rem;margin-bottom:.5rem">USB Mode (no WiFi needed)</h3>
+    <p style="font-size:.78rem;color:var(--sub);margin-bottom:.5rem">Connect your phone via USB cable and forward the port. Faster than WiFi, works without any network.</p>
+    <pre style="margin:0"><button class="cpb" onclick="cpb(this)">Copy</button># iOS (requires libimobiledevice: brew install libimobiledevice)
+iproxy 8420 8420
+
+# Android (requires adb from Android SDK platform-tools)
+adb forward tcp:8420 tcp:8420
+
+# Then use wss://localhost:8420 as BRIDGE_URL</pre>
   </div>
 </div>
 </section>
@@ -367,6 +477,58 @@ console.log(`Exported ${total} resources`);</pre>
 </div>
 </section>
 <hr class="sep">
+
+<!-- ═══════════ CLAUDE CODE MCP ═══════════ -->
+<section style="background:var(--s2);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr)">
+<div class="w">
+  <div class="lbl">Claude Code Integration</div>
+  <h2>Talk to your health data in Claude Code</h2>
+  <p class="lead" style="margin-bottom:1.25rem">Add the MCP server to Claude Code. Then ask health questions in natural language &mdash; Claude queries your real FHIR data.</p>
+
+  <div class="grid-2">
+    <div>
+      <h3 style="font-size:.88rem;margin-bottom:.5rem">1. Build the MCP server</h3>
+      <pre><button class="cpb" onclick="cpb(this)">Copy</button>cd aion-web/src/services/bridge/mcp
+npm install && npm run build</pre>
+      <h3 style="font-size:.88rem;margin-top:1rem;margin-bottom:.5rem">2. Add to Claude Code settings</h3>
+      <pre><button class="cpb" onclick="cpb(this)">Copy</button>{
+  "mcpServers": {
+    "aion-health": {
+      "command": "node",
+      "args": ["path/to/mcp/dist/index.js"],
+      "env": {
+        "AION_BRIDGE_URL": "wss://192.168.1.42:8420",
+        "AION_PAIRING_CODE": "123456"
+      }
+    }
+  }
+}</pre>
+    </div>
+    <div>
+      <h3 style="font-size:.88rem;margin-bottom:.5rem">MCP Tools Available</h3>
+      <div style="display:flex;flex-direction:column;gap:.5rem">
+        <div class="card" style="padding:1rem">
+          <div style="font-family:var(--mono);font-size:.75rem;color:var(--gr);font-weight:600">query_health_data</div>
+          <div style="font-size:.72rem;color:var(--sub);margin-top:.2rem">Query FHIR resources by type, category, date range. Returns structured clinical data.</div>
+        </div>
+        <div class="card" style="padding:1rem">
+          <div style="font-family:var(--mono);font-size:.75rem;color:var(--gr);font-weight:600">get_health_summary</div>
+          <div style="font-size:.72rem;color:var(--sub);margin-top:.2rem">Overview of all available health data with counts per resource type.</div>
+        </div>
+        <div class="card" style="padding:1rem">
+          <div style="font-family:var(--mono);font-size:.75rem;color:var(--gr);font-weight:600">analyze_health</div>
+          <div style="font-size:.72rem;color:var(--sub);margin-top:.2rem">Ask a natural language health question. Runs on local Ollama LLM.</div>
+        </div>
+        <div class="card" style="padding:1rem">
+          <div style="font-family:var(--mono);font-size:.75rem;color:var(--gr);font-weight:600">export_health_data</div>
+          <div style="font-size:.72rem;color:var(--sub);margin-top:.2rem">Export as FHIR R4 Bundle JSON for analysis or sharing.</div>
+        </div>
+      </div>
+      <p style="font-size:.75rem;color:var(--sub);margin-top:.75rem">Then just ask Claude: <em>&ldquo;Show me my blood pressure trend over the last month&rdquo;</em></p>
+    </div>
+  </div>
+</div>
+</section>
 
 <!-- ═══════════ FHIR RESOURCES ═══════════ -->
 <section>
