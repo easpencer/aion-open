@@ -263,32 +263,135 @@ footer{padding:1.5rem 0;border-top:1px solid var(--bdr);text-align:center;font-s
 </div>
 </section>
 
-<!-- ═══════════ ON-DEVICE AI ═══════════ -->
+<!-- ═══════════ APP TIERS ═══════════ -->
 <section>
 <div class="w">
-  <div class="lbl">Privacy-First AI</div>
-  <h2>AI that runs on your devices</h2>
-  <p class="lead" style="margin-bottom:1.5rem">Two tiers of intelligence. Both keep your data private.</p>
-  <div class="grid-2">
-    <div class="card">
-      <h3>On Your Phone</h3>
-      <p style="font-size:.8rem;color:var(--sub);margin-bottom:.75rem">Edge Language Models run directly on your device. Analyze vitals, medications, conditions, and labs without any data leaving your phone.</p>
-      <div style="font-size:.75rem;color:var(--sub);display:flex;flex-direction:column;gap:.3rem">
-        <span><strong style="color:var(--txt)">Bundled model</strong> &mdash; works immediately after install</span>
-        <span><strong style="color:var(--txt)">Downloadable models</strong> &mdash; medical-specialized, deeper reasoning</span>
-        <span><strong style="color:var(--txt)">Emergency patterns</strong> &mdash; works offline, no model required</span>
+  <div class="lbl">Get Aion</div>
+  <h2>Download from the App Store</h2>
+  <p class="lead" style="margin-bottom:1.5rem">Aion is available on iOS and Android. Three tiers &mdash; all run locally on your devices.</p>
+
+  <div class="grid-3">
+    <div class="card" style="border-color:var(--gr);border-width:2px">
+      <div style="font-size:.6rem;text-transform:uppercase;letter-spacing:.15em;color:var(--gr);font-weight:700;margin-bottom:.5rem">Free</div>
+      <h3>Aion Core</h3>
+      <p style="font-size:.78rem;color:var(--sub);margin-bottom:.75rem">The open source foundation. Consolidate your health data, bridge it to your PC, and build on it.</p>
+      <div style="font-size:.72rem;color:var(--sub);display:flex;flex-direction:column;gap:.25rem">
+        <span>&#10003; FHIR R4 health data store</span>
+        <span>&#10003; Local Bridge (WiFi + USB)</span>
+        <span>&#10003; REST API + Web Console + CLI</span>
+        <span>&#10003; Simple health UI</span>
+        <span>&#10003; De-identification + TLS</span>
+        <span style="color:var(--dim)">&#8211; Bring your own AI models</span>
       </div>
     </div>
     <div class="card">
-      <h3>On Your PC (via Bridge)</h3>
-      <p style="font-size:.8rem;color:var(--sub);margin-bottom:.75rem">When you need more power, the bridge serves your FHIR data to local PC models. Run bigger models, complex analysis, or build custom tools.</p>
-      <div style="font-size:.75rem;color:var(--sub);display:flex;flex-direction:column;gap:.3rem">
-        <span><strong style="color:var(--txt)">Ollama</strong> &mdash; Qwen 3, Llama 3.3, Gemma, Phi-4 on your hardware</span>
-        <span><strong style="color:var(--txt)">Claude Code</strong> &mdash; MCP server with 4 health data tools</span>
-        <span><strong style="color:var(--txt)">Any HTTP client</strong> &mdash; Python, Node.js, Jupyter, custom apps</span>
+      <div style="font-size:.6rem;text-transform:uppercase;letter-spacing:.15em;color:var(--ac);font-weight:700;margin-bottom:.5rem">Upgrade</div>
+      <h3>Aion Elite</h3>
+      <p style="font-size:.78rem;color:var(--sub);margin-bottom:.75rem">Full app experience. Everything still runs locally &mdash; you add your own model API keys to power the AI Chorus.</p>
+      <div style="font-size:.72rem;color:var(--sub);display:flex;flex-direction:column;gap:.25rem">
+        <span>&#10003; Everything in Core</span>
+        <span>&#10003; Full health briefings + clinical reasoning</span>
+        <span>&#10003; AI Chorus (multi-model consensus)</span>
+        <span>&#10003; Agentic tool calling</span>
+        <span>&#10003; Voice interaction</span>
+        <span style="color:var(--dim)">&#8211; You provide API keys (Claude, GPT, etc.)</span>
+      </div>
+    </div>
+    <div class="card">
+      <div style="font-size:.6rem;text-transform:uppercase;letter-spacing:.15em;color:var(--yl);font-weight:700;margin-bottom:.5rem">Subscription</div>
+      <h3>Aion Concierge</h3>
+      <p style="font-size:.78rem;color:var(--sub);margin-bottom:.75rem">Full app plus all AI models and services included. No keys to manage &mdash; everything works out of the box.</p>
+      <div style="font-size:.72rem;color:var(--sub);display:flex;flex-direction:column;gap:.25rem">
+        <span>&#10003; Everything in Elite</span>
+        <span>&#10003; All AI models included (no API keys needed)</span>
+        <span>&#10003; Chorus models pre-configured</span>
+        <span>&#10003; Priority support</span>
+        <span>&#10003; Automatic updates</span>
+        <span style="color:var(--yl)">Monthly subscription</span>
       </div>
     </div>
   </div>
+</div>
+</section>
+<hr class="sep">
+
+<!-- ═══════════ HOW TO USE ═══════════ -->
+<section style="background:var(--s2);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr)">
+<div class="w">
+  <div class="lbl">Ways to Use the Bridge</div>
+  <h2>Four paths, all build on the same API</h2>
+  <p class="lead" style="margin-bottom:1.5rem">The bridge exposes your health data as a standard API. How you consume it is up to you.</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
+    <div class="card">
+      <h3 style="color:var(--gr)">1. As a raw API</h3>
+      <p style="font-size:.78rem;color:var(--sub);margin-bottom:.5rem">Use the REST endpoints from any language, tool, or app you build. The bridge is just an HTTP server &mdash; <code>curl</code>, <code>requests</code>, <code>fetch()</code>, Postman, anything.</p>
+      <pre style="font-size:.7rem;margin:0">curl http://localhost:3000/api/Observation?category=vital-signs
+curl http://localhost:3000/api/Condition
+curl -X POST http://localhost:3000/api/analyze \
+  -d '{"question":"BP trends?"}'</pre>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--ac)">2. With local AI models</h3>
+      <p style="font-size:.78rem;color:var(--sub);margin-bottom:.5rem">Run Ollama on your PC. The bridge&rsquo;s <code>/api/analyze</code> endpoint routes questions to your local LLM. Your data + your model = fully private analysis.</p>
+      <pre style="font-size:.7rem;margin:0"># Install Ollama + pull a model
+ollama pull llama4:scout
+
+# The bridge auto-detects Ollama
+# Ask questions via API or console
+curl -X POST localhost:3000/api/analyze \
+  -d '{"question":"Summarize my medications"}'</pre>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--yl)">3. From the terminal</h3>
+      <p style="font-size:.78rem;color:var(--sub);margin-bottom:.5rem">The CLI tool pipes data to <code>jq</code>, scripts, cron jobs, or any unix workflow. Great for automation and monitoring.</p>
+      <pre style="font-size:.7rem;margin:0"># Query and pipe to jq
+./cli.js query Observation --category vital-signs \
+  | jq '.[] | .code.text'
+
+# Export for backup
+./cli.js export --format bundle > health.json
+
+# Analyze
+./cli.js analyze "Any drug interactions?"</pre>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--gr)">4. Via the web console</h3>
+      <p style="font-size:.78rem;color:var(--sub);margin-bottom:.5rem">Open <code>http://localhost:3000</code> for a visual browser. Query resources, inspect JSON, generate code snippets, test API calls &mdash; no coding required.</p>
+      <p style="font-size:.75rem;color:var(--sub)">The console is also where you connect to your phone&rsquo;s bridge if you didn&rsquo;t set env vars at startup. Enter the URL and pairing code, and you&rsquo;re live.</p>
+    </div>
+  </div>
+
+  <p style="font-size:.78rem;color:var(--dim);text-align:center;margin-top:1.25rem">All four paths talk to the same REST API. Build a dashboard, a Jupyter notebook, a Claude Code integration, a cron monitor &mdash; or all of them at once.</p>
+</div>
+</section>
+
+<!-- ═══════════ RECOMMENDED MODELS ═══════════ -->
+<section>
+<div class="w">
+  <div class="lbl">PC Models</div>
+  <h2>Recommended models for Ollama</h2>
+  <p class="lead" style="margin-bottom:1.25rem">When bridging to your PC, these models work well with the analyze endpoint. Aion auto-detects installed models.</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3 style="font-size:.88rem">Best for Most PCs</h3>
+      <div style="font-size:.75rem;color:var(--sub);display:flex;flex-direction:column;gap:.5rem;margin-top:.5rem">
+        <span><strong style="color:var(--gr)">Llama 4 Scout</strong> &mdash; 17B active (MoE, 16 experts). Multimodal. 10M context. ~12GB VRAM. <code>ollama pull llama4:scout</code></span>
+        <span><strong style="color:var(--txt)">Qwen 3 8B</strong> &mdash; Best 8B for tool calling. ~5GB. <code>ollama pull qwen3:8b</code></span>
+        <span><strong style="color:var(--txt)">Gemma 3 4B</strong> &mdash; Runs on CPU. No GPU needed. <code>ollama pull gemma3:4b</code></span>
+      </div>
+    </div>
+    <div class="card">
+      <h3 style="font-size:.88rem">High-End (20GB+ VRAM)</h3>
+      <div style="font-size:.75rem;color:var(--sub);display:flex;flex-direction:column;gap:.5rem;margin-top:.5rem">
+        <span><strong style="color:var(--ac)">Llama 4 Maverick</strong> &mdash; 17B active (MoE, 128 experts). Top-tier multimodal. ~24GB VRAM. <code>ollama pull llama4:maverick</code></span>
+        <span><strong style="color:var(--txt)">Qwen 3 32B</strong> &mdash; Excellent tool calling + health reasoning. ~20GB. <code>ollama pull qwen3:32b</code></span>
+        <span><strong style="color:var(--txt)">Phi-4 14B</strong> &mdash; Strong reasoning model from Microsoft. ~8GB. <code>ollama pull phi4:14b</code></span>
+      </div>
+    </div>
+  </div>
+  <p style="font-size:.72rem;color:var(--dim);margin-top:.75rem">Install any model: <code>ollama pull model-name</code> &mdash; the bridge settings UI on your phone auto-detects available models when connected.</p>
 </div>
 </section>
 <hr class="sep">
@@ -309,7 +412,7 @@ footer{padding:1.5rem 0;border-top:1px solid var(--bdr);text-align:center;font-s
     </div>
     <div class="card" style="background:var(--s1)">
       <h3 style="font-size:.88rem">Claude Code integration</h3>
-      <p style="font-size:.75rem;color:var(--sub)">Add the MCP server to Claude Code. Ask "What&rsquo;s my BP trend?" and Claude queries your real health data to answer.</p>
+      <p style="font-size:.75rem;color:var(--sub)">Add the MCP server to Claude Code. Ask &ldquo;What&rsquo;s my BP trend?&rdquo; and Claude queries your real health data to answer.</p>
     </div>
     <div class="card" style="background:var(--s1)">
       <h3 style="font-size:.88rem">Automated monitoring</h3>
