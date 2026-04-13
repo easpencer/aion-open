@@ -21,7 +21,7 @@
  *   API_URL=http://192.168.1.50:3000 aion-bridge query Observation
  */
 
-const API = process.env.API_URL || 'http://localhost:3000';
+const API = (process.env.API_URL || 'http://localhost:3000').replace(/\/+$/, '');
 
 const [,, cmd, ...args] = process.argv;
 
@@ -35,6 +35,8 @@ async function main() {
     get <Type> <id>                            Get a single resource
     analyze "<question>"                       Ask a health question
     export [--format bundle|csv] [--type x]    Export data
+    graph                                      Health knowledge graph summary
+    graph report                               Full HEALTH_REPORT.md
     metadata                                   FHIR CapabilityStatement
     audit [--limit n]                          View audit log
     status                                     Check connection status
@@ -71,11 +73,12 @@ async function main() {
         if (!type) { console.error('Usage: aion-bridge query <ResourceType>'); process.exit(1); }
         const params = new URLSearchParams();
         for (let i = 1; i < args.length; i += 2) {
+          if (!args[i]?.startsWith('--') || args[i + 1] === undefined) continue;
           const key = args[i].replace(/^--/, '');
-          params.set(key, args[i + 1] || '');
+          params.set(key, args[i + 1]);
         }
         const r = await fetchJSON(`/api/${type}?${params}`);
-        if (r.error) { console.error('Error:', r.message || r.error); process.exit(1); }
+        if (r.error) { console.error('Error:', r.error); process.exit(1); }
         const entries = r.entry || [];
         console.log(`${entries.length} ${type} resources:\n`);
         for (const { resource } of entries) {
@@ -91,7 +94,7 @@ async function main() {
         const [type, id] = args;
         if (!type || !id) { console.error('Usage: aion-bridge get <Type> <id>'); process.exit(1); }
         const r = await fetchJSON(`/api/${type}/${id}`);
-        if (r.error) { console.error('Error:', r.message || r.error); process.exit(1); }
+        if (r.error) { console.error('Error:', r.error || r.message || 'Unknown error'); process.exit(1); }
         console.log(JSON.stringify(r.resource || r, null, 2));
         break;
       }
@@ -100,19 +103,20 @@ async function main() {
         if (!question) { console.error('Usage: aion-bridge analyze "your question"'); process.exit(1); }
         console.log('Analyzing...\n');
         const r = await fetchJSON('/api/analyze', { method: 'POST', body: { question } });
-        if (r.error) { console.error('Error:', r.message || r.error); process.exit(1); }
+        if (r.error) { console.error('Error:', r.error || r.message || 'Unknown error'); process.exit(1); }
         console.log(r.answer || 'No answer returned');
         break;
       }
       case 'export': {
         const params = new URLSearchParams();
         for (let i = 0; i < args.length; i += 2) {
+          if (!args[i]?.startsWith('--') || args[i + 1] === undefined) continue;
           const key = args[i].replace(/^--/, '');
-          if (key === 'type') params.set('resourceType', args[i + 1] || '');
-          else params.set(key, args[i + 1] || '');
+          if (key === 'type') params.set('resourceType', args[i + 1]);
+          else params.set(key, args[i + 1]);
         }
         const r = await fetchJSON(`/api/_export?${params}`);
-        if (r.error) { console.error('Error:', r.message || r.error); process.exit(1); }
+        if (r.error) { console.error('Error:', r.error || r.message || 'Unknown error'); process.exit(1); }
         if (r.format === 'csv') {
           console.log(r.data);
         } else {
@@ -128,10 +132,45 @@ async function main() {
         }
         break;
       }
+      case 'graph': {
+        const sub = args[0];
+        if (sub === 'report') {
+          const r = await fetchJSON('/api/_graph/report');
+          if (typeof r === 'string') console.log(r);
+          else if (r.report) console.log(r.report);
+          else console.log(JSON.stringify(r, null, 2));
+        } else {
+          const r = await fetchJSON('/api/_graph');
+          if (r.error) { console.error('Error:', r.error); process.exit(1); }
+          console.log(`Health Knowledge Graph: ${r.stats?.nodeCount || 0} nodes, ${r.stats?.edgeCount || 0} edges, ${r.stats?.communityCount || 0} communities\n`);
+          if (r.godNodes?.length) {
+            console.log('Key Health Factors (God Nodes):');
+            for (const g of r.godNodes) {
+              console.log(`  ${g.label} (${g.connectionCount} connections, ${g.type})`);
+            }
+            console.log('');
+          }
+          if (r.communities?.length) {
+            console.log('Health Clusters:');
+            for (const c of r.communities.filter(c => c.nodeCount >= 2)) {
+              console.log(`  ${c.label} (${c.nodeCount} entities, ${(c.cohesion * 100).toFixed(0)}% cohesion)`);
+            }
+            console.log('');
+          }
+          if (r.surprisingConnections?.length) {
+            console.log('Surprising Connections:');
+            for (const s of r.surprisingConnections) {
+              console.log(`  ${s.sourceLabel} ↔ ${s.targetLabel} (${s.type}, ${(s.confidence * 100).toFixed(0)}%)`);
+            }
+          }
+        }
+        break;
+      }
       case 'audit': {
-        const limit = args.includes('--limit') ? args[args.indexOf('--limit') + 1] : 20;
+        const idx = args.indexOf('--limit');
+        const limit = (idx !== -1 && args[idx + 1]) ? args[idx + 1] : 20;
         const r = await fetchJSON(`/api/_audit?limit=${limit}`);
-        if (r.error) { console.error('Error:', r.message || r.error); process.exit(1); }
+        if (r.error) { console.error('Error:', r.error || r.message || 'Unknown error'); process.exit(1); }
         console.log(`Audit log (${r.total} total):\n`);
         for (const e of r.entries || []) {
           console.log(`  ${e.timestamp?.slice(11, 19) || '?'} ${e.type.padEnd(10)} ${e.resourceType || ''}${e.resultCount != null ? ' → ' + e.resultCount : ''}${e.error ? ' ERROR: ' + e.error : ''}`);

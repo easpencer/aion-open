@@ -54,7 +54,13 @@ function bridgeSend(msg) {
       reject(new Error('Bridge request timed out (30s)'));
     }, 30000);
     pending.set(id, { resolve: (m) => { clearTimeout(timeout); resolve(m); }, reject: (e) => { clearTimeout(timeout); reject(e); } });
-    ws.send(JSON.stringify({ ...msg, id }));
+    try {
+      ws.send(JSON.stringify({ ...msg, id }));
+    } catch (e) {
+      clearTimeout(timeout);
+      pending.delete(id);
+      reject(new Error('Failed to send: ' + e.message));
+    }
   });
 }
 
@@ -110,7 +116,9 @@ function connectToBridge(url, code) {
           pending.delete(msg.id);
           resolve(msg);
         }
-      } catch {}
+      } catch (e) {
+        console.error('[aion] Failed to parse bridge message:', e.message);
+      }
     });
 
     ws.on('error', (e) => {
@@ -126,7 +134,19 @@ function connectToBridge(url, code) {
   });
 }
 
+// ---- CORS ----
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') return res.sendStatus(200);
+  next();
+});
+
 // ---- REST API Routes ----
+// IMPORTANT: Fixed routes (_export, _metadata, _audit) must come BEFORE
+// parameterized routes (:resourceType) to avoid Express matching conflicts.
 
 // Status
 app.get('/api/status', (req, res) => {
@@ -157,7 +177,79 @@ app.post('/api/disconnect', (req, res) => {
   res.json({ disconnected: true });
 });
 
-// Query resources: GET /api/:resourceType
+// Analyze: POST /api/analyze
+app.post('/api/analyze', async (req, res) => {
+  try {
+    const msg = await bridgeSend({
+      type: 'analyze',
+      payload: { question: req.body.question, provider: req.body.provider, model: req.body.model },
+    });
+    if (msg.type === 'error') return res.status(400).json(msg.payload);
+    res.json(msg.payload);
+  } catch (e) {
+    res.status(502).json({ error: e.message });
+  }
+});
+
+// Export: GET /api/_export — MUST be before :resourceType
+app.get('/api/_export', async (req, res) => {
+  try {
+    const msg = await bridgeSend({
+      type: 'export',
+      payload: { resourceType: req.query.resourceType || undefined, format: req.query.format || 'bundle' },
+    });
+    if (msg.type === 'error') return res.status(400).json(msg.payload);
+    res.json(msg.payload);
+  } catch (e) {
+    res.status(502).json({ error: e.message });
+  }
+});
+
+// Metadata: GET /api/_metadata — MUST be before :resourceType
+app.get('/api/_metadata', async (req, res) => {
+  try {
+    const msg = await bridgeSend({ type: 'metadata' });
+    if (msg.type === 'error') return res.status(400).json(msg.payload);
+    res.json(msg.payload);
+  } catch (e) {
+    res.status(502).json({ error: e.message });
+  }
+});
+
+// Graph: GET /api/_graph — MUST be before :resourceType
+app.get('/api/_graph', async (req, res) => {
+  try {
+    const msg = await bridgeSend({ type: 'graph' });
+    if (msg.type === 'error') return res.status(400).json(msg.payload);
+    res.json(msg.payload);
+  } catch (e) {
+    res.status(502).json({ error: e.message });
+  }
+});
+
+// Graph Report: GET /api/_graph/report
+app.get('/api/_graph/report', async (req, res) => {
+  try {
+    const msg = await bridgeSend({ type: 'graph_report' });
+    if (msg.type === 'error') return res.status(400).json(msg.payload);
+    res.type('text/markdown').send(msg.payload.report);
+  } catch (e) {
+    res.status(502).json({ error: e.message });
+  }
+});
+
+// Audit: GET /api/_audit — MUST be before :resourceType
+app.get('/api/_audit', async (req, res) => {
+  try {
+    const msg = await bridgeSend({ type: 'audit', payload: { limit: req.query.limit ? parseInt(req.query.limit) : 50 } });
+    if (msg.type === 'error') return res.status(400).json(msg.payload);
+    res.json(msg.payload);
+  } catch (e) {
+    res.status(502).json({ error: e.message });
+  }
+});
+
+// Query resources: GET /api/:resourceType — MUST be after fixed routes
 app.get('/api/:resourceType', async (req, res) => {
   try {
     const msg = await bridgeSend({
@@ -199,56 +291,6 @@ app.get('/api/:resourceType/:id', async (req, res) => {
   }
 });
 
-// Analyze: POST /api/analyze
-app.post('/api/analyze', async (req, res) => {
-  try {
-    const msg = await bridgeSend({
-      type: 'analyze',
-      payload: { question: req.body.question, provider: req.body.provider, model: req.body.model },
-    });
-    if (msg.type === 'error') return res.status(400).json(msg.payload);
-    res.json(msg.payload);
-  } catch (e) {
-    res.status(502).json({ error: e.message });
-  }
-});
-
-// Export: GET /api/_export?resourceType=Observation&format=bundle
-app.get('/api/_export', async (req, res) => {
-  try {
-    const msg = await bridgeSend({
-      type: 'export',
-      payload: { resourceType: req.query.resourceType || undefined, format: req.query.format || 'bundle' },
-    });
-    if (msg.type === 'error') return res.status(400).json(msg.payload);
-    res.json(msg.payload);
-  } catch (e) {
-    res.status(502).json({ error: e.message });
-  }
-});
-
-// Metadata: GET /api/_metadata
-app.get('/api/_metadata', async (req, res) => {
-  try {
-    const msg = await bridgeSend({ type: 'metadata' });
-    if (msg.type === 'error') return res.status(400).json(msg.payload);
-    res.json(msg.payload);
-  } catch (e) {
-    res.status(502).json({ error: e.message });
-  }
-});
-
-// Audit: GET /api/_audit
-app.get('/api/_audit', async (req, res) => {
-  try {
-    const msg = await bridgeSend({ type: 'audit', payload: { limit: req.query.limit ? parseInt(req.query.limit) : 50 } });
-    if (msg.type === 'error') return res.status(400).json(msg.payload);
-    res.json(msg.payload);
-  } catch (e) {
-    res.status(502).json({ error: e.message });
-  }
-});
-
 // ---- Start ----
 
 app.listen(PORT, async () => {
@@ -277,3 +319,14 @@ app.listen(PORT, async () => {
     console.log('  BRIDGE_URL=wss://phone-ip:8420 PAIRING_CODE=123456 npm start\n');
   }
 });
+
+// Graceful shutdown
+function shutdown() {
+  console.log('\n[aion] Shutting down...');
+  if (ws) { try { ws.close(); } catch {} }
+  for (const [, { reject }] of pending) reject(new Error('Server shutting down'));
+  pending.clear();
+  process.exit(0);
+}
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);
