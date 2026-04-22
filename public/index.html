@@ -169,7 +169,7 @@ footer a{color:var(--sub)}
 <div class="w">
   <div class="hero-tag">Zero Mile Health &middot; Open Source</div>
   <h1>Know yourself.<br><em>Change your life.</em></h1>
-  <p class="hero-p">Aion builds a FHIR knowledge graph from every health source &mdash; vitals, labs, medications, conditions, wearables, calendar, daily life. Bridge it to your PC and explore your complete health picture with any AI model. Open source. Private by default.</p>
+  <p class="hero-p">Aion builds a knowledge graph from every health source &mdash; vitals, labs, medications, conditions, wearables, calendar, daily life. When you truly know yourself, you have the power to change everything. Bridge your data to your PC, connect any AI model, and build whatever you imagine. We give you the knowledge. You decide what to do with it.</p>
   <div class="hero-btns">
     <a href="#universe" class="btn btn-p">Get Started</a>
     <a href="https://github.com/easpencer/Aion" class="btn btn-s">View Source</a>
@@ -239,9 +239,9 @@ footer a{color:var(--sub)}
     <div class="card" style="border-color:rgba(245,158,11,0.25);border-width:1.5px">
       <div style="font-size:.55rem;text-transform:uppercase;letter-spacing:.18em;color:var(--warn);font-weight:700;margin-bottom:.5rem">Local computing &middot; Private</div>
       <h3 style="font-size:1rem;margin-bottom:.5rem">Bridge to Your PC</h3>
-      <p style="font-size:.8rem;color:var(--sub);margin-bottom:.75rem">Run the bridge server on your PC and access your health data from any tool — browser, terminal, Jupyter, or custom code. Run <strong style="color:var(--ink)">local AI models</strong> with Ollama. <strong style="color:var(--ink)">Still completely private.</strong></p>
+      <p style="font-size:.8rem;color:var(--sub);margin-bottom:.75rem">Run the bridge server on your PC and access your health data from any tool — browser, terminal, Jupyter, or custom code. Use <strong style="color:var(--ink)">local models</strong> with Ollama or connect any cloud provider. <strong style="color:var(--ink)">Still completely private.</strong></p>
       <div style="font-size:.75rem;color:var(--sub);display:flex;flex-direction:column;gap:.25rem">
-        <span><span class="check">&#10003;</span> Ollama + Llama 4, Qwen 3, Gemma</span>
+        <span><span class="check">&#10003;</span> Ollama, Claude, OpenAI, Groq, Together.ai</span>
         <span><span class="check">&#10003;</span> REST API for custom apps</span>
         <span><span class="check">&#10003;</span> Terminal CLI + Jupyter notebooks</span>
         <span><span class="check">&#10003;</span> Browser explorer (zero install)</span>
@@ -252,20 +252,19 @@ footer a{color:var(--sub)}
     <div class="card" style="border-color:var(--code-bdr);border-width:1.5px">
       <div style="font-size:.55rem;text-transform:uppercase;letter-spacing:.18em;color:var(--code);font-weight:700;margin-bottom:.5rem">Claude Code &amp; AI assistants</div>
       <h3 style="font-size:1rem;margin-bottom:.5rem">MCP: Ask Claude About Your Health</h3>
-      <p style="font-size:.8rem;color:var(--sub);margin-bottom:.6rem">One command gives Claude Code live access to your FHIR data. No IP address needed &mdash; auto-discovers your phone on the network.</p>
-      <div class="universe-pre" style="font-size:.76rem;padding:.65rem 1rem;margin:0 0 .65rem"><span class="cmd">npx</span> <span class="str">aion-bridge-mcp</span> setup</div>
+      <p style="font-size:.8rem;color:var(--sub);margin-bottom:.75rem">Give Claude Code direct access to your FHIR data via MCP. Ask <em>&ldquo;What&rsquo;s my BP trend?&rdquo;</em> and get answers grounded in real data from your phone.</p>
       <div style="font-size:.75rem;color:var(--sub);display:flex;flex-direction:column;gap:.25rem">
         <span><span class="check">&#10003;</span> Works with Claude Code, Claude Desktop</span>
         <span><span class="check">&#10003;</span> Any MCP-compatible assistant</span>
         <span><span class="check">&#10003;</span> Live FHIR data, not summaries</span>
-        <span><span class="check">&#10003;</span> Auto-discovers phone &mdash; no IP config</span>
+        <span><span class="check">&#10003;</span> Knowledge graph + analysis tools</span>
       </div>
-      <p style="font-size:.68rem;color:var(--dim);margin-top:.75rem">Requires: Node.js 18+, phone and PC on same WiFi. Full setup below.</p>
+      <p style="font-size:.68rem;color:var(--dim);margin-top:.75rem">Requires: Node.js 18+, phone and PC on same WiFi. Setup below.</p>
     </div>
 
     <div class="card" style="border-color:rgba(236,72,153,0.25);border-width:1.5px">
       <div style="font-size:.55rem;text-transform:uppercase;letter-spacing:.18em;color:#ec4899;font-weight:700;margin-bottom:.5rem">Desktop Companion &middot; Mac &amp; Windows</div>
-      <h3 style="font-size:1rem;margin-bottom:.5rem">Send Your PC to Your Graph <span class="badge badge-dev" style="vertical-align:middle;font-size:.5rem">In development</span></h3>
+      <h3 style="font-size:1rem;margin-bottom:.5rem">Send Your PC to Your Graph</h3>
       <p style="font-size:.8rem;color:var(--sub);margin-bottom:.75rem">An Electron app that runs in your system tray and sends your <strong style="color:var(--ink)">computer activity to your health knowledge graph</strong> — anonymized, on-device. Your phone finally knows your whole story.</p>
       <div style="font-size:.75rem;color:var(--sub);display:flex;flex-direction:column;gap:.25rem">
         <span><span class="check">&#10003;</span> Screen time, meeting hours, break count</span>
@@ -293,11 +292,11 @@ footer a{color:var(--sub)}
       <div style="font-size:.72rem;color:var(--dim);margin-top:.2rem">Required for everything</div>
     </div>
     <div style="background:var(--white);border:1.5px solid var(--em-bdr);border-radius:var(--r);padding:1.1rem 1.25rem">
-      <p style="font-size:.82rem;color:var(--sub);margin-bottom:.6rem">Download the <strong style="color:var(--ink)">Aion app</strong> from the App Store (iOS) or Play Store (Android).</p>
+      <p style="font-size:.82rem;color:var(--sub);margin-bottom:.6rem">Download the <strong style="color:var(--ink)">Aion app</strong> from the App Store (iOS) or Play Store (Android). It runs the bridge server automatically.</p>
       <div style="font-size:.78rem;color:var(--sub);display:flex;flex-direction:column;gap:.2rem">
-        <span>1. Open <strong style="color:var(--ink)">Settings → Bridge</strong> in the app and turn it on</span>
-        <span>2. Note the <strong style="color:var(--ink)">pairing code</strong> shown (changes each session)</span>
-        <span>3. <strong style="color:var(--warn)">iOS only:</strong> go to iOS <strong style="color:var(--ink)">Settings → Privacy &amp; Security → Local Network → Aion</strong> and toggle <strong style="color:var(--ink)">ON</strong></span>
+        <span>1. Open <strong style="color:var(--ink)">Settings → Local Bridge</strong> and turn it on</span>
+        <span>2. Note your <strong style="color:var(--ink)">phone's IP address</strong> (shown in the bridge screen)</span>
+        <span>3. Note the <strong style="color:var(--ink)">6-digit pairing code</strong> (changes each session)</span>
       </div>
       <div style="margin-top:.6rem;padding:.5rem .75rem;background:var(--em-bg);border-radius:6px;font-size:.73rem;color:var(--sub)">The bridge listens on port <strong style="color:var(--ink)">8420</strong>. Your PC and phone must be on the <strong style="color:var(--ink)">same WiFi network.</strong></div>
     </div>
@@ -317,8 +316,8 @@ footer a{color:var(--sub)}
 <span class="cmd">git clone</span> <span class="str">https://github.com/easpencer/aion-open</span>
 <span class="cmd">cd</span> aion-open &amp;&amp; npm install
 
-<span class="comment"># Run (enter pairing code from Settings → Bridge in the app)</span>
-<span class="cmd">PAIRING_CODE</span>=<span class="str">123456</span> npm start</div>
+<span class="comment"># Run (replace with your phone's IP and code)</span>
+<span class="cmd">BRIDGE_URL</span>=<span class="str">wss://192.168.1.42:8420</span> <span class="cmd">PAIRING_CODE</span>=<span class="str">123456</span> npm start</div>
       <p style="font-size:.75rem;color:var(--sub);margin-top:.6rem">Then open <a href="http://localhost:3000">http://localhost:3000</a> in any browser. No login, no cloud.</p>
     </div>
   </div>
@@ -331,21 +330,26 @@ footer a{color:var(--sub)}
       <div style="font-size:.72rem;color:var(--dim);margin-top:.2rem">Claude ↔ your health data</div>
     </div>
     <div style="background:var(--white);border:1.5px solid var(--code-bdr);border-radius:var(--r);padding:1.1rem 1.25rem">
-      <p style="font-size:.82rem;color:var(--sub);margin-bottom:.75rem">One command connects <strong style="color:var(--ink)">Claude Code or Claude Desktop</strong> directly to your phone. Auto-discovers the phone on your network &mdash; no IP address needed. Connects directly; Step 2 is not required.</p>
-
-      <div style="font-size:.73rem;font-weight:700;font-family:var(--head);color:var(--ink);margin-bottom:.35rem">Quickest: run in your terminal</div>
-      <div class="universe-pre" style="font-size:.76rem;padding:.85rem 1.25rem;margin:0 0 .75rem"><span class="cmd">npx</span> <span class="str">aion-bridge-mcp</span> setup</div>
-      <p style="font-size:.78rem;color:var(--sub);margin-bottom:.75rem">The wizard finds your phone, prompts for the pairing code from <strong style="color:var(--ink)">Settings → Bridge</strong>, tests the connection, and writes <code>.mcp.json</code> automatically.</p>
-
-      <div style="font-size:.73rem;font-weight:700;font-family:var(--head);color:var(--ink);margin-bottom:.35rem">Other install options</div>
-      <div style="display:flex;flex-direction:column;gap:.45rem;margin-bottom:.75rem">
-        <div style="font-size:.78rem;color:var(--sub)"><strong style="color:var(--ink);font-size:.72rem;font-family:var(--head)">Pre-built binary</strong> &mdash; download from <a href="https://github.com/easpencer/Aion/releases">GitHub Releases</a> (mac-arm64 / mac-x64 / linux / windows), then run:</div>
-        <div class="universe-pre" style="font-size:.74rem;padding:.65rem 1rem;margin:0"><span class="str">./aion-bridge-mcp-macos-arm64</span> setup</div>
-        <div style="font-size:.78rem;color:var(--sub);margin-top:.2rem"><strong style="color:var(--ink);font-size:.72rem;font-family:var(--head)">Docker</strong></div>
-        <div class="universe-pre" style="font-size:.74rem;padding:.65rem 1rem;margin:0"><span class="cmd">docker run</span> <span class="flag">--rm -it</span> <span class="str">ghcr.io/aion-open/bridge-mcp</span> setup</div>
-      </div>
-
-      <div style="padding:.6rem .85rem;background:var(--em-bg);border-radius:8px;font-size:.75rem;color:var(--sub);margin-bottom:.6rem">Restart Claude Code after setup. Then ask: <em style="color:var(--ink)">&ldquo;What are my BP trends?&rdquo;</em> &middot; <em style="color:var(--ink)">&ldquo;What medications am I on?&rdquo;</em> &middot; <em style="color:var(--ink)">&ldquo;Summarize my recent labs&rdquo;</em></div>
+      <p style="font-size:.82rem;color:var(--sub);margin-bottom:.6rem">A separate Node process that connects <strong style="color:var(--ink)">Claude Code or Claude Desktop</strong> directly to your phone's bridge. Gives Claude tools to query FHIR data, run analysis, read your knowledge graph, and write new health observations back to your phone &mdash; all live, from real data.</p>
+      <div style="font-size:.73rem;color:var(--dim);margin-bottom:.4rem;font-weight:600;font-family:var(--head)">Requires: Node.js 18+. Connects directly to your phone &mdash; the bridge server (Step 2) is not required.</div>
+      <div class="universe-pre" style="font-size:.75rem;padding:1rem 1.25rem;margin:0 0 .75rem"><span class="comment"># One-time setup</span>
+<span class="cmd">git clone</span> <span class="str">https://github.com/easpencer/Aion</span>
+<span class="cmd">cd</span> Aion/aion-web/src/services/bridge/mcp
+npm install</div>
+      <p style="font-size:.78rem;color:var(--sub);margin-bottom:.4rem">Add to your <code>.mcp.json</code> (Claude Code: <code>~/.mcp.json</code> or project root):</p>
+      <div class="universe-pre" style="font-size:.73rem;padding:1rem 1.25rem;margin:0"><span class="str">{
+  "mcpServers": {
+    "aion-health": {
+      "command": "node",
+      "args": ["/absolute/path/to/mcp/dist/index.js"],
+      "env": {
+        "AION_BRIDGE_URL": "wss://192.168.1.42:8420",
+        "AION_PAIRING_CODE": "123456"
+      }
+    }
+  }
+}</span></div>
+      <p style="font-size:.75rem;color:var(--sub);margin-top:.6rem">Restart Claude Code. Then ask: <em style="color:var(--ink)">&ldquo;What are my BP trends?&rdquo;</em> or <em style="color:var(--ink)">&ldquo;What medications am I on?&rdquo;</em></p>
     </div>
   </div>
 
@@ -353,7 +357,7 @@ footer a{color:var(--sub)}
   <div style="display:grid;grid-template-columns:200px 1fr;gap:1.5rem;margin-bottom:2rem;align-items:start">
     <div style="text-align:right;padding-top:.15rem">
       <div style="font-size:.58rem;text-transform:uppercase;letter-spacing:.15em;color:#ec4899;font-weight:700;margin-bottom:.2rem">Step 4 (optional)</div>
-      <div style="font-size:.95rem;font-weight:700;font-family:var(--head);color:var(--ink)">Desktop Companion <span class="badge badge-dev" style="vertical-align:middle">In development</span></div>
+      <div style="font-size:.95rem;font-weight:700;font-family:var(--head);color:var(--ink)">Desktop Companion</div>
       <div style="font-size:.72rem;color:var(--dim);margin-top:.2rem">PC activity → health graph</div>
     </div>
     <div style="background:var(--white);border:1.5px solid rgba(236,72,153,.2);border-radius:var(--r);padding:1.1rem 1.25rem">
@@ -372,14 +376,66 @@ footer a{color:var(--sub)}
           </div>
         </div>
       </div>
-      <div style="font-size:.73rem;color:var(--dim);margin-bottom:.4rem;font-weight:600;font-family:var(--head)">Currently available as source code. Packaged installers (.dmg / .exe) coming soon.</div>
+      <div style="font-size:.73rem;color:var(--dim);margin-bottom:.4rem;font-weight:600;font-family:var(--head)">macOS arm64 .dmg available now (unsigned dev build). Windows .exe coming soon.</div>
       <div class="universe-pre" style="font-size:.75rem;padding:.85rem 1.25rem;margin:0"><span class="comment"># Run from source</span>
 <span class="cmd">cd</span> aion-desktop &amp;&amp; npm install &amp;&amp; npm start</div>
-      <p style="font-size:.73rem;color:var(--sub);margin-top:.5rem">Enter the pairing code from <strong style="color:var(--ink)">Settings → Bridge</strong> in the tray app. It syncs hourly in the background.</p>
+      <p style="font-size:.73rem;color:var(--sub);margin-top:.5rem">Enter your phone&rsquo;s IP and pairing code in the tray app. It syncs hourly in the background.</p>
     </div>
   </div>
 
   <p style="text-align:center;font-size:.82rem;color:var(--sub)">Your health data. Your models. Your rules. <a href="https://github.com/easpencer/aion-open">Clone and run &rarr;</a></p>
+</div>
+</section>
+<hr class="sep">
+
+<!-- ═══ FOUR WAYS ═══ -->
+<section>
+<div class="w">
+  <div class="lbl">Everything you can do</div>
+  <h2>Use it, build on it, make it yours</h2>
+  <p class="lead" style="margin-bottom:1.5rem">The app works standalone. The bridge opens your data to your entire PC ecosystem. And because it&rsquo;s a standard API, you can build anything on top of it.</p>
+
+  <div style="font-size:.6rem;text-transform:uppercase;letter-spacing:.15em;color:var(--em);font-weight:600;margin-bottom:.5rem">On your phone</div>
+  <div class="grid-3" style="margin-bottom:1.5rem">
+    <div class="card">
+      <h3 style="font-size:.95rem;margin-bottom:.35rem">Health Dashboard</h3>
+      <p style="font-size:.82rem;color:var(--sub)">Vitals, conditions, medications, labs &mdash; all in one place. Tap any metric for history and trends.</p>
+    </div>
+    <div class="card">
+      <h3 style="font-size:.95rem;margin-bottom:.35rem">Knowledge Graph</h3>
+      <p style="font-size:.82rem;color:var(--sub)">See how your health connects. Interactive graph of conditions, medications, vitals, lifestyle. Tap to explore.</p>
+    </div>
+    <div class="card">
+      <h3 style="font-size:.95rem;margin-bottom:.35rem">AI Health Agent</h3>
+      <p style="font-size:.82rem;color:var(--sub)">Ask health questions in natural language. On-device AI reasons over your complete FHIR data. Works offline.</p>
+    </div>
+  </div>
+
+  <div style="font-size:.6rem;text-transform:uppercase;letter-spacing:.15em;color:var(--code);font-weight:600;margin-bottom:.5rem">On your PC (via bridge)</div>
+  <div class="grid-2">
+    <div class="card">
+      <h3 style="font-size:.95rem;margin-bottom:.35rem">Browser Explorer (zero install)</h3>
+      <p style="font-size:.82rem;color:var(--sub)">Open the URL shown on your phone in any browser. Enter pairing code. Browse and export your health data. No install, no code.</p>
+    </div>
+    <div class="card">
+      <h3 style="font-size:.95rem;margin-bottom:.35rem">REST API, CLI, Notebooks</h3>
+      <p style="font-size:.82rem;color:var(--sub)">For developers: clone <a href="https://github.com/easpencer/aion-open">aion-open</a> for <code>curl</code>, terminal CLI, web console, Jupyter notebooks, and full programmatic access.</p>
+    </div>
+    <div class="card">
+      <h3 style="font-size:.95rem;margin-bottom:.35rem">MCP for Claude &amp; AI Assistants</h3>
+      <p style="font-size:.82rem;color:var(--sub)">Run the MCP server and add it to your <code>.mcp.json</code>. Claude Code gets tools to query your FHIR data, analyze trends, and read your knowledge graph — live, from real data on your phone.</p>
+    </div>
+    <div class="card">
+      <h3 style="font-size:.95rem;margin-bottom:.35rem">Desktop Companion</h3>
+      <p style="font-size:.82rem;color:var(--sub)">An Electron tray app (Mac/Windows) that sends anonymized computer activity to your health graph. Screen time, meetings, breaks, app categories &mdash; correlated with your vitals. macOS arm64 .dmg available now; Windows installer coming soon.</p>
+    </div>
+  </div>
+
+  <!-- Build on it -->
+  <div style="margin-top:2rem;padding:1.5rem;border-radius:var(--r12);background:var(--em-bg);border:1px solid var(--em-bdr)">
+    <h3 style="font-size:.95rem;color:var(--em);margin-bottom:.5rem">Build whatever you imagine</h3>
+    <p style="font-size:.82rem;color:var(--sub);line-height:1.7">The bridge is a standard REST API serving your FHIR health data. Build a dashboard for your family. Create a Jupyter notebook that correlates your medications with sleep. Train a model on your own vitals. Write a cron job that alerts you when your blood pressure trends up. Pipe your data to any tool that speaks HTTP. We give you the data layer &mdash; you decide what to build on it.</p>
+  </div>
 </div>
 </section>
 <hr class="sep">
@@ -435,9 +491,9 @@ footer a{color:var(--sub)}
 <!-- ═══ MODELS ═══ -->
 <section>
 <div class="w">
-  <div class="lbl">Recommended Models</div>
-  <h2>For Ollama on your PC</h2>
-  <p class="lead" style="margin-bottom:1.25rem">The bridge auto-detects installed models. These work well with the analyze endpoint.</p>
+  <div class="lbl">AI Models</div>
+  <h2>Local Ollama or any cloud provider</h2>
+  <p class="lead" style="margin-bottom:1.25rem">The <code>analyze</code> endpoint works with Ollama (local, private) or any cloud provider &mdash; Claude, OpenAI, Groq, Together.ai, Mistral, Cohere, LM Studio, and Jan. Set <code>LLM_PROVIDER</code> and an API key to switch. These Ollama models work especially well:</p>
   <div class="grid-2">
     <div class="card">
       <h3 style="font-size:.9rem;margin-bottom:.6rem">Best for Most PCs</h3>
@@ -669,8 +725,9 @@ console.log((await analysis.json()).answer);</pre>
 <div class="w" style="max-width:640px">
   <p style="font-size:.7rem;text-transform:uppercase;letter-spacing:.3em;color:var(--em);font-weight:600;margin-bottom:1.5rem">Zero Mile Health</p>
   <h2 style="font-size:1.5rem;line-height:1.35;margin-bottom:1.25rem;font-weight:700">Your data. Your control. Your innovation.</h2>
-  <p style="font-size:.95rem;color:var(--sub);line-height:1.8;margin-bottom:1rem">Your health data has always been yours. The problem is no one lets you use it &mdash; locked in portals, inaccessible formats, systems that don&rsquo;t answer to you. Aion changes that. Your data lives on your device, encrypted, private, and queryable. A FHIR knowledge graph you own completely. On-device AI that works offline. Bridge to your PC for any tool, any model, on your terms.</p>
-  <p style="font-size:.95rem;color:var(--sub);line-height:1.8;margin-bottom:1.75rem">The real power isn&rsquo;t just access &mdash; it&rsquo;s what you build with it. Correlate medications with sleep. Build a health dashboard for your family. Train a model on your own vitals. We give you the data layer. You decide what to build on it.</p>
+  <p style="font-size:.95rem;color:var(--sub);line-height:1.8;margin-bottom:1rem">Your health data has always been yours. The problem is no one lets you use it. It sits in portals you can barely access, locked in formats you can&rsquo;t read, controlled by systems that don&rsquo;t answer to you. Aion changes that. Your data lives on your device, encrypted, private, and queryable &mdash; a FHIR knowledge graph that you own completely. On-device AI gives you intelligence that works offline. Bridge to your PC for deeper analysis. Go online when <em>you</em> choose, with your own models, on your terms.</p>
+  <p style="font-size:.95rem;color:var(--sub);line-height:1.8;margin-bottom:1rem">But the real power isn&rsquo;t just access &mdash; it&rsquo;s what you build with it. A researcher could correlate medication adherence with sleep patterns. A developer could build a health dashboard for their family. A clinician could create a patient-facing risk visualization. A student could train a model on their own vitals. We don&rsquo;t know what you&rsquo;ll build. That&rsquo;s the point.</p>
+  <p style="font-size:.95rem;color:var(--sub);line-height:1.8;margin-bottom:1.75rem">We believe essential healthcare should be universal &mdash; meeting people where they are, not where systems demand they go. Aion is the start of something different. A digital twin that knows your complete story. AI that reasons about <em>you</em> &mdash; first on your device, then on your network, then with any model you trust. Health at zero miles &mdash; in your pocket, understanding you better every day.</p>
   <p style="font-size:.88rem;color:var(--ink2);font-weight:500;margin-bottom:2rem">This is early. This is open. Build something amazing.</p>
   <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
     <a href="https://github.com/easpencer/Aion" class="btn btn-p">Get the Source</a>
