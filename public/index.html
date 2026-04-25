@@ -167,13 +167,19 @@ footer a{color:var(--sub)}
 <!-- ═══ HERO ═══ -->
 <section class="hero">
 <div class="w">
-  <div class="hero-tag">Zero Mile Health &middot; <a href="https://github.com/easpencer/aion-open" style="color:var(--em);text-decoration:none">Open Source &rarr;</a></div>
+  <div class="hero-tag">Zero Mile Health &middot; <a href="https://github.com/easpencer/Aion" style="color:var(--em);text-decoration:none">Open Source &rarr;</a></div>
   <h1>Know yourself.<br><em>Change your life.</em></h1>
   <p class="hero-p">Aion builds a FHIR knowledge graph from every health source &mdash; vitals, labs, medications, conditions, wearables, calendar, daily life. Bridge it to your PC, connect any AI model, and build whatever you imagine. Private by default. Your data never leaves your network.</p>
   <div class="hero-btns">
     <a href="#get-started" class="btn btn-p">Get Started</a>
-    <a href="https://github.com/easpencer/aion-open/releases/latest" class="btn btn-s">&#8595; Download v1.0.2</a>
-    <a href="https://github.com/easpencer/aion-open" class="btn btn-s" style="border-color:var(--em-bdr);color:var(--em)">GitHub</a>
+    <a href="https://github.com/easpencer/Aion/releases" class="btn btn-s">&#8595; Download Bridge App</a>
+    <a href="https://github.com/easpencer/Aion" class="btn btn-s" style="border-color:var(--em-bdr);color:var(--em)">GitHub</a>
+  </div>
+  <!-- Open Source Notice -->
+  <div style="margin-top:1.5rem;padding:.65rem 1.25rem;border-radius:8px;background:var(--em-bg);border:1px solid var(--em-bdr);display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--sub)">
+    <span style="color:var(--em);font-weight:600">Open source coming soon</span>
+    <span style="color:var(--faint)">&middot;</span>
+    <span>Source available now at <a href="https://github.com/easpencer/Aion">github.com/easpencer/Aion</a></span>
   </div>
 </div>
 </section>
@@ -275,8 +281,8 @@ footer a{color:var(--sub)}
         <span><span class="check">&#10003;</span> Correlates with BP, HRV, sleep, glucose</span>
       </div>
       <div style="margin-top:.75rem;display:flex;gap:.5rem;flex-wrap:wrap">
-        <a href="https://github.com/easpencer/aion-open/releases/download/v1.0.0/Aion.Desktop-0.1.0-arm64.dmg" class="btn btn-p" style="font-size:.72rem;padding:.5rem 1rem">&#8595; Download for Mac</a>
-        <a href="https://github.com/easpencer/aion-open/releases/latest" class="btn btn-s" style="font-size:.72rem;padding:.5rem 1rem;opacity:.6">Windows (.exe) &mdash; coming soon</a>
+        <a href="https://github.com/easpencer/Aion/releases" class="btn btn-p" style="font-size:.72rem;padding:.5rem 1rem">&#8595; Download for Mac</a>
+        <a href="https://github.com/easpencer/Aion/releases" class="btn btn-s" style="font-size:.72rem;padding:.5rem 1rem">&#8595; Download for Windows</a>
       </div>
       <p style="font-size:.65rem;color:var(--dim);margin-top:.5rem">Also available as source: <code style="font-size:.63rem">cd aion-desktop &amp;&amp; npm install &amp;&amp; npm start</code></p>
     </div>
@@ -298,13 +304,21 @@ footer a{color:var(--sub)}
       <div style="font-size:.72rem;color:var(--dim);margin-top:.2rem">Required for everything</div>
     </div>
     <div style="background:var(--white);border:1.5px solid var(--em-bdr);border-radius:var(--r);padding:1.1rem 1.25rem">
-      <p style="font-size:.82rem;color:var(--sub);margin-bottom:.6rem">Download the <strong style="color:var(--ink)">Aion app</strong> from the App Store (iOS) or Play Store (Android). It runs the bridge server automatically.</p>
-      <div style="font-size:.78rem;color:var(--sub);display:flex;flex-direction:column;gap:.2rem">
-        <span>1. Open <strong style="color:var(--ink)">Settings → Local Bridge</strong> and turn it on</span>
-        <span>2. Note your <strong style="color:var(--ink)">phone's IP address</strong> (shown in the bridge screen)</span>
-        <span>3. Note the <strong style="color:var(--ink)">6-digit pairing code</strong> (changes each session)</span>
+      <p style="font-size:.82rem;color:var(--sub);margin-bottom:.6rem">Download the <strong style="color:var(--ink)">Aion app</strong> from the App Store (iOS) or Play Store (Android). It runs the bridge server.</p>
+      <div style="font-size:.78rem;color:var(--sub);display:flex;flex-direction:column;gap:.2rem;margin-bottom:.6rem">
+        <span>1. Open <strong style="color:var(--ink)">Settings → Bridge</strong> and tap <strong style="color:var(--ink)">Start</strong></span>
+        <span>2. Note the <strong style="color:var(--ink)">6-digit pairing code</strong> shown on screen (changes each session)</span>
+        <span>3. Note your <strong style="color:var(--ink)">phone's IP address</strong> shown below the code</span>
       </div>
-      <div style="margin-top:.6rem;padding:.5rem .75rem;background:var(--em-bg);border-radius:6px;font-size:.73rem;color:var(--sub)">The bridge listens on port <strong style="color:var(--ink)">8420</strong>. Your PC and phone must be on the <strong style="color:var(--ink)">same WiFi network.</strong></div>
+      <div style="margin-top:.4rem;padding:.5rem .75rem;background:var(--em-bg);border-radius:6px;font-size:.73rem;color:var(--sub);margin-bottom:.5rem">
+        <strong style="color:var(--ink)">WiFi mode:</strong> Phone and PC on the same network. Connect to <code style="font-size:.7rem">wss://&lt;phone-ip&gt;:8420</code>
+      </div>
+      <div style="padding:.5rem .75rem;background:var(--bg2);border:1px solid var(--line);border-radius:6px;font-size:.73rem;color:var(--sub)">
+        <strong style="color:var(--ink)">USB mode (no network needed):</strong> In the bridge screen, switch to USB tab, then run on your PC:<br>
+        <code style="font-size:.7rem;display:block;margin-top:.3rem">iproxy 8420 8420</code><span style="font-size:.66rem;color:var(--dim)">iOS (requires libimobiledevice)</span><br>
+        <code style="font-size:.7rem;display:block;margin-top:.25rem">adb forward tcp:8420 tcp:8420</code><span style="font-size:.66rem;color:var(--dim)">Android (requires ADB)</span><br>
+        <span style="margin-top:.3rem;display:inline-block">Then connect to <code style="font-size:.7rem">wss://localhost:8420</code></span>
+      </div>
     </div>
   </div>
 
@@ -318,13 +332,21 @@ footer a{color:var(--sub)}
     <div style="background:var(--white);border:1.5px solid rgba(245,158,11,.2);border-radius:var(--r);padding:1.1rem 1.25rem">
       <p style="font-size:.82rem;color:var(--sub);margin-bottom:.6rem">Runs <strong style="color:var(--ink)">aion-open</strong> on your PC. Exposes your phone's FHIR data as a standard REST API at <code>localhost:3000</code>. Includes a browser console, CLI, and code generator.</p>
       <div style="font-size:.73rem;color:var(--dim);margin-bottom:.4rem;font-weight:600;font-family:var(--head)">Requires: Node.js 18+</div>
-      <div class="universe-pre" style="font-size:.75rem;padding:1rem 1.25rem;margin:0"><span class="comment"># One-time setup</span>
+      <div class="universe-pre" style="font-size:.75rem;padding:1rem 1.25rem;margin:0 0 .5rem;line-height:2"><span class="comment"># One-time setup</span>
 <span class="cmd">git clone</span> <span class="str">https://github.com/easpencer/aion-open</span>
 <span class="cmd">cd</span> aion-open &amp;&amp; npm install
 
-<span class="comment"># Run (replace with your phone's IP and code)</span>
-<span class="cmd">BRIDGE_URL</span>=<span class="str">wss://192.168.1.42:8420</span> <span class="cmd">PAIRING_CODE</span>=<span class="str">123456</span> npm start</div>
-      <p style="font-size:.75rem;color:var(--sub);margin-top:.6rem">Then open <a href="http://localhost:3000">http://localhost:3000</a> in any browser. No login, no cloud.</p>
+<span class="comment"># WiFi — replace with your phone's IP and pairing code</span>
+<span class="cmd">BRIDGE_URL</span>=<span class="str">wss://192.168.1.42:8420</span> <span class="cmd">PAIRING_CODE</span>=<span class="str">123456</span> npm start
+
+<span class="comment"># USB (iOS) — run iproxy first, then:</span>
+<span class="cmd">iproxy</span> 8420 8420
+<span class="cmd">BRIDGE_URL</span>=<span class="str">wss://localhost:8420</span> <span class="cmd">PAIRING_CODE</span>=<span class="str">123456</span> npm start
+
+<span class="comment"># USB (Android) — run adb forward first, then:</span>
+<span class="cmd">adb</span> forward tcp:8420 tcp:8420
+<span class="cmd">BRIDGE_URL</span>=<span class="str">wss://localhost:8420</span> <span class="cmd">PAIRING_CODE</span>=<span class="str">123456</span> npm start</div>
+      <p style="font-size:.75rem;color:var(--sub);margin-top:.4rem">Then open <a href="http://localhost:3000">http://localhost:3000</a> in any browser. No login, no cloud.</p>
     </div>
   </div>
 
@@ -346,9 +368,30 @@ footer a{color:var(--sub)}
       <div style="font-size:.73rem;color:var(--sub);display:flex;flex-direction:column;gap:.15rem;margin-bottom:.65rem;padding-left:.25rem">
         <span>1. Search for your phone on the local network (Bonjour + ARP + subnet scan)</span>
         <span>2. Prompt for the 6-digit pairing code from Aion Settings → Bridge</span>
-        <span>3. Test the connection</span>
+        <span>3. Test the connection and save config</span>
         <span>4. Detect every installed AI client and write configs automatically</span>
       </div>
+
+      <p style="font-size:.72rem;color:var(--sub);margin-bottom:.35rem">Other commands:</p>
+      <div class="universe-pre" style="font-size:.75rem;padding:.75rem 1.25rem;margin:0 0 .5rem;line-height:2"><button class="cpb" onclick="cpb(this)">Copy</button><span class="comment"># Fix a broken or stale config</span>
+<span class="cmd">npx</span> aion-bridge-mcp <span class="flag">repair</span>
+
+<span class="comment"># Find your phone on the network</span>
+<span class="cmd">npx</span> aion-bridge-mcp <span class="flag">discover</span>
+
+<span class="comment"># Export your health data as a FHIR bundle</span>
+<span class="cmd">npx</span> aion-bridge-mcp <span class="flag">export</span> <span class="str">--output health.json</span>
+<span class="cmd">npx</span> aion-bridge-mcp <span class="flag">export</span> <span class="str">--type Observation --output vitals.json</span></div>
+
+      <p style="font-size:.72rem;color:var(--sub);margin-bottom:.25rem">USB mode with MCP — run on your PC first, then use <code style="font-size:.68rem">wss://localhost:8420</code>:</p>
+      <div class="universe-pre" style="font-size:.75rem;padding:.65rem 1.25rem;margin:0 0 .65rem;line-height:2"><span class="comment"># iOS</span>
+<span class="cmd">iproxy</span> 8420 8420
+
+<span class="comment"># Android</span>
+<span class="cmd">adb</span> forward tcp:8420 tcp:8420
+
+<span class="comment"># Then set in .mcp.json env</span>
+<span class="str">"AION_BRIDGE_URL": "wss://localhost:8420"</span></div>
 
       <p style="font-size:.75rem;color:var(--sub)">Restart your AI assistant, then ask: <em style="color:var(--ink)">&ldquo;What are my BP trends?&rdquo;</em> or <em style="color:var(--ink)">&ldquo;What medications am I on?&rdquo;</em></p>
     </div>
@@ -363,7 +406,7 @@ footer a{color:var(--sub)}
     </div>
     <div style="background:var(--white);border:1.5px solid rgba(236,72,153,.2);border-radius:var(--r);padding:1.1rem 1.25rem">
       <p style="font-size:.82rem;color:var(--sub);margin-bottom:.6rem">A tray app for Mac/Windows. Captures computer activity and sends it to your health graph &mdash; anonymized, categories only, no content. Your graph discovers correlations like <em style="color:var(--ink)">&ldquo;BP higher on weeks with &gt;6h meetings.&rdquo;</em></p>
-      <div style="font-size:.78rem;color:var(--sub);display:flex;flex-direction:column;gap:.2rem;margin-bottom:.75rem">
+      <div style="font-size:.78rem;color:var(--sub);display:flex;flex-direction:column;gap:.2rem;margin-bottom:.65rem">
         <div style="display:flex;gap:1rem;flex-wrap:wrap">
           <div style="display:flex;flex-direction:column;gap:.2rem">
             <span><span class="check">&#10003;</span> Screen time, meetings, breaks</span>
@@ -377,17 +420,20 @@ footer a{color:var(--sub)}
           </div>
         </div>
       </div>
-      <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.6rem">
-        <a href="https://github.com/easpencer/aion-open/releases/download/v1.0.0/Aion.Desktop-0.1.0-arm64.dmg" class="btn btn-p" style="font-size:.72rem;padding:.5rem 1rem;background:#ec4899;border-color:#ec4899">&#8595; Download for Mac (.dmg)</a>
-        <a href="https://github.com/easpencer/aion-open/releases/latest" class="btn btn-s" style="font-size:.72rem;padding:.5rem 1rem;opacity:.6">Windows (.exe) &mdash; coming soon</a>
+      <div style="padding:.45rem .75rem;background:var(--em-bg);border:1px solid var(--em-bdr);border-radius:6px;font-size:.72rem;color:var(--sub);margin-bottom:.6rem">
+        <strong style="color:var(--ink)">One-tap connect:</strong> In Aion → Settings → Bridge, tap <strong style="color:var(--ink)">Copy Connection String</strong>. This copies an <code style="font-size:.67rem">aion://</code> URL that opens the desktop app and pre-fills the address and pairing code automatically.
       </div>
-      <p style="font-size:.65rem;color:var(--dim)">Also available as source: <code style="font-size:.63rem">cd aion-desktop &amp;&amp; npm install &amp;&amp; npm start</code></p>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem">
+        <a href="https://github.com/easpencer/Aion/releases" class="btn btn-p" style="font-size:.72rem;padding:.5rem 1rem;background:#ec4899;border-color:#ec4899">&#8595; Download for Mac (.dmg)</a>
+        <a href="https://github.com/easpencer/Aion/releases" class="btn btn-s" style="font-size:.72rem;padding:.5rem 1rem">&#8595; Download for Windows (.exe)</a>
+      </div>
+      <p style="font-size:.65rem;color:var(--dim)">Run from source: <code style="font-size:.63rem">cd aion-desktop &amp;&amp; npm install &amp;&amp; npm start</code></p>
     </div>
   </div>
 
   <div style="text-align:center;display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:.5rem">
-    <a href="https://github.com/easpencer/aion-open/releases/latest" class="btn btn-p" style="font-size:.8rem">&#8595; Download v1.0.2</a>
-    <a href="https://github.com/easpencer/aion-open" class="btn btn-s" style="font-size:.8rem">View Source on GitHub</a>
+    <a href="https://github.com/easpencer/Aion/releases" class="btn btn-p" style="font-size:.8rem">&#8595; Download Bridge App</a>
+    <a href="https://github.com/easpencer/Aion" class="btn btn-s" style="font-size:.8rem">View Source on GitHub</a>
   </div>
 </div>
 </section>
@@ -428,11 +474,11 @@ footer a{color:var(--sub)}
     </div>
     <div class="card">
       <h3 style="font-size:.95rem;margin-bottom:.35rem">MCP for Any AI Assistant</h3>
-      <p style="font-size:.82rem;color:var(--sub)">One command sets up Claude Code, Cursor, Windsurf, Gemini CLI, Zed, and more. Your AI gets tools to query FHIR data, analyze trends, and write observations — live, from your phone. <code style="font-size:.7rem">npx aion-bridge-mcp setup</code></p>
+      <p style="font-size:.82rem;color:var(--sub)">One command sets up Claude Code, Cursor, Windsurf, Gemini CLI, Zed, and more. Your AI gets tools to query FHIR data, analyze trends, and write observations — live, from your phone. <code style="font-size:.7rem">npx aion-bridge-mcp setup</code> &nbsp;&middot;&nbsp; <code style="font-size:.7rem">npx aion-bridge-mcp repair</code></p>
     </div>
     <div class="card">
-      <h3 style="font-size:.95rem;margin-bottom:.35rem">Desktop Companion</h3>
-      <p style="font-size:.82rem;color:var(--sub)">An Electron tray app (Mac/Windows) that sends anonymized computer activity to your health graph. Screen time, meetings, breaks, app categories &mdash; correlated with your vitals. <a href="https://github.com/easpencer/aion-open/releases/download/v1.0.0/Aion.Desktop-0.1.0-arm64.dmg">Download for Mac</a> or build from source.</p>
+      <h3 style="font-size:.95rem;margin-bottom:.35rem">Desktop Companion <span class="badge badge-dev" style="vertical-align:middle">In development</span></h3>
+      <p style="font-size:.82rem;color:var(--sub)">An Electron tray app (Mac/Windows) that sends anonymized computer activity to your health graph. Screen time, meetings, breaks, app categories &mdash; correlated with your vitals. Available now as source code; packaged installers coming soon.</p>
     </div>
   </div>
 
@@ -716,7 +762,8 @@ console.log((await analysis.json()).answer);</pre>
         <div class="qs">
           <h4>Links</h4>
           <a href="https://github.com/easpencer/aion-open">aion-open</a> &middot;
-          <a href="https://github.com/easpencer/aion-open/releases/latest">Releases</a>
+          <a href="https://github.com/easpencer/Aion">Aion source</a> &middot;
+          <a href="https://github.com/easpencer/Aion/blob/main/aion-web/docs/LOCAL_BRIDGE.md">Docs</a>
         </div>
       </div>
     </div>
@@ -734,14 +781,15 @@ console.log((await analysis.json()).answer);</pre>
   <p style="font-size:.95rem;color:var(--sub);line-height:1.8;margin-bottom:1.75rem">We believe essential healthcare should be universal &mdash; meeting people where they are, not where systems demand they go. Aion is the start of something different. A digital twin that knows your complete story. AI that reasons about <em>you</em> &mdash; first on your device, then on your network, then with any model you trust. Health at zero miles &mdash; in your pocket, understanding you better every day.</p>
   <p style="font-size:.88rem;color:var(--ink2);font-weight:500;margin-bottom:2rem">This is early. This is open. Build something amazing.</p>
   <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
-    <a href="https://github.com/easpencer/aion-open/releases/latest" class="btn btn-p">&#8595; Download v1.0.2</a>
-    <a href="https://github.com/easpencer/aion-open" class="btn btn-s">View Source on GitHub</a>
+    <a href="https://github.com/easpencer/Aion/releases" class="btn btn-p">&#8595; Download Bridge App</a>
+    <a href="https://github.com/easpencer/Aion" class="btn btn-s">View Source on GitHub</a>
     <a href="https://github.com/easpencer/aion-open" class="btn btn-s">Run the REST Bridge</a>
   </div>
+  <p style="font-size:.72rem;color:var(--dim);margin-top:1.25rem">Open source release coming soon &middot; Source available now at <a href="https://github.com/easpencer/Aion" style="color:var(--sub)">github.com/easpencer/Aion</a></p>
 </div>
 </section>
 
-<footer><div class="w"><strong style="color:var(--ink2);font-family:var(--head)">Aion</strong> &middot; Zero mile health &middot; <a href="https://github.com/easpencer/aion-open">GitHub</a> &middot; <a href="https://github.com/easpencer/aion-open/releases/latest">Releases</a></div></footer>
+<footer><div class="w"><strong style="color:var(--ink2);font-family:var(--head)">Aion</strong> &middot; Zero mile health &middot; <a href="https://github.com/easpencer/aion-open">GitHub</a> &middot; <a href="https://github.com/easpencer/Aion">Source</a></div></footer>
 
 <!-- Modal -->
 <div class="modal-ov" id="modal" onclick="closeM()"><div class="modal" onclick="event.stopPropagation()"><div class="modal-hd"><h3 id="mT">Detail</h3><button class="modal-x" onclick="closeM()">&times;</button></div><div class="modal-bd"><pre id="mJ"></pre></div></div></div>
