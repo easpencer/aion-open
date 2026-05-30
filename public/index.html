@@ -4,162 +4,529 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aion — Your Digital Twin, Built from Your Health Data</title>
-<meta name="description" content="Aion creates a FHIR knowledge graph from every health source. Bridge it to your PC and explore your health universe with any AI model. Open source. Private by default.">
+<meta name="description" content="Aion creates a FHIR knowledge graph from every health source. Bridge it to your PC and explore your health universe with any AI model. Source-available. Private by default.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+/* ════════════════════════════════════════════════════════════
+   AION — design system
+   tokens · type · layout · components · console · motion
+   ════════════════════════════════════════════════════════════ */
 :root{
-  --white:#ffffff;--bg:#fafbfc;--bg2:#f4f5f7;--bg3:#eef0f4;
-  --ink:#1a1a2e;--ink2:#2d2d44;--sub:#5c5c7a;--dim:#8888a0;--faint:#c4c4d4;--line:#e5e7eb;--line2:#d1d5db;
-  --em:#10b981;--em-bg:rgba(16,185,129,.06);--em-bdr:rgba(16,185,129,.2);
-  --code:#6366f1;--code-bg:#f0f0ff;--code-bdr:rgba(99,102,241,.15);
-  --warn:#f59e0b;--red:#ef4444;
+  /* — neutrals (warm paper → deep ink) — */
+  --white:#ffffff;
+  --paper:#fcfcfb;        /* page base */
+  --paper2:#f6f6f4;       /* recessed panels */
+  --paper3:#eeeeec;       /* deeper wells */
+  --ink:#15161c;          /* primary text */
+  --ink2:#33343f;         /* secondary headings */
+  --sub:#54566a;          /* body copy */
+  --dim:#8a8c9e;          /* muted */
+  --faint:#c2c3cf;        /* hairline accents */
+  --line:#e8e8e4;         /* borders */
+  --line2:#d6d6d0;        /* stronger borders */
+
+  /* — accents — */
+  --em:#0e9f6e;           /* emerald (AA on white) */
+  --em-deep:#0b7d57;
+  --em-soft:#10b981;
+  --em-bg:rgba(14,159,110,.06);
+  --em-bdr:rgba(14,159,110,.22);
+  --code:#5b5fe0;         /* indigo */
+  --code-bg:#f2f2fd;
+  --code-bdr:rgba(91,95,224,.16);
+  --warn:#d98300;
+  --warn-bdr:rgba(217,131,0,.22);
+  --pink:#d6488e;
+  --pink-bdr:rgba(214,72,142,.22);
+  --red:#e0463f;
+
+  /* — radii — */
   --r:10px;
-  --head:'Instrument Sans',system-ui,sans-serif;
-  --body:'IBM Plex Sans',system-ui,sans-serif;
-  --mono:'IBM Plex Mono','JetBrains Mono',monospace;
-  --shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06);
-  --shadow2:0 4px 12px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
+  --r-sm:7px;
+  --r-lg:16px;
+  --r-xl:22px;
+  --r12:12px;
+
+  /* — type — */
+  --head:'Instrument Sans',system-ui,-apple-system,sans-serif;
+  --body:'IBM Plex Sans',system-ui,-apple-system,sans-serif;
+  --mono:'IBM Plex Mono','JetBrains Mono',ui-monospace,monospace;
+
+  /* — type scale — */
+  --t-eyebrow:.66rem;
+  --t-meta:.72rem;
+  --t-small:.8rem;
+  --t-body:.92rem;
+  --t-lead:1.05rem;
+
+  /* — elevation — */
+  --shadow:0 1px 2px rgba(20,22,40,.04),0 1px 3px rgba(20,22,40,.05);
+  --shadow2:0 2px 6px rgba(20,22,40,.05),0 8px 24px rgba(20,22,40,.06);
+  --shadow3:0 4px 12px rgba(20,22,40,.06),0 20px 48px rgba(20,22,40,.09);
+  --glow:0 8px 28px rgba(14,159,110,.16);
+
+  /* — console palette (deep, refined) — */
+  --c-bg:#0b0c12;
+  --c-bg2:#11121b;
+  --c-bg3:#070810;
+  --c-line:rgba(255,255,255,.07);
+  --c-line2:rgba(255,255,255,.04);
+  --c-text:#e6e7ee;
+  --c-sub:#9092a6;
+  --c-dim:#5b5d72;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:var(--body);background:var(--white);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;font-size:15px;
-  background-image:radial-gradient(circle,var(--line) .5px,transparent .5px);background-size:24px 24px}
-a{color:var(--em);text-decoration:none;font-weight:500}a:hover{text-decoration:underline}
-::selection{background:var(--em-bg);color:var(--em)}
-h1,h2,h3,h4{font-family:var(--head);color:var(--ink);letter-spacing:-.02em}
-code{font-family:var(--mono);font-size:.82em;background:var(--code-bg);color:var(--code);padding:2px 7px;border-radius:5px;border:1px solid var(--code-bdr)}
-pre{font-family:var(--mono);font-size:.8rem;line-height:1.7;background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:1.25rem 1.5rem;overflow-x:auto;color:var(--ink2);position:relative}
-.cpb{position:absolute;top:8px;right:8px;background:var(--white);border:1px solid var(--line);color:var(--dim);padding:3px 10px;border-radius:6px;font-size:.65rem;cursor:pointer;font-family:var(--mono);opacity:0;transition:opacity .15s}
-pre:hover .cpb{opacity:1}.cpb:hover{color:var(--ink);border-color:var(--line2)}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html,body{overflow-x:hidden;max-width:100%}
+body{
+  font-family:var(--body);background:var(--paper);color:var(--ink);
+  line-height:1.7;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  font-size:15px;
+}
+/* subtle dotted texture, lighter than before */
+body::before{
+  content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(14,159,110,.04),transparent 55%),
+    radial-gradient(circle,rgba(20,22,40,.025) .5px,transparent .6px);
+  background-size:auto,26px 26px;
+}
+a{color:var(--em-deep);text-decoration:none;font-weight:500;transition:color .15s}
+a:hover{color:var(--em);text-decoration:none}
+::selection{background:rgba(14,159,110,.14);color:var(--em-deep)}
+h1,h2,h3,h4{font-family:var(--head);color:var(--ink);letter-spacing:-.022em;line-height:1.15}
+strong{color:var(--ink);font-weight:600}
+em{font-style:italic}
 
+code{
+  font-family:var(--mono);font-size:.8em;background:var(--code-bg);color:var(--code);
+  padding:.12em .5em;border-radius:5px;border:1px solid var(--code-bdr);white-space:nowrap;
+}
+pre{
+  font-family:var(--mono);font-size:.78rem;line-height:1.75;
+  background:var(--paper2);border:1px solid var(--line);border-radius:var(--r);
+  padding:1.25rem 1.4rem;overflow-x:auto;color:var(--ink2);position:relative;
+}
+.cpb{
+  position:absolute;top:8px;right:8px;background:var(--white);border:1px solid var(--line2);
+  color:var(--dim);padding:.2rem .65rem;border-radius:6px;font-size:.62rem;cursor:pointer;
+  font-family:var(--mono);letter-spacing:.04em;opacity:0;transition:opacity .15s,color .15s,border-color .15s;
+}
+pre:hover .cpb,.cg-out:hover .cpb,.universe-pre:hover .cpb{opacity:1}
+.cpb:hover{color:var(--ink);border-color:var(--dim)}
+
+/* ── layout ── */
 .w{max-width:1080px;margin:0 auto;padding:0 2rem}
-section{padding:5rem 0}
-.lbl{font-size:.6rem;text-transform:uppercase;letter-spacing:.22em;color:var(--em);font-weight:600;margin-bottom:.6rem}
-h2{font-size:1.75rem;font-weight:700;line-height:1.2;margin-bottom:.5rem}
-.lead{font-size:.95rem;color:var(--sub);max-width:560px;line-height:1.75}
+.w-narrow{max-width:840px}
+section{padding:6rem 0;position:relative}
+.sec-head{margin-bottom:2.5rem}
+.sec-head.center{text-align:center}
+.sec-head.center .lead{margin-left:auto;margin-right:auto}
+
+.eyebrow{
+  font-size:var(--t-eyebrow);text-transform:uppercase;letter-spacing:.2em;
+  color:var(--em-deep);font-weight:600;margin-bottom:.85rem;display:inline-flex;
+  align-items:center;gap:.5rem;
+}
+.eyebrow::before{content:'';width:18px;height:1px;background:var(--em-bdr)}
+.sec-head.center .eyebrow::before{display:none}
+.lbl{
+  font-size:var(--t-eyebrow);text-transform:uppercase;letter-spacing:.2em;
+  color:var(--em-deep);font-weight:600;margin-bottom:.85rem;
+}
+h2{font-size:clamp(1.6rem,3vw,2.1rem);font-weight:700;line-height:1.15;margin-bottom:.6rem}
+h3{font-weight:600}
+.lead{font-size:var(--t-lead);color:var(--sub);max-width:580px;line-height:1.7;font-weight:300}
+
 hr.sep{border:none;border-top:1px solid var(--line);margin:0}
-.card{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:1.75rem;box-shadow:var(--shadow)}
-.card:hover{box-shadow:var(--shadow2);border-color:var(--line2)}
+
+/* ── cards ── */
+.card{
+  background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:1.75rem;box-shadow:var(--shadow);transition:box-shadow .25s,border-color .25s,transform .25s;
+}
+.card:hover{box-shadow:var(--shadow2);border-color:var(--line2);transform:translateY(-2px)}
+.card-accent{position:relative;overflow:hidden}
+.card-accent::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:.85}
+.card-em::before{background:linear-gradient(90deg,var(--em),var(--em-soft))}
+.card-warn::before{background:linear-gradient(90deg,var(--warn),#f0a830)}
+.card-code::before{background:linear-gradient(90deg,var(--code),#7c80f0)}
+.card-pink::before{background:linear-gradient(90deg,var(--pink),#e878b0)}
+
+.kicker{font-size:.58rem;text-transform:uppercase;letter-spacing:.16em;font-weight:700;margin-bottom:.55rem}
+.kicker.em{color:var(--em-deep)} .kicker.warn{color:var(--warn)} .kicker.code{color:var(--code)} .kicker.pink{color:var(--pink)}
+.card h3{font-size:1.05rem;margin-bottom:.5rem}
+.card-body{font-size:var(--t-small);color:var(--sub);margin-bottom:.85rem;line-height:1.65}
+.feat{font-size:var(--t-small);color:var(--sub);display:flex;flex-direction:column;gap:.32rem}
+.feat span{display:flex;gap:.1rem;align-items:baseline}
+.note{font-size:var(--t-meta);color:var(--dim);margin-top:.85rem;line-height:1.55}
+
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
 @media(max-width:800px){.grid-2,.grid-3{grid-template-columns:1fr}}
-@media(max-width:700px){.setup-row{grid-template-columns:1fr!important}.setup-label{text-align:left!important;padding-bottom:.25rem}}
-.btn{padding:.7rem 1.75rem;border-radius:var(--r);font-weight:600;font-size:.85rem;cursor:pointer;border:none;transition:all .2s;display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;font-family:var(--head)}
-.btn-p{background:var(--em);color:#fff}.btn-p:hover{background:#0ea572;transform:translateY(-1px);box-shadow:0 6px 20px rgba(16,185,129,.18);text-decoration:none}
-.btn-s{background:var(--white);color:var(--ink);border:1px solid var(--line2)}.btn-s:hover{border-color:var(--dim);transform:translateY(-1px);text-decoration:none}
-.method{font-family:var(--mono);font-size:.65rem;font-weight:500;padding:.2rem .5rem;border-radius:5px;display:inline-block;min-width:40px;text-align:center}
-.method.get{background:var(--em-bg);color:var(--em)}.method.post{background:var(--code-bg);color:var(--code)}
-.step-n{width:30px;height:30px;border-radius:50%;background:var(--em-bg);border:1.5px solid var(--em-bdr);color:var(--em);font-size:.78rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--head)}
-.check{color:var(--em);margin-right:.35rem}
 
-/* ── Hero ── */
-.hero{padding:6rem 0 4rem;text-align:center;position:relative}
-.hero-tag{font-size:.6rem;text-transform:uppercase;letter-spacing:.25em;color:var(--dim);font-weight:600;margin-bottom:1.25rem}
-.hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:700;line-height:1.1;margin-bottom:1.5rem;color:var(--ink)}
-.hero h1 em{font-style:normal;color:var(--em)}
-.hero-p{font-size:1.05rem;color:var(--sub);max-width:580px;margin:0 auto 2.5rem;line-height:1.75;font-weight:300}
+/* ── buttons ── */
+.btn{
+  padding:.72rem 1.6rem;border-radius:var(--r);font-weight:600;font-size:.85rem;cursor:pointer;
+  border:1px solid transparent;transition:all .2s;display:inline-flex;align-items:center;gap:.45rem;
+  text-decoration:none;font-family:var(--head);letter-spacing:-.01em;white-space:nowrap;
+}
+.btn-p{background:var(--em-deep);color:#fff;box-shadow:0 1px 2px rgba(11,125,87,.25)}
+.btn-p:hover{background:var(--em);transform:translateY(-1px);box-shadow:var(--glow);color:#fff}
+.btn-s{background:var(--white);color:var(--ink);border-color:var(--line2)}
+.btn-s:hover{border-color:var(--dim);transform:translateY(-1px);background:var(--white);color:var(--ink)}
+.btn-ghost{background:transparent;color:var(--em-deep);border-color:var(--em-bdr)}
+.btn-ghost:hover{background:var(--em-bg);border-color:var(--em);transform:translateY(-1px);color:var(--em-deep)}
+.btn-sm{font-size:.74rem;padding:.5rem 1rem}
+.btn-pink{background:var(--pink);color:#fff;border-color:var(--pink)}
+.btn-pink:hover{background:#c43a7e;color:#fff;transform:translateY(-1px)}
+
+.check{color:var(--em);margin-right:.35rem;font-weight:600}
+.cross{color:var(--red);margin-right:.35rem}
+
+.method{
+  font-family:var(--mono);font-size:.64rem;font-weight:500;padding:.22rem .5rem;
+  border-radius:5px;display:inline-block;min-width:42px;text-align:center;letter-spacing:.02em;
+}
+.method.get{background:var(--em-bg);color:var(--em-deep)}
+.method.post{background:var(--code-bg);color:var(--code)}
+
+/* ── HERO ── */
+.hero{padding:7rem 0 4.5rem;text-align:center;position:relative;overflow:hidden}
+.hero-tag{
+  font-size:var(--t-meta);letter-spacing:.02em;color:var(--dim);font-weight:500;
+  margin-bottom:1.5rem;display:inline-flex;align-items:center;gap:.6rem;
+  padding:.4rem .9rem;border:1px solid var(--line);border-radius:999px;background:var(--white);
+  box-shadow:var(--shadow);
+}
+.hero-tag a{color:var(--em-deep);font-weight:600}
+.hero-tag .pip{width:6px;height:6px;border-radius:50%;background:var(--em);box-shadow:0 0 0 3px var(--em-bg)}
+.hero h1{
+  font-size:clamp(1.95rem,8.5vw,4rem);font-weight:700;line-height:1.06;
+  margin-bottom:1.5rem;letter-spacing:-.035em;color:var(--ink);
+  overflow-wrap:break-word;
+}
+.hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--em-deep),var(--em-soft));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero-p{
+  font-size:clamp(1.02rem,1.6vw,1.18rem);color:var(--sub);max-width:600px;margin:0 auto 2.5rem;
+  line-height:1.65;font-weight:300;
+}
 .hero-btns{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+.hero-license{
+  margin-top:1.75rem;padding:.6rem 1.25rem;border-radius:999px;background:var(--white);
+  border:1px solid var(--line);display:inline-flex;align-items:center;gap:.65rem;
+  font-size:var(--t-meta);color:var(--sub);box-shadow:var(--shadow);flex-wrap:wrap;justify-content:center;
+}
+.hero-license b{color:var(--em-deep);font-weight:600}
+.hero-license .dot{color:var(--faint)}
 
-/* ── Diagram ── */
-.diagram{display:grid;grid-template-columns:200px 40px 1fr 40px 200px;align-items:center;gap:0;margin:2.5rem auto;max-width:820px;padding:2rem;background:var(--white);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow2)}
-.diagram-src,.diagram-out{display:flex;flex-direction:column;gap:.4rem}
-.diagram-src span,.diagram-out span{font-size:.78rem;color:var(--sub);display:flex;align-items:center;gap:.35rem}
-.diagram-src span::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--faint);flex-shrink:0}
-.diagram-out span::after{content:'';width:5px;height:5px;border-radius:50%;background:var(--em);flex-shrink:0}
+/* ── graph viz ── */
+.viz{
+  position:relative;margin:3rem auto 0;max-width:920px;height:380px;
+  border-radius:var(--r-xl);overflow:hidden;
+  background:radial-gradient(120% 100% at 50% 0%,#ffffff,#f3f6f7 70%,#eef3f2);
+  border:1px solid var(--line);box-shadow:var(--shadow2);
+}
+.viz::after{content:'';position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 80px rgba(20,22,40,.03);border-radius:inherit}
+.viz canvas{width:100%;height:100%;display:block}
+.viz-cap{
+  position:absolute;bottom:12px;left:50%;transform:translateX(-50%);
+  font-size:.56rem;color:var(--dim);letter-spacing:.14em;text-transform:uppercase;
+  font-family:var(--head);font-weight:600;white-space:nowrap;
+}
+
+/* ── diagram (source → core → output) ── */
+.diagram{
+  display:grid;grid-template-columns:1fr 48px auto 48px 1fr;align-items:center;
+  gap:0;margin:2.5rem auto 0;max-width:840px;padding:2.25rem;
+  background:var(--white);border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--shadow2);
+}
+.diagram-src,.diagram-out{display:flex;flex-direction:column;gap:.55rem}
+.diagram-src span,.diagram-out span{font-size:var(--t-small);color:var(--sub);display:flex;align-items:center;gap:.5rem}
+.diagram-src span::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--faint);flex-shrink:0;transition:background .2s}
+.diagram-src span:hover::before{background:var(--code)}
+.diagram-out span::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--em);flex-shrink:0}
 .diagram-out span{justify-content:flex-end}
-.diagram-arr{text-align:center;color:var(--faint);font-size:1.1rem}
-.diagram-core{text-align:center;padding:1.5rem 1rem;background:var(--em-bg);border:1.5px solid var(--em-bdr);border-radius:14px}
-.diagram-core h4{font-size:.95rem;color:var(--em);margin-bottom:.25rem}
-.diagram-core p{font-size:.72rem;color:var(--sub)}
-@media(max-width:700px){.diagram{grid-template-columns:1fr;gap:1rem;text-align:center}.diagram-arr{transform:rotate(90deg)}.diagram-src span::before,.diagram-out span::after{display:none}.diagram-out span{justify-content:center}}
+.diagram-arr{text-align:center;color:var(--faint);font-size:1.2rem;line-height:1}
+.diagram-core{
+  text-align:center;padding:1.6rem 1.1rem;background:var(--em-bg);
+  border:1.5px solid var(--em-bdr);border-radius:var(--r-lg);min-width:180px;
+}
+.diagram-core h4{font-size:1rem;color:var(--em-deep);margin-bottom:.25rem}
+.diagram-core p{font-size:var(--t-meta);color:var(--sub)}
+.diagram-core .micro{margin-top:.5rem;font-size:.62rem;color:var(--dim)}
+@media(max-width:700px){
+  .diagram{grid-template-columns:1fr;gap:1rem;text-align:center}
+  .diagram-arr{transform:rotate(90deg)}
+  .diagram-src span::before,.diagram-out span::after{display:none}
+  .diagram-src span,.diagram-out span{justify-content:center}
+}
 
-/* ── Universe ── */
-.universe-pre{background:var(--ink);color:#a5b4c8;border:none;border-radius:14px;padding:2rem;font-size:.85rem;line-height:1.8;box-shadow:var(--shadow2)}
-.universe-pre .comment{color:#5c6b7f}
+/* ── setup steps ── */
+.step{
+  display:grid;grid-template-columns:200px 1fr;gap:1.75rem;margin-bottom:1.5rem;align-items:start;
+}
+.step-aside{text-align:right;padding-top:.2rem;position:sticky;top:1.5rem}
+.step-num{font-size:.58rem;text-transform:uppercase;letter-spacing:.14em;font-weight:700;margin-bottom:.3rem}
+.step-num.em{color:var(--em-deep)} .step-num.warn{color:var(--warn)} .step-num.code{color:var(--code)} .step-num.pink{color:var(--pink)}
+.step-title{font-size:1rem;font-weight:700;font-family:var(--head);color:var(--ink);letter-spacing:-.02em}
+.step-sub{font-size:var(--t-meta);color:var(--dim);margin-top:.25rem}
+.step-body{
+  background:var(--white);border:1.5px solid var(--line);border-radius:var(--r-lg);
+  padding:1.4rem 1.5rem;box-shadow:var(--shadow);
+}
+.step-body.em{border-color:var(--em-bdr)} .step-body.warn{border-color:var(--warn-bdr)}
+.step-body.code{border-color:var(--code-bdr)} .step-body.pink{border-color:var(--pink-bdr)}
+.step-body p{font-size:var(--t-small);color:var(--sub);margin-bottom:.65rem;line-height:1.6}
+.step-list{font-size:var(--t-small);color:var(--sub);display:flex;flex-direction:column;gap:.3rem;margin-bottom:.65rem}
+.req{font-size:var(--t-meta);color:var(--dim);margin-bottom:.5rem;font-weight:600;font-family:var(--head)}
+.callout{padding:.6rem .85rem;border-radius:var(--r-sm);font-size:var(--t-small);color:var(--sub);margin-bottom:.6rem;line-height:1.55}
+.callout.em{background:var(--em-bg);border:1px solid var(--em-bdr)}
+.callout.neutral{background:var(--paper2);border:1px solid var(--line)}
+.callout code{font-size:.7rem}
+.cmd-pill{margin-top:.85rem;padding:.5rem .85rem;background:var(--code-bg);border:1px solid var(--code-bdr);border-radius:var(--r-sm);font-family:var(--mono);font-size:.74rem;color:var(--code)}
+@media(max-width:700px){
+  .step{grid-template-columns:1fr;gap:.75rem}
+  .step-aside{text-align:left;position:static;padding-bottom:.25rem}
+}
+
+/* ── terminal blocks ── */
+.universe-pre{
+  background:var(--c-bg);color:#aab6cb;border:1px solid var(--c-line);border-radius:var(--r);
+  padding:1.25rem 1.5rem;font-size:.76rem;line-height:1.95;box-shadow:var(--shadow);
+  position:relative;overflow-x:auto;
+}
+.universe-pre .comment{color:#5e6b81}
 .universe-pre .cmd{color:#7dd3fc}
 .universe-pre .str{color:#86efac}
 .universe-pre .flag{color:#c4b5fd}
 
-/* ── API table ── */
-.api-row{display:grid;grid-template-columns:55px 1fr 2fr;gap:.75rem;padding:.7rem 0;border-bottom:1px solid var(--line);align-items:baseline;font-size:.85rem}
+/* ── capability sub-heads ── */
+.subhead{font-size:.6rem;text-transform:uppercase;letter-spacing:.15em;font-weight:700;margin-bottom:.7rem}
+.subhead.em{color:var(--em-deep)} .subhead.code{color:var(--code)}
+.capture{
+  margin-top:2rem;padding:1.75rem;border-radius:var(--r-lg);
+  background:linear-gradient(135deg,var(--em-bg),rgba(91,95,224,.04));border:1px solid var(--em-bdr);
+}
+.capture h3{font-size:1.05rem;color:var(--em-deep);margin-bottom:.5rem}
+.capture p{font-size:var(--t-small);color:var(--sub);line-height:1.7}
+
+/* ── tiers ── */
+.tier.featured{box-shadow:var(--shadow2);border-color:var(--em-bdr);border-width:1.5px;position:relative}
+.tier h3{font-size:1.15rem;margin-bottom:.1rem}
+.tier-price{font-size:.55rem;text-transform:uppercase;letter-spacing:.16em;font-weight:700;margin-bottom:.5rem}
+.tier-price.em{color:var(--em-deep)} .tier-price.code{color:var(--code)} .tier-price.warn{color:var(--warn)}
+.tier-desc{font-size:var(--t-small);color:var(--sub);margin:.5rem 0 .9rem;line-height:1.6}
+
+/* ── models ── */
+.model-row{font-size:var(--t-small);color:var(--sub)}
+.model-row strong{font-weight:600}
+.model-row + .model-row{margin-top:.65rem;padding-top:.65rem;border-top:1px solid var(--line)}
+.model-row code{font-size:.7rem;margin-top:.2rem;display:inline-block}
+
+/* ── api table ── */
+.api-table{background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);padding:.5rem 1.5rem;box-shadow:var(--shadow)}
+.api-row{display:grid;grid-template-columns:60px 1fr 2fr;gap:1rem;padding:.7rem 0;border-bottom:1px solid var(--line);align-items:baseline;font-size:var(--t-small)}
 .api-row:last-child{border-bottom:none}
-.api-path{font-family:var(--mono);font-size:.8rem;color:var(--ink2)}
-.api-desc{font-size:.8rem;color:var(--sub)}
+.api-row.head span{font-size:.58rem;font-weight:700;color:var(--dim);font-family:var(--head);text-transform:uppercase;letter-spacing:.1em}
+.api-path{font-family:var(--mono);font-size:.78rem;color:var(--ink2)}
+.api-desc{font-size:var(--t-small);color:var(--sub)}
+@media(max-width:600px){.api-row{grid-template-columns:54px 1fr;gap:.5rem}.api-desc{grid-column:1/-1;padding-left:0}}
 
-/* ── Resources ── */
-.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
-.res-item{background:var(--white);padding:.85rem 1rem}
-.res-item strong{color:var(--em);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;font-family:var(--head)}
-.res-item span{display:block;color:var(--sub);margin-top:.15rem;font-size:.75rem}
-@media(max-width:600px){.res-grid{grid-template-columns:1fr 1fr}}
+/* ── code examples ── */
+.code-label{font-size:var(--t-meta);color:var(--dim);font-weight:600;margin-bottom:.5rem;font-family:var(--head);display:flex;align-items:center;gap:.45rem}
+.code-label::before{content:'';width:7px;height:7px;border-radius:2px}
+.code-label.py::before{background:var(--code)}
+.code-label.js::before{background:var(--warn)}
 
-/* ── Console (dark embed) ── */
-.console-wrap{background:#0c0c14;border:1px solid #1e1e2e;border-radius:16px;overflow:hidden;box-shadow:var(--shadow2);color:#e4e4ec}
-.conn{display:flex;align-items:center;gap:.6rem;padding:.85rem 1.1rem;border-bottom:1px solid rgba(255,255,255,.06);flex-wrap:wrap;background:#10101a}
-.conn-dot{width:8px;height:8px;border-radius:50%;transition:all .3s}.conn-dot.off{background:#55556e}.conn-dot.on{background:var(--em);box-shadow:0 0 10px var(--em)}.conn-dot.err{background:var(--red)}
-.conn-lbl{font-size:.72rem;color:#8888a0;min-width:65px}
-.conn input{padding:.38rem .55rem;border:1px solid rgba(255,255,255,.08);border-radius:7px;background:#050508;color:#e4e4ec;font-family:var(--mono);font-size:.73rem;outline:none}
-.conn input:focus{border-color:rgba(16,185,129,.3)}
-.conn input.url{width:250px}.conn input.code{width:85px;text-align:center;letter-spacing:.15em}
-.conn-btn{padding:.38rem .85rem;border:none;border-radius:7px;font-weight:600;font-size:.73rem;cursor:pointer}
-.conn-btn.go{background:var(--em);color:#fff}.conn-btn.go:hover{background:#0ea572}
-.conn-btn.dc{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2)}.conn-btn.dc:hover{background:rgba(239,68,68,.15)}
-.badges{display:flex;gap:.3rem;margin-left:auto}
-.badge{font-size:.52rem;padding:.15rem .4rem;border-radius:4px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
-.badge-tls{background:rgba(16,185,129,.12);color:var(--em)}.badge-deid{background:rgba(99,102,241,.12);color:#818cf8}.badge-sim{background:rgba(239,68,68,.12);color:var(--red)}.badge-dev{background:rgba(236,72,153,.1);color:#ec4899}
+/* ── security chips ── */
+.chips{display:flex;flex-wrap:wrap;gap:.6rem}
+.chip{
+  display:flex;align-items:center;gap:.45rem;padding:.55rem .95rem;border-radius:999px;
+  background:var(--white);border:1px solid var(--line);font-size:var(--t-small);color:var(--sub);
+  box-shadow:var(--shadow);transition:border-color .2s,transform .2s;
+}
+.chip:hover{border-color:var(--em-bdr);transform:translateY(-1px)}
 
-.c-layout{display:grid;grid-template-columns:1fr 260px}
+/* ════════════════ CONSOLE (deep product surface) ════════════════ */
+.console-wrap{
+  background:var(--c-bg);border:1px solid var(--c-line);border-radius:var(--r-xl);overflow:hidden;
+  box-shadow:var(--shadow3);color:var(--c-text);
+}
+.conn{
+  display:flex;align-items:center;gap:.65rem;padding:.9rem 1.15rem;
+  border-bottom:1px solid var(--c-line);flex-wrap:wrap;background:var(--c-bg2);
+}
+.conn-dot{width:9px;height:9px;border-radius:50%;transition:all .3s;flex-shrink:0}
+.conn-dot.off{background:#4c4e63}
+.conn-dot.on{background:var(--em-soft);box-shadow:0 0 0 4px rgba(16,185,129,.15),0 0 10px var(--em-soft)}
+.conn-dot.err{background:var(--red);box-shadow:0 0 0 4px rgba(224,70,63,.15)}
+.conn-lbl{font-size:var(--t-meta);color:var(--c-sub);min-width:68px;font-weight:500}
+.conn input{
+  padding:.42rem .6rem;border:1px solid var(--c-line);border-radius:7px;background:var(--c-bg3);
+  color:var(--c-text);font-family:var(--mono);font-size:.73rem;outline:none;transition:border-color .15s;
+}
+.conn input::placeholder{color:var(--c-dim)}
+.conn input:focus{border-color:rgba(16,185,129,.4)}
+.conn input.url{width:240px;max-width:100%;flex:1 1 200px;min-width:0}.conn input.code{width:88px;text-align:center;letter-spacing:.18em}
+.conn-btn{padding:.42rem .95rem;border:none;border-radius:7px;font-weight:600;font-size:.73rem;cursor:pointer;transition:all .15s;font-family:var(--head)}
+.conn-btn.go{background:var(--em-soft);color:#04130d}.conn-btn.go:hover{background:#34d399}
+.conn-btn.dc{background:rgba(224,70,63,.12);color:#f87171;border:1px solid rgba(224,70,63,.25)}.conn-btn.dc:hover{background:rgba(224,70,63,.18)}
+.badges{display:flex;gap:.35rem;margin-left:auto}
+.badge{font-size:.52rem;padding:.18rem .45rem;border-radius:5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.badge-tls{background:rgba(16,185,129,.14);color:#34d399}
+.badge-deid{background:rgba(129,140,248,.14);color:#a5b4fc}
+.badge-sim{background:rgba(224,70,63,.14);color:#f87171}
+.badge-dev{background:rgba(236,72,153,.12);color:#f0a6cf}
+
+.c-layout{display:grid;grid-template-columns:1fr 270px}
 @media(max-width:900px){.c-layout{grid-template-columns:1fr}}
-.c-main{display:flex;flex-direction:column;min-height:440px}.c-side{border-left:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;overflow:hidden}@media(max-width:900px){.c-side{display:none}}
+.c-main{display:flex;flex-direction:column;min-height:460px}
+.c-side{border-left:1px solid var(--c-line);display:flex;flex-direction:column;overflow:hidden}
+@media(max-width:900px){.c-side{display:none}}
 
-.tabs{display:flex;border-bottom:1px solid rgba(255,255,255,.06);background:#10101a}
-.tab{padding:.55rem 1rem;font-size:.7rem;font-weight:600;color:#55556e;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;user-select:none;font-family:var(--head)}
-.tab:hover{color:#8888a0}.tab.active{color:var(--em);border-bottom-color:var(--em)}
+.tabs{display:flex;border-bottom:1px solid var(--c-line);background:var(--c-bg2);padding:0 .35rem}
+.tab{
+  padding:.7rem 1rem;font-size:.71rem;font-weight:600;color:var(--c-dim);cursor:pointer;
+  border-bottom:2px solid transparent;transition:all .15s;user-select:none;font-family:var(--head);letter-spacing:-.01em;
+}
+.tab:hover{color:var(--c-sub)}
+.tab.active{color:var(--em-soft);border-bottom-color:var(--em-soft)}
 .tp{display:none;flex:1;overflow-y:auto;flex-direction:column}.tp.active{display:flex}
 
-.bb{display:flex;gap:.4rem;padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.06);flex-wrap:wrap;align-items:center}
-.bb select,.bb input{padding:.38rem .5rem;border:1px solid rgba(255,255,255,.06);border-radius:6px;background:#050508;color:#e4e4ec;font-size:.73rem;font-family:var(--mono);outline:none}
-.bb select:focus,.bb input:focus{border-color:rgba(16,185,129,.3)}
-.qbtn{padding:.38rem .75rem;border:none;border-radius:6px;background:var(--em);color:#fff;font-weight:600;font-size:.73rem;cursor:pointer}.qbtn:hover{background:#0ea572}
-.qinfo{font-size:.65rem;color:#55556e;margin-left:auto;font-family:var(--mono)}
-.rr{display:grid;grid-template-columns:1fr 120px 120px;padding:.5rem 1rem;border-bottom:1px solid rgba(255,255,255,.06);font-size:.76rem;cursor:pointer;transition:background .1s;color:#e4e4ec}
-.rr:hover{background:rgba(255,255,255,.02)}.rr.hd{color:#55556e;font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;cursor:default;background:#10101a;position:sticky;top:0}.rr.hd:hover{background:#10101a}
+.bb{display:flex;gap:.45rem;padding:.8rem 1.1rem;border-bottom:1px solid var(--c-line);flex-wrap:wrap;align-items:center;background:rgba(255,255,255,.012)}
+.bb select,.bb input{padding:.42rem .55rem;border:1px solid var(--c-line);border-radius:6px;background:var(--c-bg3);color:var(--c-text);font-size:.73rem;font-family:var(--mono);outline:none;transition:border-color .15s}
+.bb select:focus,.bb input:focus{border-color:rgba(16,185,129,.4)}
+.qbtn{padding:.42rem .85rem;border:none;border-radius:6px;background:var(--em-soft);color:#04130d;font-weight:600;font-size:.73rem;cursor:pointer;font-family:var(--head);transition:background .15s}.qbtn:hover{background:#34d399}
+.qinfo{font-size:.66rem;color:var(--c-dim);margin-left:auto;font-family:var(--mono)}
+.rr{display:grid;grid-template-columns:1fr 120px 120px;padding:.6rem 1.1rem;border-bottom:1px solid var(--c-line2);font-size:.76rem;cursor:pointer;transition:background .12s;color:var(--c-text)}
+.rr:hover{background:rgba(255,255,255,.025)}
+.rr.hd{color:var(--c-dim);font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;cursor:default;background:var(--c-bg2);position:sticky;top:0;z-index:1}
+.rr.hd:hover{background:var(--c-bg2)}
 .rr .nm{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.rr .vl{font-family:var(--mono);font-size:.73rem;color:var(--em)}.rr .dt{font-size:.7rem;color:#8888a0}
+.rr .vl{font-family:var(--mono);font-size:.73rem;color:var(--em-soft)}
+.rr .dt{font-size:.7rem;color:var(--c-sub)}
 .results{flex:1;overflow-y:auto}
-.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem;color:#55556e;gap:.4rem;flex:1}.empty .ico{font-size:1.6rem;opacity:.25}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3.5rem;color:var(--c-dim);gap:.5rem;flex:1;text-align:center}
+.empty .ico{font-size:1.8rem;opacity:.3}
 
-.side-hd{padding:.6rem .85rem;font-size:.58rem;font-weight:600;text-transform:uppercase;letter-spacing:.15em;color:#55556e;border-bottom:1px solid rgba(255,255,255,.06);background:#10101a;flex-shrink:0}
+.side-hd{padding:.7rem .95rem;font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:var(--c-dim);border-bottom:1px solid var(--c-line);background:var(--c-bg2);flex-shrink:0}
 .events{flex:1;overflow-y:auto;font-family:var(--mono);font-size:.66rem}
-.ev{padding:.3rem .75rem;border-bottom:1px solid rgba(255,255,255,.04);display:flex;gap:.35rem;align-items:baseline;color:#8888a0}
-.ev-t{color:#55556e;font-size:.58rem;flex-shrink:0}.ev-tp{font-weight:600;font-size:.58rem;padding:.1rem .3rem;border-radius:3px}
-.ev-tp.query{background:rgba(16,185,129,.12);color:var(--em)}.ev-tp.sys{background:rgba(255,255,255,.04);color:#55556e}.ev-tp.auth{background:rgba(239,68,68,.1);color:var(--warn)}
+.ev{padding:.38rem .9rem;border-bottom:1px solid var(--c-line2);display:flex;gap:.4rem;align-items:baseline;color:var(--c-sub)}
+.ev-t{color:var(--c-dim);font-size:.58rem;flex-shrink:0}
+.ev-tp{font-weight:600;font-size:.56rem;padding:.1rem .35rem;border-radius:4px;flex-shrink:0}
+.ev-tp.query{background:rgba(16,185,129,.14);color:#34d399}
+.ev-tp.sys{background:rgba(255,255,255,.05);color:var(--c-dim)}
+.ev-tp.auth{background:rgba(217,131,0,.14);color:#fbbf24}
 .ev-d{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-.cg{padding:.85rem}.cg-ctl{display:flex;gap:.4rem;margin-bottom:.75rem;flex-wrap:wrap}
-.cg-ctl select{padding:.38rem .5rem;border:1px solid rgba(255,255,255,.06);border-radius:6px;background:#050508;color:#e4e4ec;font-size:.73rem;outline:none}
-.cg-out{position:relative;background:#050508;border:1px solid rgba(255,255,255,.06);border-radius:var(--r);overflow:hidden}
-.cg-out pre{margin:0;border:none;background:transparent;color:#a5b4c8;padding:1rem}
-.cg-out .cpb{background:#10101a;border-color:rgba(255,255,255,.08);color:#55556e}
+.cg{padding:1rem}
+.cg-ctl{display:flex;gap:.45rem;margin-bottom:.85rem;flex-wrap:wrap}
+.cg-ctl select{padding:.42rem .55rem;border:1px solid var(--c-line);border-radius:6px;background:var(--c-bg3);color:var(--c-text);font-size:.73rem;outline:none;transition:border-color .15s}
+.cg-ctl select:focus{border-color:rgba(16,185,129,.4)}
+.cg-out{position:relative;background:var(--c-bg3);border:1px solid var(--c-line);border-radius:var(--r);overflow:hidden}
+.cg-out pre{margin:0;border:none;background:transparent;color:#aab6cb;padding:1.1rem;font-size:.74rem}
+.cg-out .cpb{background:var(--c-bg2);border-color:var(--c-line);color:var(--c-sub)}
+.cg-out .cpb:hover{color:var(--c-text);border-color:var(--c-sub)}
 
-.qs{border-top:1px solid rgba(255,255,255,.06);padding:.75rem .85rem;flex-shrink:0;background:#10101a;font-size:.65rem}
-.qs h4{font-size:.6rem;font-weight:600;color:#8888a0;margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.1em}
-.qs a{color:var(--em);font-size:.65rem}
+.qs{border-top:1px solid var(--c-line);padding:.85rem .95rem;flex-shrink:0;background:var(--c-bg2);font-size:.65rem}
+.qs h4{font-size:.56rem;font-weight:700;color:var(--c-sub);margin-bottom:.45rem;text-transform:uppercase;letter-spacing:.12em;font-family:var(--head)}
+.qs a{color:var(--em-soft);font-size:.66rem}.qs a:hover{color:#34d399}
 
-.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
-.modal-ov.open{display:flex}
-.modal{background:#0c0c14;border:1px solid #1e1e2e;border-radius:14px;max-width:660px;width:92%;max-height:78vh;overflow:hidden;display:flex;flex-direction:column;color:#e4e4ec}
-.modal-hd{display:flex;align-items:center;justify-content:space-between;padding:.8rem 1.1rem;border-bottom:1px solid rgba(255,255,255,.06)}
-.modal-hd h3{font-size:.82rem;font-weight:700;font-family:var(--head)}.modal-x{background:none;border:none;color:#55556e;font-size:1.1rem;cursor:pointer}.modal-x:hover{color:#e4e4ec}
-.modal-bd{padding:1rem;overflow-y:auto;flex:1}.modal-bd pre{border:none;background:transparent;padding:0;color:#a5b4c8}
+/* health-view tiles (console) */
+.hv{padding:1.25rem;display:flex;flex-direction:column;gap:.95rem;overflow-y:auto}
+.hv-top{display:flex;align-items:center;justify-content:space-between}
+.hv-greet{font-size:1.05rem;font-weight:700;font-family:var(--head)}
+.hv-sub{font-size:.72rem;color:var(--c-sub)}
+.hv-score{width:38px;height:38px;border-radius:50%;background:rgba(16,185,129,.14);display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:var(--em-soft);font-family:var(--head)}
+.hv-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:.55rem}
+.hv-metric{background:var(--c-bg2);border:1px solid var(--c-line);border-radius:11px;padding:.85rem}
+.hv-mlabel{font-size:.54rem;color:var(--c-dim);text-transform:uppercase;letter-spacing:.09em;font-weight:600}
+.hv-mval{display:flex;align-items:baseline;gap:.25rem;margin-top:.35rem}
+.hv-mval .big{font-size:1.45rem;font-weight:800;font-family:var(--head)}
+.hv-mval .unit{font-size:.66rem;color:var(--c-sub)}
+.hv-mnote{font-size:.55rem;margin-top:.25rem}
+.hv-section-h{font-size:.58rem;font-weight:700;color:var(--c-dim);margin-bottom:.45rem;text-transform:uppercase;letter-spacing:.09em;font-family:var(--head)}
+.hv-rows{display:flex;flex-direction:column;gap:.35rem}
+.hv-row{display:flex;align-items:center;gap:.55rem;padding:.55rem .7rem;background:var(--c-bg2);border:1px solid var(--c-line);border-radius:9px}
+.hv-row .label{font-size:.75rem;font-weight:500;flex:1}
+.hv-tag{font-size:.54rem;padding:.14rem .4rem;border-radius:5px;font-weight:600}
+.hv-tag.active{background:rgba(224,70,63,.12);color:#f87171}
+.hv-rx{width:30px;height:30px;border-radius:8px;background:rgba(129,140,248,.14);display:flex;align-items:center;justify-content:center;font-size:.6rem;color:#a5b4fc;font-weight:700;flex-shrink:0}
+.hv-med .name{font-size:.75rem;font-weight:500}
+.hv-med .freq{font-size:.6rem;color:var(--c-sub)}
+.hv-foot{font-size:.62rem;color:var(--c-dim);text-align:center;padding:.5rem;border-top:1px solid var(--c-line);margin-top:.15rem}
 
-footer{padding:2rem 0;border-top:1px solid var(--line);text-align:center;font-size:.75rem;color:var(--dim);background:var(--white)}
-footer a{color:var(--sub)}
+/* modal */
+.modal-ov{position:fixed;inset:0;background:rgba(10,11,18,.55);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.modal-ov.open{display:flex;animation:modalIn .2s ease}
+.modal{background:var(--c-bg);border:1px solid var(--c-line);border-radius:var(--r-lg);max-width:680px;width:92%;max-height:80vh;overflow:hidden;display:flex;flex-direction:column;color:var(--c-text);box-shadow:var(--shadow3)}
+.modal-hd{display:flex;align-items:center;justify-content:space-between;padding:.95rem 1.2rem;border-bottom:1px solid var(--c-line)}
+.modal-hd h3{font-size:.85rem;font-weight:700;font-family:var(--head)}
+.modal-x{background:none;border:none;color:var(--c-dim);font-size:1.2rem;cursor:pointer;line-height:1;transition:color .15s}.modal-x:hover{color:var(--c-text)}
+.modal-bd{padding:1.1rem;overflow-y:auto;flex:1}
+.modal-bd pre{border:none;background:transparent;padding:0;color:#aab6cb;font-size:.73rem}
 
-@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+footer{padding:2.5rem 0;border-top:1px solid var(--line);text-align:center;font-size:var(--t-meta);color:var(--dim);background:var(--white)}
+footer strong{color:var(--ink2);font-family:var(--head)}
+footer a{color:var(--sub)}footer a:hover{color:var(--ink)}
+
+/* ── motion ── */
+@keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes modalIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier(.22,.61,.36,1),transform .6s cubic-bezier(.22,.61,.36,1)}
+.reveal.in{opacity:1;transform:none}
 .anim{animation:fadeIn .5s ease both}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+  .card:hover,.btn:hover,.chip:hover{transform:none}
+  *{animation-duration:.001ms!important}
+}
+
+/* ── small-mobile responsive (tablet → phone) ── */
+@media(max-width:600px){
+  /* tighter gutters so content + padding fit narrow viewports */
+  .w{padding:0 1.25rem}
+  section{padding:4rem 0}
+  .hero{padding:4.5rem 0 3rem}
+  /* prevent any long monospace string from forcing page width */
+  code{white-space:normal;overflow-wrap:anywhere;word-break:break-word}
+  .cmd-pill{overflow-wrap:anywhere;word-break:break-word}
+  /* console connection bar: inputs flow full-width, button reachable */
+  .conn{gap:.5rem}
+  .conn input.url{flex:1 1 100%;width:100%}
+  .conn input.code{flex:1 1 80px}
+  .conn-btn{flex:1 1 auto}
+  .badges{margin-left:0}
+}
+
+@media(max-width:480px){
+  body{font-size:14px}
+  .w{padding:0 1.1rem}
+  /* hero buttons: full-width stacked, comfortable tap targets */
+  .hero-btns{flex-direction:column;align-items:stretch}
+  .hero-btns .btn{width:100%;justify-content:center;white-space:normal}
+  .btn{white-space:normal}
+  /* license pill must wrap, never clip */
+  .hero-license{width:100%;max-width:100%}
+  .hero-license a{overflow-wrap:anywhere;word-break:break-word}
+  /* viz / diagram sit within viewport */
+  .viz{height:300px}
+  /* console: stack connection controls cleanly */
+  .conn{padding:.8rem .9rem}
+  .conn-lbl{min-width:0}
+  .conn-btn.go,.conn-btn.dc{flex:1 1 100%}
+  /* down-arrow CTA rows: stacked full-width */
+  .hero h1{letter-spacing:-.02em}
+}
+
+@media(max-width:400px){
+  .w{padding:0 1rem}
+  .console-wrap{border-radius:var(--r-lg)}
+}
 </style>
 </head>
 <body>
@@ -167,36 +534,37 @@ footer a{color:var(--sub)}
 <!-- ═══ HERO ═══ -->
 <section class="hero">
 <div class="w">
-  <div class="hero-tag">Zero Mile Health &middot; <a href="https://github.com/easpencer/Aion" style="color:var(--em);text-decoration:none">Open Source &rarr;</a></div>
+  <div class="hero-tag"><span class="pip"></span> Zero Mile Health &middot; <a href="https://github.com/easpencer/Aion">Source-Available &rarr;</a></div>
   <h1>Know yourself.<br><em>Change your life.</em></h1>
   <p class="hero-p">Aion builds a FHIR knowledge graph from every health source &mdash; vitals, labs, medications, conditions, wearables, calendar, daily life. Bridge it to your PC, connect any AI model, and build whatever you imagine. Private by default. Your data never leaves your network.</p>
   <div class="hero-btns">
     <a href="#get-started" class="btn btn-p">Get Started</a>
     <a href="https://github.com/easpencer/Aion/releases" class="btn btn-s">&#8595; Download Bridge App</a>
-    <a href="https://github.com/easpencer/Aion" class="btn btn-s" style="border-color:var(--em-bdr);color:var(--em)">GitHub</a>
+    <a href="https://github.com/easpencer/Aion" class="btn btn-ghost">GitHub</a>
   </div>
-  <!-- Open Source Notice -->
-  <div style="margin-top:1.5rem;padding:.65rem 1.25rem;border-radius:8px;background:var(--em-bg);border:1px solid var(--em-bdr);display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--sub)">
-    <span style="color:var(--em);font-weight:600">Open source coming soon</span>
-    <span style="color:var(--faint)">&middot;</span>
-    <span>Source available now at <a href="https://github.com/easpencer/Aion">github.com/easpencer/Aion</a></span>
+  <div class="hero-license">
+    <b>Free for personal &amp; non-commercial use</b>
+    <span class="dot">&middot;</span>
+    <span>Source available at <a href="https://github.com/easpencer/Aion">github.com/easpencer/Aion</a></span>
   </div>
 </div>
 </section>
 
 <!-- ═══ DIGITAL TWIN DIAGRAM ═══ -->
-<section style="padding-top:2rem">
+<section style="padding-top:1rem">
 <div class="w">
-  <div style="text-align:center"><div class="lbl">The Knowledge Graph</div>
-  <h2>Every source flows into your digital twin</h2></div>
-
-  <!-- Animated graph visualization -->
-  <div style="position:relative;margin:2rem auto 0;max-width:900px;height:360px;border-radius:16px;overflow:hidden;background:linear-gradient(135deg,#fafbfc,#f0f4f8);border:1px solid var(--line)">
-    <canvas id="graphViz" style="width:100%;height:100%;display:block"></canvas>
-    <div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-size:.55rem;color:var(--dim);letter-spacing:.12em;text-transform:uppercase;font-family:var(--head);font-weight:600">Clinical &middot; Lifestyle &middot; Calendar &middot; Work &middot; Behavior &mdash; Your Whole-Person Graph</div>
+  <div class="sec-head center reveal">
+    <div class="lbl">The Knowledge Graph</div>
+    <h2>Every source flows into your digital twin</h2>
   </div>
 
-  <div class="diagram">
+  <!-- Animated graph visualization -->
+  <div class="viz reveal">
+    <canvas id="graphViz"></canvas>
+    <div class="viz-cap">Clinical &middot; Lifestyle &middot; Calendar &middot; Work &middot; Behavior &mdash; Your Whole-Person Graph</div>
+  </div>
+
+  <div class="diagram reveal">
     <div class="diagram-src">
       <span>Apple HealthKit</span>
       <span>Google Health Connect</span>
@@ -208,7 +576,7 @@ footer a{color:var(--sub)}
     <div class="diagram-core">
       <h4>FHIR Knowledge Graph</h4>
       <p>Your Digital Twin</p>
-      <p style="margin-top:.4rem;font-size:.65rem;color:var(--dim)">15 resource types &middot; Encrypted &middot; On your device</p>
+      <p class="micro">15 resource types &middot; Encrypted &middot; On your device</p>
     </div>
     <div class="diagram-arr">&rarr;</div>
     <div class="diagram-out">
@@ -223,116 +591,119 @@ footer a{color:var(--sub)}
 </section>
 <hr class="sep">
 
-<!-- ═══ TWO MODES ═══ -->
+<!-- ═══ FOUR WAYS ═══ -->
 <section id="universe" style="scroll-margin-top:2rem"><a id="get-started"></a>
 <div class="w">
-  <div class="lbl">How it works</div>
-  <h2>Four ways to use Aion</h2>
+  <div class="sec-head reveal">
+    <div class="lbl">How it works</div>
+    <h2>Four ways to use Aion</h2>
+  </div>
 
   <div class="grid-2" style="margin-bottom:2.5rem">
-    <div class="card" style="border-color:var(--em-bdr);border-width:1.5px">
-      <div style="font-size:.55rem;text-transform:uppercase;letter-spacing:.18em;color:var(--em);font-weight:700;margin-bottom:.5rem">No code needed</div>
-      <h3 style="font-size:1rem;margin-bottom:.5rem">Just the App</h3>
-      <p style="font-size:.8rem;color:var(--sub);margin-bottom:.75rem">Download Aion and use it standalone. Health dashboard, knowledge graph, and AI chat &mdash; entirely on your phone. <strong style="color:var(--ink)">Nothing ever leaves your device.</strong></p>
-      <div style="font-size:.75rem;color:var(--sub);display:flex;flex-direction:column;gap:.25rem">
+    <div class="card card-accent card-em reveal">
+      <div class="kicker em">No code needed</div>
+      <h3>Just the App</h3>
+      <p class="card-body">Download Aion and use it standalone. Health dashboard, knowledge graph, and AI chat &mdash; entirely on your phone. <strong>Nothing ever leaves your device.</strong></p>
+      <div class="feat">
         <span><span class="check">&#10003;</span> HealthKit / Health Connect sync</span>
         <span><span class="check">&#10003;</span> Vitals, conditions, medications</span>
         <span><span class="check">&#10003;</span> Interactive knowledge graph</span>
         <span><span class="check">&#10003;</span> On-device AI (works offline)</span>
       </div>
-      <p style="font-size:.68rem;color:var(--dim);margin-top:.75rem">100% private. The bridge is there if you ever want to extend to your PC.</p>
+      <p class="note">100% private. The bridge is there if you ever want to extend to your PC.</p>
     </div>
 
-    <div class="card" style="border-color:rgba(245,158,11,0.25);border-width:1.5px">
-      <div style="font-size:.55rem;text-transform:uppercase;letter-spacing:.18em;color:var(--warn);font-weight:700;margin-bottom:.5rem">Local computing &middot; Private</div>
-      <h3 style="font-size:1rem;margin-bottom:.5rem">Bridge to Your PC</h3>
-      <p style="font-size:.8rem;color:var(--sub);margin-bottom:.75rem">Run the bridge server on your PC and access your health data from any tool — browser, terminal, Jupyter, or custom code. Run <strong style="color:var(--ink)">local AI models</strong> with Ollama. <strong style="color:var(--ink)">Still completely private.</strong></p>
-      <div style="font-size:.75rem;color:var(--sub);display:flex;flex-direction:column;gap:.25rem">
+    <div class="card card-accent card-warn reveal">
+      <div class="kicker warn">Local computing &middot; Private</div>
+      <h3>Bridge to Your PC</h3>
+      <p class="card-body">Run the bridge server on your PC and access your health data from any tool — browser, terminal, Jupyter, or custom code. Run <strong>local AI models</strong> with Ollama. <strong>Still completely private.</strong></p>
+      <div class="feat">
         <span><span class="check">&#10003;</span> Ollama + Llama 4, Qwen 3, Gemma</span>
         <span><span class="check">&#10003;</span> REST API for custom apps</span>
         <span><span class="check">&#10003;</span> Terminal CLI + Jupyter notebooks</span>
         <span><span class="check">&#10003;</span> Browser explorer (zero install)</span>
       </div>
-      <p style="font-size:.68rem;color:var(--dim);margin-top:.75rem">Requires: Node.js 18+, phone and PC on same WiFi.</p>
+      <p class="note">Requires: Node.js 18+, phone and PC on same WiFi.</p>
     </div>
 
-    <div class="card" style="border-color:var(--code-bdr);border-width:1.5px">
-      <div style="font-size:.55rem;text-transform:uppercase;letter-spacing:.18em;color:var(--code);font-weight:700;margin-bottom:.5rem">Claude &middot; Cursor &middot; Gemini &middot; Windsurf &middot; Zed</div>
-      <h3 style="font-size:1rem;margin-bottom:.5rem">MCP: Ask Your AI About Your Health</h3>
-      <p style="font-size:.8rem;color:var(--sub);margin-bottom:.75rem">One command connects any MCP-compatible AI assistant directly to your real FHIR data. Ask <em>&ldquo;What&rsquo;s my BP trend?&rdquo;</em> and get answers grounded in data from your phone.</p>
-      <div style="font-size:.75rem;color:var(--sub);display:flex;flex-direction:column;gap:.25rem">
+    <div class="card card-accent card-code reveal">
+      <div class="kicker code">Claude &middot; Cursor &middot; Gemini &middot; Windsurf &middot; Zed</div>
+      <h3>MCP: Ask Your AI About Your Health</h3>
+      <p class="card-body">One command connects any MCP-compatible AI assistant directly to your real FHIR data. Ask <em>&ldquo;What&rsquo;s my BP trend?&rdquo;</em> and get answers grounded in data from your phone.</p>
+      <div class="feat">
         <span><span class="check">&#10003;</span> Claude Code &amp; Desktop, Cursor, Windsurf</span>
         <span><span class="check">&#10003;</span> Gemini CLI, Zed, Continue.dev &amp; more</span>
         <span><span class="check">&#10003;</span> Live FHIR data, not summaries</span>
         <span><span class="check">&#10003;</span> Auto-detects &amp; configures all clients at once</span>
       </div>
-      <div style="margin-top:.75rem;padding:.45rem .75rem;background:var(--code-bg);border-radius:6px;font-family:var(--mono);font-size:.72rem;color:var(--code)">npx aion-bridge-mcp setup</div>
-      <p style="font-size:.68rem;color:var(--dim);margin-top:.5rem">Requires: Node.js 18+, phone and PC on same WiFi.</p>
+      <div class="cmd-pill">npx aion-bridge-mcp setup</div>
+      <p class="note">Requires: Node.js 18+, phone and PC on same WiFi.</p>
     </div>
 
-    <div class="card" style="border-color:rgba(236,72,153,0.25);border-width:1.5px">
-      <div style="font-size:.55rem;text-transform:uppercase;letter-spacing:.18em;color:#ec4899;font-weight:700;margin-bottom:.5rem">Desktop Companion &middot; Mac &amp; Windows</div>
-      <h3 style="font-size:1rem;margin-bottom:.5rem">Send Your PC Activity to Your Graph</h3>
-      <p style="font-size:.8rem;color:var(--sub);margin-bottom:.75rem">A tray app that sends your <strong style="color:var(--ink)">computer activity to your health knowledge graph</strong> — anonymized, on-device. Your phone finally knows your whole story. One-click setup.</p>
-      <div style="font-size:.75rem;color:var(--sub);display:flex;flex-direction:column;gap:.25rem">
+    <div class="card card-accent card-pink reveal">
+      <div class="kicker pink">Desktop Companion &middot; Mac &amp; Windows</div>
+      <h3>Send Your PC Activity to Your Graph</h3>
+      <p class="card-body">A tray app that sends your <strong>computer activity to your health knowledge graph</strong> — anonymized, on-device. Your phone finally knows your whole story. One-click setup.</p>
+      <div class="feat">
         <span><span class="check">&#10003;</span> Screen time, meeting hours, break count</span>
         <span><span class="check">&#10003;</span> App categories (never specific names)</span>
         <span><span class="check">&#10003;</span> Typing intensity: high / medium / low</span>
         <span><span class="check">&#10003;</span> Correlates with BP, HRV, sleep, glucose</span>
       </div>
-      <div style="margin-top:.75rem;display:flex;gap:.5rem;flex-wrap:wrap">
-        <a href="https://github.com/easpencer/Aion/releases" class="btn btn-p" style="font-size:.72rem;padding:.5rem 1rem">&#8595; Download for Mac</a>
-        <a href="https://github.com/easpencer/Aion/releases" class="btn btn-s" style="font-size:.72rem;padding:.5rem 1rem">&#8595; Download for Windows</a>
+      <div style="margin-top:.95rem;display:flex;gap:.5rem;flex-wrap:wrap">
+        <a href="https://github.com/easpencer/Aion/releases" class="btn btn-p btn-sm">&#8595; Download for Mac</a>
+        <a href="https://github.com/easpencer/Aion/releases" class="btn btn-s btn-sm">&#8595; Download for Windows</a>
       </div>
-      <p style="font-size:.65rem;color:var(--dim);margin-top:.5rem">Also available as source: <code style="font-size:.63rem">cd aion-desktop &amp;&amp; npm install &amp;&amp; npm start</code></p>
+      <p class="note">Also available as source: <code style="font-size:.63rem">cd aion-desktop &amp;&amp; npm install &amp;&amp; npm start</code></p>
     </div>
   </div>
 
-  <div style="text-align:center;margin-bottom:2.5rem"><div class="lbl">Setup guide</div>
-  <h2 style="font-size:1.4rem">What runs where &mdash; the complete picture</h2>
-  <p style="font-size:.88rem;color:var(--sub);max-width:560px;margin:.4rem auto 0">Four independent pieces. Use only what you need. Each works without the others.</p>
+  <div class="sec-head center reveal" style="margin-top:1rem">
+    <div class="lbl">Setup guide</div>
+    <h2 style="font-size:1.5rem">What runs where &mdash; the complete picture</h2>
+    <p class="lead" style="font-size:.92rem">Four independent pieces. Use only what you need. Each works without the others.</p>
   </div>
 </div>
 
-<div class="w" style="max-width:820px">
+<div class="w w-narrow">
 
   <!-- Component 1: Phone -->
-  <div style="display:grid;grid-template-columns:200px 1fr;gap:1.5rem;margin-bottom:1.5rem;align-items:start">
-    <div style="text-align:right;padding-top:.15rem">
-      <div style="font-size:.58rem;text-transform:uppercase;letter-spacing:.15em;color:var(--em);font-weight:700;margin-bottom:.2rem">Step 1</div>
-      <div style="font-size:.95rem;font-weight:700;font-family:var(--head);color:var(--ink)">Your Phone</div>
-      <div style="font-size:.72rem;color:var(--dim);margin-top:.2rem">Required for everything</div>
+  <div class="step reveal">
+    <div class="step-aside">
+      <div class="step-num em">Step 1</div>
+      <div class="step-title">Your Phone</div>
+      <div class="step-sub">Required for everything</div>
     </div>
-    <div style="background:var(--white);border:1.5px solid var(--em-bdr);border-radius:var(--r);padding:1.1rem 1.25rem">
-      <p style="font-size:.82rem;color:var(--sub);margin-bottom:.6rem">Download the <strong style="color:var(--ink)">Aion app</strong> from the App Store (iOS) or Play Store (Android). It runs the bridge server.</p>
-      <div style="font-size:.78rem;color:var(--sub);display:flex;flex-direction:column;gap:.2rem;margin-bottom:.6rem">
-        <span>1. Open <strong style="color:var(--ink)">Settings → Bridge</strong> and tap <strong style="color:var(--ink)">Start</strong></span>
-        <span>2. Note the <strong style="color:var(--ink)">6-digit pairing code</strong> shown on screen (changes each session)</span>
-        <span>3. Note your <strong style="color:var(--ink)">phone's IP address</strong> shown below the code</span>
+    <div class="step-body em">
+      <p>Download the <strong>Aion app</strong> from the App Store (iOS) or Play Store (Android). It runs the bridge server.</p>
+      <div class="step-list">
+        <span>1. Open <strong>Settings → Bridge</strong> and tap <strong>Start</strong></span>
+        <span>2. Note the <strong>6-digit pairing code</strong> shown on screen (changes each session)</span>
+        <span>3. Note your <strong>phone's IP address</strong> shown below the code</span>
       </div>
-      <div style="margin-top:.4rem;padding:.5rem .75rem;background:var(--em-bg);border-radius:6px;font-size:.73rem;color:var(--sub);margin-bottom:.5rem">
-        <strong style="color:var(--ink)">WiFi mode:</strong> Phone and PC on the same network. Connect to <code style="font-size:.7rem">wss://&lt;phone-ip&gt;:8420</code>
+      <div class="callout em">
+        <strong>WiFi mode:</strong> Phone and PC on the same network. Connect to <code>wss://&lt;phone-ip&gt;:8420</code>
       </div>
-      <div style="padding:.5rem .75rem;background:var(--bg2);border:1px solid var(--line);border-radius:6px;font-size:.73rem;color:var(--sub)">
-        <strong style="color:var(--ink)">USB mode (no network needed):</strong> In the bridge screen, switch to USB tab, then run on your PC:<br>
-        <code style="font-size:.7rem;display:block;margin-top:.3rem">iproxy 8420 8420</code><span style="font-size:.66rem;color:var(--dim)">iOS (requires libimobiledevice)</span><br>
-        <code style="font-size:.7rem;display:block;margin-top:.25rem">adb forward tcp:8420 tcp:8420</code><span style="font-size:.66rem;color:var(--dim)">Android (requires ADB)</span><br>
-        <span style="margin-top:.3rem;display:inline-block">Then connect to <code style="font-size:.7rem">wss://localhost:8420</code></span>
+      <div class="callout neutral">
+        <strong>USB mode (no network needed):</strong> In the bridge screen, switch to USB tab, then run on your PC:<br>
+        <code style="display:inline-block;margin-top:.3rem">iproxy 8420 8420</code> <span style="font-size:.66rem;color:var(--dim)">iOS (requires libimobiledevice)</span><br>
+        <code style="display:inline-block;margin-top:.25rem">adb forward tcp:8420 tcp:8420</code> <span style="font-size:.66rem;color:var(--dim)">Android (requires ADB)</span><br>
+        <span style="margin-top:.3rem;display:inline-block">Then connect to <code>wss://localhost:8420</code></span>
       </div>
     </div>
   </div>
 
   <!-- Component 2: Bridge Server -->
-  <div style="display:grid;grid-template-columns:200px 1fr;gap:1.5rem;margin-bottom:1.5rem;align-items:start">
-    <div style="text-align:right;padding-top:.15rem">
-      <div style="font-size:.58rem;text-transform:uppercase;letter-spacing:.15em;color:var(--warn);font-weight:700;margin-bottom:.2rem">Step 2 (optional)</div>
-      <div style="font-size:.95rem;font-weight:700;font-family:var(--head);color:var(--ink)">Bridge Server</div>
-      <div style="font-size:.72rem;color:var(--dim);margin-top:.2rem">REST API + browser console</div>
+  <div class="step reveal">
+    <div class="step-aside">
+      <div class="step-num warn">Step 2 (optional)</div>
+      <div class="step-title">Bridge Server</div>
+      <div class="step-sub">REST API + browser console</div>
     </div>
-    <div style="background:var(--white);border:1.5px solid rgba(245,158,11,.2);border-radius:var(--r);padding:1.1rem 1.25rem">
-      <p style="font-size:.82rem;color:var(--sub);margin-bottom:.6rem">Runs <strong style="color:var(--ink)">aion-open</strong> on your PC. Exposes your phone's FHIR data as a standard REST API at <code>localhost:3000</code>. Includes a browser console, CLI, and code generator.</p>
-      <div style="font-size:.73rem;color:var(--dim);margin-bottom:.4rem;font-weight:600;font-family:var(--head)">Requires: Node.js 18+</div>
-      <div class="universe-pre" style="font-size:.75rem;padding:1rem 1.25rem;margin:0 0 .5rem;line-height:2"><span class="comment"># One-time setup</span>
+    <div class="step-body warn">
+      <p>Runs <strong>aion-open</strong> on your PC. Exposes your phone's FHIR data as a standard REST API at <code>localhost:3000</code>. Includes a browser console, CLI, and code generator.</p>
+      <div class="req">Requires: Node.js 18+</div>
+      <div class="universe-pre" style="line-height:2"><span class="comment"># One-time setup</span>
 <span class="cmd">git clone</span> <span class="str">https://github.com/easpencer/aion-open</span>
 <span class="cmd">cd</span> aion-open &amp;&amp; npm install
 
@@ -346,34 +717,34 @@ footer a{color:var(--sub)}
 <span class="comment"># USB (Android) — run adb forward first, then:</span>
 <span class="cmd">adb</span> forward tcp:8420 tcp:8420
 <span class="cmd">BRIDGE_URL</span>=<span class="str">wss://localhost:8420</span> <span class="cmd">PAIRING_CODE</span>=<span class="str">123456</span> npm start</div>
-      <p style="font-size:.75rem;color:var(--sub);margin-top:.4rem">Then open <a href="http://localhost:3000">http://localhost:3000</a> in any browser. No login, no cloud.</p>
+      <p style="margin-top:.65rem">Then open <a href="http://localhost:3000">http://localhost:3000</a> in any browser. No login, no cloud.</p>
     </div>
   </div>
 
   <!-- Component 3: MCP -->
-  <div style="display:grid;grid-template-columns:200px 1fr;gap:1.5rem;margin-bottom:1.5rem;align-items:start">
-    <div style="text-align:right;padding-top:.15rem">
-      <div style="font-size:.58rem;text-transform:uppercase;letter-spacing:.15em;color:var(--code);font-weight:700;margin-bottom:.2rem">Step 3 (optional)</div>
-      <div style="font-size:.95rem;font-weight:700;font-family:var(--head);color:var(--ink)">MCP Server</div>
-      <div style="font-size:.72rem;color:var(--dim);margin-top:.2rem">AI assistants ↔ your health data</div>
+  <div class="step reveal">
+    <div class="step-aside">
+      <div class="step-num code">Step 3 (optional)</div>
+      <div class="step-title">MCP Server</div>
+      <div class="step-sub">AI assistants ↔ your health data</div>
     </div>
-    <div style="background:var(--white);border:1.5px solid var(--code-bdr);border-radius:var(--r);padding:1.1rem 1.25rem">
-      <p style="font-size:.82rem;color:var(--sub);margin-bottom:.4rem">Connects <strong style="color:var(--ink)">Claude Code, Cursor, Windsurf, Gemini CLI, Zed,</strong> and other MCP-compatible assistants directly to your phone's bridge. Gives your AI tools to query FHIR data, run analysis, and write observations back &mdash; live, from real data on your phone.</p>
-      <div style="font-size:.73rem;color:var(--dim);margin-bottom:.6rem;font-weight:600;font-family:var(--head)">Requires: Node.js 18+. No bridge server needed &mdash; connects directly to your phone.</div>
+    <div class="step-body code">
+      <p>Connects <strong>Claude Code, Cursor, Windsurf, Gemini CLI, Zed,</strong> and other MCP-compatible assistants directly to your phone's bridge. Gives your AI tools to query FHIR data, run analysis, and write observations back &mdash; live, from real data on your phone.</p>
+      <div class="req">Requires: Node.js 18+. No bridge server needed &mdash; connects directly to your phone.</div>
 
-      <p style="font-size:.78rem;color:var(--sub);margin-bottom:.35rem"><strong style="color:var(--ink)">One command</strong> — auto-discovers your phone, tests the connection, and configures all installed AI clients at once:</p>
-      <div class="universe-pre" style="font-size:.8rem;padding:.85rem 1.25rem;margin:0 0 .75rem"><button class="cpb" onclick="cpb(this)">Copy</button><span class="cmd">npx</span> <span class="str">aion-bridge-mcp</span> <span class="flag">setup</span></div>
+      <p><strong>One command</strong> — auto-discovers your phone, tests the connection, and configures all installed AI clients at once:</p>
+      <div class="universe-pre" style="font-size:.82rem;padding:.95rem 1.4rem"><button class="cpb" onclick="cpb(this)">Copy</button><span class="cmd">npx</span> <span class="str">aion-bridge-mcp</span> <span class="flag">setup</span></div>
 
-      <p style="font-size:.72rem;color:var(--sub);margin-bottom:.25rem">The setup wizard will:</p>
-      <div style="font-size:.73rem;color:var(--sub);display:flex;flex-direction:column;gap:.15rem;margin-bottom:.65rem;padding-left:.25rem">
+      <p style="margin-top:.75rem">The setup wizard will:</p>
+      <div class="step-list" style="padding-left:.25rem">
         <span>1. Search for your phone on the local network (Bonjour + ARP + subnet scan)</span>
         <span>2. Prompt for the 6-digit pairing code from Aion Settings → Bridge</span>
         <span>3. Test the connection and save config</span>
         <span>4. Detect every installed AI client and write configs automatically</span>
       </div>
 
-      <p style="font-size:.72rem;color:var(--sub);margin-bottom:.35rem">Other commands:</p>
-      <div class="universe-pre" style="font-size:.75rem;padding:.75rem 1.25rem;margin:0 0 .5rem;line-height:2"><button class="cpb" onclick="cpb(this)">Copy</button><span class="comment"># Fix a broken or stale config</span>
+      <p>Other commands:</p>
+      <div class="universe-pre" style="line-height:2"><button class="cpb" onclick="cpb(this)">Copy</button><span class="comment"># Fix a broken or stale config</span>
 <span class="cmd">npx</span> aion-bridge-mcp <span class="flag">repair</span>
 
 <span class="comment"># Find your phone on the network</span>
@@ -383,8 +754,8 @@ footer a{color:var(--sub)}
 <span class="cmd">npx</span> aion-bridge-mcp <span class="flag">export</span> <span class="str">--output health.json</span>
 <span class="cmd">npx</span> aion-bridge-mcp <span class="flag">export</span> <span class="str">--type Observation --output vitals.json</span></div>
 
-      <p style="font-size:.72rem;color:var(--sub);margin-bottom:.25rem">USB mode with MCP — run on your PC first, then use <code style="font-size:.68rem">wss://localhost:8420</code>:</p>
-      <div class="universe-pre" style="font-size:.75rem;padding:.65rem 1.25rem;margin:0 0 .65rem;line-height:2"><span class="comment"># iOS</span>
+      <p style="margin-top:.75rem">USB mode with MCP — run on your PC first, then use <code style="font-size:.68rem">wss://localhost:8420</code>:</p>
+      <div class="universe-pre" style="line-height:2"><span class="comment"># iOS</span>
 <span class="cmd">iproxy</span> 8420 8420
 
 <span class="comment"># Android</span>
@@ -393,116 +764,120 @@ footer a{color:var(--sub)}
 <span class="comment"># Then set in .mcp.json env</span>
 <span class="str">"AION_BRIDGE_URL": "wss://localhost:8420"</span></div>
 
-      <p style="font-size:.75rem;color:var(--sub)">Restart your AI assistant, then ask: <em style="color:var(--ink)">&ldquo;What are my BP trends?&rdquo;</em> or <em style="color:var(--ink)">&ldquo;What medications am I on?&rdquo;</em></p>
+      <p style="margin-top:.65rem">Restart your AI assistant, then ask: <em>&ldquo;What are my BP trends?&rdquo;</em> or <em>&ldquo;What medications am I on?&rdquo;</em></p>
     </div>
   </div>
 
   <!-- Component 4: Desktop Companion -->
-  <div style="display:grid;grid-template-columns:200px 1fr;gap:1.5rem;margin-bottom:2rem;align-items:start">
-    <div style="text-align:right;padding-top:.15rem">
-      <div style="font-size:.58rem;text-transform:uppercase;letter-spacing:.15em;color:#ec4899;font-weight:700;margin-bottom:.2rem">Step 4 (optional)</div>
-      <div style="font-size:.95rem;font-weight:700;font-family:var(--head);color:var(--ink)">Desktop Companion</div>
-      <div style="font-size:.72rem;color:var(--dim);margin-top:.2rem">PC activity → health graph</div>
+  <div class="step reveal" style="margin-bottom:2rem">
+    <div class="step-aside">
+      <div class="step-num pink">Step 4 (optional)</div>
+      <div class="step-title">Desktop Companion</div>
+      <div class="step-sub">PC activity → health graph</div>
     </div>
-    <div style="background:var(--white);border:1.5px solid rgba(236,72,153,.2);border-radius:var(--r);padding:1.1rem 1.25rem">
-      <p style="font-size:.82rem;color:var(--sub);margin-bottom:.6rem">A tray app for Mac/Windows. Captures computer activity and sends it to your health graph &mdash; anonymized, categories only, no content. Your graph discovers correlations like <em style="color:var(--ink)">&ldquo;BP higher on weeks with &gt;6h meetings.&rdquo;</em></p>
-      <div style="font-size:.78rem;color:var(--sub);display:flex;flex-direction:column;gap:.2rem;margin-bottom:.65rem">
-        <div style="display:flex;gap:1rem;flex-wrap:wrap">
-          <div style="display:flex;flex-direction:column;gap:.2rem">
+    <div class="step-body pink">
+      <p>A tray app for Mac/Windows. Captures computer activity and sends it to your health graph &mdash; anonymized, categories only, no content. Your graph discovers correlations like <em>&ldquo;BP higher on weeks with &gt;6h meetings.&rdquo;</em></p>
+      <div class="step-list">
+        <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
+          <div style="display:flex;flex-direction:column;gap:.3rem">
             <span><span class="check">&#10003;</span> Screen time, meetings, breaks</span>
             <span><span class="check">&#10003;</span> App categories (never specific names)</span>
             <span><span class="check">&#10003;</span> Typing intensity: high / medium / low</span>
           </div>
-          <div style="display:flex;flex-direction:column;gap:.2rem">
+          <div style="display:flex;flex-direction:column;gap:.3rem">
             <span><span class="check">&#10003;</span> Correlates with BP, HRV, sleep, glucose</span>
             <span><span class="check">&#10003;</span> Configures AI clients (MCP) in one click</span>
-            <span style="color:var(--red)">&#10007; Never: URLs, app names, content, keystrokes</span>
+            <span style="color:var(--red)"><span class="cross">&#10007;</span> Never: URLs, app names, content, keystrokes</span>
           </div>
         </div>
       </div>
-      <div style="padding:.45rem .75rem;background:var(--em-bg);border:1px solid var(--em-bdr);border-radius:6px;font-size:.72rem;color:var(--sub);margin-bottom:.6rem">
-        <strong style="color:var(--ink)">One-tap connect:</strong> In Aion → Settings → Bridge, tap <strong style="color:var(--ink)">Copy Connection String</strong>. This copies an <code style="font-size:.67rem">aion://</code> URL that opens the desktop app and pre-fills the address and pairing code automatically.
+      <div class="callout em">
+        <strong>One-tap connect:</strong> In Aion → Settings → Bridge, tap <strong>Copy Connection String</strong>. This copies an <code style="font-size:.67rem">aion://</code> URL that opens the desktop app and pre-fills the address and pairing code automatically.
       </div>
       <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem">
-        <a href="https://github.com/easpencer/Aion/releases" class="btn btn-p" style="font-size:.72rem;padding:.5rem 1rem;background:#ec4899;border-color:#ec4899">&#8595; Download for Mac (.dmg)</a>
-        <a href="https://github.com/easpencer/Aion/releases" class="btn btn-s" style="font-size:.72rem;padding:.5rem 1rem">&#8595; Download for Windows (.exe)</a>
+        <a href="https://github.com/easpencer/Aion/releases" class="btn btn-pink btn-sm">&#8595; Download for Mac (.dmg)</a>
+        <a href="https://github.com/easpencer/Aion/releases" class="btn btn-s btn-sm">&#8595; Download for Windows (.exe)</a>
       </div>
-      <p style="font-size:.65rem;color:var(--dim)">Run from source: <code style="font-size:.63rem">cd aion-desktop &amp;&amp; npm install &amp;&amp; npm start</code></p>
+      <p class="note">Run from source: <code style="font-size:.63rem">cd aion-desktop &amp;&amp; npm install &amp;&amp; npm start</code></p>
     </div>
   </div>
 
-  <div style="text-align:center;display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:.5rem">
-    <a href="https://github.com/easpencer/Aion/releases" class="btn btn-p" style="font-size:.8rem">&#8595; Download Bridge App</a>
-    <a href="https://github.com/easpencer/Aion" class="btn btn-s" style="font-size:.8rem">View Source on GitHub</a>
+  <div style="text-align:center;display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:.5rem" class="reveal">
+    <a href="https://github.com/easpencer/Aion/releases" class="btn btn-p">&#8595; Download Bridge App</a>
+    <a href="https://github.com/easpencer/Aion" class="btn btn-s">View Source on GitHub</a>
   </div>
 </div>
 </section>
 <hr class="sep">
 
-<!-- ═══ FOUR WAYS ═══ -->
+<!-- ═══ CAPABILITIES ═══ -->
 <section>
 <div class="w">
-  <div class="lbl">Everything you can do</div>
-  <h2>Use it, build on it, make it yours</h2>
-  <p class="lead" style="margin-bottom:1.5rem">The app works standalone. The bridge opens your data to your entire PC ecosystem. And because it&rsquo;s a standard API, you can build anything on top of it.</p>
+  <div class="sec-head reveal">
+    <div class="lbl">Everything you can do</div>
+    <h2>Use it, build on it, make it yours</h2>
+    <p class="lead" style="margin-top:.75rem">The app works standalone. The bridge opens your data to your entire PC ecosystem. And because it&rsquo;s a standard API, you can build anything on top of it.</p>
+  </div>
 
-  <div style="font-size:.6rem;text-transform:uppercase;letter-spacing:.15em;color:var(--em);font-weight:600;margin-bottom:.5rem">On your phone</div>
-  <div class="grid-3" style="margin-bottom:1.5rem">
-    <div class="card">
-      <h3 style="font-size:.95rem;margin-bottom:.35rem">Health Dashboard</h3>
-      <p style="font-size:.82rem;color:var(--sub)">Vitals, conditions, medications, labs &mdash; all in one place. Tap any metric for history and trends.</p>
+  <div class="subhead em reveal">On your phone</div>
+  <div class="grid-3" style="margin-bottom:2rem">
+    <div class="card reveal">
+      <h3 style="font-size:.98rem">Health Dashboard</h3>
+      <p class="card-body" style="margin-bottom:0">Vitals, conditions, medications, labs &mdash; all in one place. Tap any metric for history and trends.</p>
     </div>
-    <div class="card">
-      <h3 style="font-size:.95rem;margin-bottom:.35rem">Knowledge Graph</h3>
-      <p style="font-size:.82rem;color:var(--sub)">See how your health connects. Interactive graph of conditions, medications, vitals, lifestyle. Tap to explore.</p>
+    <div class="card reveal">
+      <h3 style="font-size:.98rem">Knowledge Graph</h3>
+      <p class="card-body" style="margin-bottom:0">See how your health connects. Interactive graph of conditions, medications, vitals, lifestyle. Tap to explore.</p>
     </div>
-    <div class="card">
-      <h3 style="font-size:.95rem;margin-bottom:.35rem">AI Health Agent</h3>
-      <p style="font-size:.82rem;color:var(--sub)">Ask health questions in natural language. On-device AI reasons over your complete FHIR data. Works offline.</p>
+    <div class="card reveal">
+      <h3 style="font-size:.98rem">AI Health Agent</h3>
+      <p class="card-body" style="margin-bottom:0">Ask health questions in natural language. On-device AI reasons over your complete FHIR data. Works offline.</p>
     </div>
   </div>
 
-  <div style="font-size:.6rem;text-transform:uppercase;letter-spacing:.15em;color:var(--code);font-weight:600;margin-bottom:.5rem">On your PC (via bridge)</div>
+  <div class="subhead code reveal">On your PC (via bridge)</div>
   <div class="grid-2">
-    <div class="card">
-      <h3 style="font-size:.95rem;margin-bottom:.35rem">Browser Explorer (zero install)</h3>
-      <p style="font-size:.82rem;color:var(--sub)">Open the URL shown on your phone in any browser. Enter pairing code. Browse and export your health data. No install, no code.</p>
+    <div class="card reveal">
+      <h3 style="font-size:.98rem">Browser Explorer (zero install)</h3>
+      <p class="card-body" style="margin-bottom:0">Open the URL shown on your phone in any browser. Enter pairing code. Browse and export your health data. No install, no code.</p>
     </div>
-    <div class="card">
-      <h3 style="font-size:.95rem;margin-bottom:.35rem">REST API, CLI, Notebooks</h3>
-      <p style="font-size:.82rem;color:var(--sub)">For developers: clone <a href="https://github.com/easpencer/aion-open">aion-open</a> for <code>curl</code>, terminal CLI, web console, Jupyter notebooks, and full programmatic access.</p>
+    <div class="card reveal">
+      <h3 style="font-size:.98rem">REST API, CLI, Notebooks</h3>
+      <p class="card-body" style="margin-bottom:0">For developers: clone <a href="https://github.com/easpencer/aion-open">aion-open</a> for <code>curl</code>, terminal CLI, web console, Jupyter notebooks, and full programmatic access.</p>
     </div>
-    <div class="card">
-      <h3 style="font-size:.95rem;margin-bottom:.35rem">MCP for Any AI Assistant</h3>
-      <p style="font-size:.82rem;color:var(--sub)">One command sets up Claude Code, Cursor, Windsurf, Gemini CLI, Zed, and more. Your AI gets tools to query FHIR data, analyze trends, and write observations — live, from your phone. <code style="font-size:.7rem">npx aion-bridge-mcp setup</code> &nbsp;&middot;&nbsp; <code style="font-size:.7rem">npx aion-bridge-mcp repair</code></p>
+    <div class="card reveal">
+      <h3 style="font-size:.98rem">MCP for Any AI Assistant</h3>
+      <p class="card-body" style="margin-bottom:0">One command sets up Claude Code, Cursor, Windsurf, Gemini CLI, Zed, and more. Your AI gets tools to query FHIR data, analyze trends, and write observations — live, from your phone. <code style="font-size:.7rem">npx aion-bridge-mcp setup</code> &nbsp;&middot;&nbsp; <code style="font-size:.7rem">npx aion-bridge-mcp repair</code></p>
     </div>
-    <div class="card">
-      <h3 style="font-size:.95rem;margin-bottom:.35rem">Desktop Companion <span class="badge badge-dev" style="vertical-align:middle">In development</span></h3>
-      <p style="font-size:.82rem;color:var(--sub)">An Electron tray app (Mac/Windows) that sends anonymized computer activity to your health graph. Screen time, meetings, breaks, app categories &mdash; correlated with your vitals. Available now as source code; packaged installers coming soon.</p>
+    <div class="card reveal">
+      <h3 style="font-size:.98rem">Desktop Companion <span class="badge badge-dev" style="vertical-align:middle">In development</span></h3>
+      <p class="card-body" style="margin-bottom:0">An Electron tray app (Mac/Windows) that sends anonymized computer activity to your health graph. Screen time, meetings, breaks, app categories &mdash; correlated with your vitals. Available now as source code; packaged installers coming soon.</p>
     </div>
   </div>
 
   <!-- Build on it -->
-  <div style="margin-top:2rem;padding:1.5rem;border-radius:var(--r12);background:var(--em-bg);border:1px solid var(--em-bdr)">
-    <h3 style="font-size:.95rem;color:var(--em);margin-bottom:.5rem">Build whatever you imagine</h3>
-    <p style="font-size:.82rem;color:var(--sub);line-height:1.7">The bridge is a standard REST API serving your FHIR health data. Build a dashboard for your family. Create a Jupyter notebook that correlates your medications with sleep. Train a model on your own vitals. Write a cron job that alerts you when your blood pressure trends up. Pipe your data to any tool that speaks HTTP. We give you the data layer &mdash; you decide what to build on it.</p>
+  <div class="capture reveal">
+    <h3>Build whatever you imagine</h3>
+    <p>The bridge is a standard REST API serving your FHIR health data. Build a dashboard for your family. Create a Jupyter notebook that correlates your medications with sleep. Train a model on your own vitals. Write a cron job that alerts you when your blood pressure trends up. Pipe your data to any tool that speaks HTTP. We give you the data layer &mdash; you decide what to build on it.</p>
   </div>
 </div>
 </section>
 <hr class="sep">
 
 <!-- ═══ TIERS ═══ -->
-<section style="background:var(--bg)">
+<section style="background:var(--paper2)">
 <div class="w">
-  <div class="lbl">Get Aion</div>
-  <h2>Three tiers, all run on your devices</h2>
-  <p class="lead" style="margin-bottom:1.5rem">Download from the app store. Start with Core for free.</p>
+  <div class="sec-head reveal">
+    <div class="lbl">Get Aion</div>
+    <h2>Three tiers, all run on your devices</h2>
+    <p class="lead" style="margin-top:.6rem">Download from the app store. Start with Core for free.</p>
+  </div>
   <div class="grid-3">
-    <div class="card" style="border-color:var(--em-bdr);border-width:1.5px">
-      <div style="font-size:.58rem;text-transform:uppercase;letter-spacing:.18em;color:var(--em);font-weight:700;margin-bottom:.5rem">Free</div>
-      <h3 style="font-size:1.05rem">Core</h3>
-      <p style="font-size:.8rem;color:var(--sub);margin:.5rem 0 .75rem">The open source foundation. Health data store, bridge API, simple UI.</p>
-      <div style="font-size:.78rem;color:var(--sub);display:flex;flex-direction:column;gap:.3rem">
+    <div class="card tier featured reveal">
+      <div class="tier-price em">Free</div>
+      <h3>Core</h3>
+      <p class="tier-desc">The source-available foundation. Health data store, bridge API, simple UI.</p>
+      <div class="feat">
         <span><span class="check">&#10003;</span>FHIR R4 knowledge graph</span>
         <span><span class="check">&#10003;</span>Bridge auto-starts (REST + CLI + Console)</span>
         <span><span class="check">&#10003;</span>TLS encrypted, de-identified</span>
@@ -510,11 +885,11 @@ footer a{color:var(--sub)}
         <span style="color:var(--dim)">&#8211; Bring your own AI models</span>
       </div>
     </div>
-    <div class="card">
-      <div style="font-size:.58rem;text-transform:uppercase;letter-spacing:.18em;color:var(--code);font-weight:700;margin-bottom:.5rem">Upgrade</div>
-      <h3 style="font-size:1.05rem">Elite</h3>
-      <p style="font-size:.8rem;color:var(--sub);margin:.5rem 0 .75rem">Full app. Everything runs locally &mdash; add your own API keys for the AI Chorus.</p>
-      <div style="font-size:.78rem;color:var(--sub);display:flex;flex-direction:column;gap:.3rem">
+    <div class="card tier reveal">
+      <div class="tier-price code">Upgrade</div>
+      <h3>Elite</h3>
+      <p class="tier-desc">Full app. Everything runs locally &mdash; add your own API keys for the AI Chorus.</p>
+      <div class="feat">
         <span><span class="check">&#10003;</span>Everything in Core</span>
         <span><span class="check">&#10003;</span>Health briefings + clinical reasoning</span>
         <span><span class="check">&#10003;</span>AI Chorus (multi-model consensus)</span>
@@ -522,11 +897,11 @@ footer a{color:var(--sub)}
         <span style="color:var(--dim)">&#8211; You provide API keys</span>
       </div>
     </div>
-    <div class="card">
-      <div style="font-size:.58rem;text-transform:uppercase;letter-spacing:.18em;color:var(--warn);font-weight:700;margin-bottom:.5rem">Subscription</div>
-      <h3 style="font-size:1.05rem">Concierge</h3>
-      <p style="font-size:.8rem;color:var(--sub);margin:.5rem 0 .75rem">Full app plus all AI models included. No keys needed &mdash; everything works out of the box.</p>
-      <div style="font-size:.78rem;color:var(--sub);display:flex;flex-direction:column;gap:.3rem">
+    <div class="card tier reveal">
+      <div class="tier-price warn">Subscription</div>
+      <h3>Concierge</h3>
+      <p class="tier-desc">Full app plus all AI models included. No keys needed &mdash; everything works out of the box.</p>
+      <div class="feat">
         <span><span class="check">&#10003;</span>Everything in Elite</span>
         <span><span class="check">&#10003;</span>All AI models included</span>
         <span><span class="check">&#10003;</span>Chorus pre-configured</span>
@@ -542,24 +917,26 @@ footer a{color:var(--sub)}
 <!-- ═══ MODELS ═══ -->
 <section>
 <div class="w">
-  <div class="lbl">Recommended Models</div>
-  <h2>For Ollama on your PC</h2>
-  <p class="lead" style="margin-bottom:1.25rem">The bridge auto-detects installed models. These work well with the analyze endpoint.</p>
+  <div class="sec-head reveal">
+    <div class="lbl">Recommended Models</div>
+    <h2>For Ollama on your PC</h2>
+    <p class="lead" style="margin-top:.6rem">The bridge auto-detects installed models. These work well with the analyze endpoint.</p>
+  </div>
   <div class="grid-2">
-    <div class="card">
-      <h3 style="font-size:.9rem;margin-bottom:.6rem">Best for Most PCs</h3>
-      <div style="font-size:.8rem;color:var(--sub);display:flex;flex-direction:column;gap:.5rem">
-        <div><strong style="color:var(--em)">Llama 4 Scout</strong> &mdash; 17B active (MoE). Multimodal. 10M context. ~12GB.<br><code style="font-size:.72rem">ollama pull llama4:scout</code></div>
-        <div><strong style="color:var(--ink)">Qwen 3 8B</strong> &mdash; Best 8B for tool calling. ~5GB.<br><code style="font-size:.72rem">ollama pull qwen3:8b</code></div>
-        <div><strong style="color:var(--ink)">Gemma 3 4B</strong> &mdash; Runs on CPU. No GPU needed.<br><code style="font-size:.72rem">ollama pull gemma3:4b</code></div>
+    <div class="card reveal">
+      <h3 style="font-size:.95rem;margin-bottom:.85rem">Best for Most PCs</h3>
+      <div>
+        <div class="model-row"><strong style="color:var(--em-deep)">Llama 4 Scout</strong> &mdash; 17B active (MoE). Multimodal. 10M context. ~12GB.<br><code>ollama pull llama4:scout</code></div>
+        <div class="model-row"><strong>Qwen 3 8B</strong> &mdash; Best 8B for tool calling. ~5GB.<br><code>ollama pull qwen3:8b</code></div>
+        <div class="model-row"><strong>Gemma 3 4B</strong> &mdash; Runs on CPU. No GPU needed.<br><code>ollama pull gemma3:4b</code></div>
       </div>
     </div>
-    <div class="card">
-      <h3 style="font-size:.9rem;margin-bottom:.6rem">High-End (20GB+ VRAM)</h3>
-      <div style="font-size:.8rem;color:var(--sub);display:flex;flex-direction:column;gap:.5rem">
-        <div><strong style="color:var(--code)">Llama 4 Maverick</strong> &mdash; 128 experts, top-tier multimodal. ~24GB.<br><code style="font-size:.72rem">ollama pull llama4:maverick</code></div>
-        <div><strong style="color:var(--ink)">Qwen 3 32B</strong> &mdash; Excellent tool calling + reasoning. ~20GB.<br><code style="font-size:.72rem">ollama pull qwen3:32b</code></div>
-        <div><strong style="color:var(--ink)">Phi-4 14B</strong> &mdash; Strong reasoning model. ~8GB.<br><code style="font-size:.72rem">ollama pull phi4:14b</code></div>
+    <div class="card reveal">
+      <h3 style="font-size:.95rem;margin-bottom:.85rem">High-End (20GB+ VRAM)</h3>
+      <div>
+        <div class="model-row"><strong style="color:var(--code)">Llama 4 Maverick</strong> &mdash; 128 experts, top-tier multimodal. ~24GB.<br><code>ollama pull llama4:maverick</code></div>
+        <div class="model-row"><strong>Qwen 3 32B</strong> &mdash; Excellent tool calling + reasoning. ~20GB.<br><code>ollama pull qwen3:32b</code></div>
+        <div class="model-row"><strong>Phi-4 14B</strong> &mdash; Strong reasoning model. ~8GB.<br><code>ollama pull phi4:14b</code></div>
       </div>
     </div>
   </div>
@@ -568,13 +945,15 @@ footer a{color:var(--sub)}
 <hr class="sep">
 
 <!-- ═══ API ═══ -->
-<section style="background:var(--bg)">
+<section style="background:var(--paper2)">
 <div class="w">
-  <div class="lbl">REST API</div>
-  <h2>Endpoints</h2>
-  <p class="lead" style="margin-bottom:1.25rem">All return JSON. Connect first, then query freely.</p>
-  <div class="card" style="padding:1rem 1.5rem">
-    <div class="api-row" style="border-bottom:1px solid var(--line2);padding-bottom:.4rem;margin-bottom:.2rem"><span style="font-size:.6rem;font-weight:600;color:var(--dim);font-family:var(--head)">METHOD</span><span style="font-size:.6rem;font-weight:600;color:var(--dim);font-family:var(--head)">ENDPOINT</span><span style="font-size:.6rem;font-weight:600;color:var(--dim);font-family:var(--head)">DESCRIPTION</span></div>
+  <div class="sec-head reveal">
+    <div class="lbl">REST API</div>
+    <h2>Endpoints</h2>
+    <p class="lead" style="margin-top:.6rem">All return JSON. Connect first, then query freely.</p>
+  </div>
+  <div class="api-table reveal">
+    <div class="api-row head"><span>Method</span><span>Endpoint</span><span>Description</span></div>
     <div class="api-row"><span class="method get">GET</span><span class="api-path">/api/{type}</span><span class="api-desc">Query FHIR resources. Params: <code>category</code>, <code>limit</code>, <code>start</code>, <code>end</code></span></div>
     <div class="api-row"><span class="method get">GET</span><span class="api-path">/api/{type}/{id}</span><span class="api-desc">Get a single resource by ID</span></div>
     <div class="api-row"><span class="method post">POST</span><span class="api-path">/api/analyze</span><span class="api-desc">Ask a health question. Body: <code>{"question":"..."}</code></span></div>
@@ -593,11 +972,13 @@ footer a{color:var(--sub)}
 <!-- ═══ CODE ═══ -->
 <section>
 <div class="w">
-  <div class="lbl">Code Examples</div>
-  <h2>Build with any language</h2>
-  <p class="lead" style="margin-bottom:1.5rem">Standard HTTP. No SDK needed.</p>
+  <div class="sec-head reveal">
+    <div class="lbl">Code Examples</div>
+    <h2>Build with any language</h2>
+    <p class="lead" style="margin-top:.6rem">Standard HTTP. No SDK needed.</p>
+  </div>
   <div class="grid-2">
-    <div><div style="font-size:.78rem;color:var(--dim);font-weight:500;margin-bottom:.4rem;font-family:var(--head)">Python</div>
+    <div class="reveal"><div class="code-label py">Python</div>
       <pre><button class="cpb" onclick="cpb(this)">Copy</button>import requests
 
 resp = requests.get(
@@ -617,7 +998,7 @@ resp = requests.post(
 )
 print(resp.json().get("answer", ""))</pre>
     </div>
-    <div><div style="font-size:.78rem;color:var(--dim);font-weight:500;margin-bottom:.4rem;font-family:var(--head)">JavaScript</div>
+    <div class="reveal"><div class="code-label js">JavaScript</div>
       <pre><button class="cpb" onclick="cpb(this)">Copy</button>const resp = await fetch(
   "http://localhost:3000/api/Observation?category=vital-signs"
 );
@@ -643,32 +1024,36 @@ console.log((await analysis.json()).answer);</pre>
 <hr class="sep">
 
 <!-- ═══ SECURITY ═══ -->
-<section style="background:var(--bg)">
+<section style="background:var(--paper2)">
 <div class="w">
-  <div class="lbl">Security</div>
-  <h2>Private by design</h2>
-  <p class="lead" style="margin-bottom:1rem">Data never leaves your network. Multiple layers of protection.</p>
-  <div style="display:flex;flex-wrap:wrap;gap:.5rem">
-    <span style="display:flex;align-items:center;gap:.4rem;padding:.5rem .85rem;border-radius:8px;background:var(--white);border:1px solid var(--line);font-size:.78rem;color:var(--sub);box-shadow:var(--shadow)"><span class="check">&#10003;</span>TLS encryption</span>
-    <span style="display:flex;align-items:center;gap:.4rem;padding:.5rem .85rem;border-radius:8px;background:var(--white);border:1px solid var(--line);font-size:.78rem;color:var(--sub);box-shadow:var(--shadow)"><span class="check">&#10003;</span>Pairing code auth (rate-limited)</span>
-    <span style="display:flex;align-items:center;gap:.4rem;padding:.5rem .85rem;border-radius:8px;background:var(--white);border:1px solid var(--line);font-size:.78rem;color:var(--sub);box-shadow:var(--shadow)"><span class="check">&#10003;</span>HIPAA Safe Harbor de-identification</span>
-    <span style="display:flex;align-items:center;gap:.4rem;padding:.5rem .85rem;border-radius:8px;background:var(--white);border:1px solid var(--line);font-size:.78rem;color:var(--sub);box-shadow:var(--shadow)"><span class="check">&#10003;</span>Audit log</span>
-    <span style="display:flex;align-items:center;gap:.4rem;padding:.5rem .85rem;border-radius:8px;background:var(--white);border:1px solid var(--line);font-size:.78rem;color:var(--sub);box-shadow:var(--shadow)"><span class="check">&#10003;</span>LAN-only</span>
-    <span style="display:flex;align-items:center;gap:.4rem;padding:.5rem .85rem;border-radius:8px;background:var(--white);border:1px solid var(--line);font-size:.78rem;color:var(--sub);box-shadow:var(--shadow)"><span class="check">&#10003;</span>USB mode (zero network)</span>
-    <span style="display:flex;align-items:center;gap:.4rem;padding:.5rem .85rem;border-radius:8px;background:var(--white);border:1px solid var(--line);font-size:.78rem;color:var(--sub);box-shadow:var(--shadow)"><span class="check">&#10003;</span>De-id fails closed</span>
+  <div class="sec-head reveal">
+    <div class="lbl">Security</div>
+    <h2>Private by design</h2>
+    <p class="lead" style="margin-top:.6rem">Data never leaves your network. Multiple layers of protection.</p>
+  </div>
+  <div class="chips reveal">
+    <span class="chip"><span class="check">&#10003;</span>TLS encryption</span>
+    <span class="chip"><span class="check">&#10003;</span>Pairing code auth (rate-limited)</span>
+    <span class="chip"><span class="check">&#10003;</span>HIPAA Safe Harbor de-identification</span>
+    <span class="chip"><span class="check">&#10003;</span>Audit log</span>
+    <span class="chip"><span class="check">&#10003;</span>LAN-only</span>
+    <span class="chip"><span class="check">&#10003;</span>USB mode (zero network)</span>
+    <span class="chip"><span class="check">&#10003;</span>De-id fails closed</span>
   </div>
 </div>
 </section>
 <hr class="sep">
 
 <!-- ═══ CONSOLE ═══ -->
-<section id="console" style="padding-bottom:3rem">
+<section id="console" style="padding-bottom:4rem">
 <div class="w">
-  <div class="lbl">Interactive Demo</div>
-  <h2>Explore your digital twin</h2>
-  <p class="lead" style="margin-bottom:1.25rem">Simulated health data below. <a href="#universe">Clone the repo</a> and run locally to query your real FHIR knowledge graph.</p>
+  <div class="sec-head reveal">
+    <div class="lbl">Interactive Demo</div>
+    <h2>Explore your digital twin</h2>
+    <p class="lead" style="margin-top:.6rem">Simulated health data below. <a href="#universe">Clone the repo</a> and run locally to query your real FHIR knowledge graph.</p>
+  </div>
 
-  <div class="console-wrap">
+  <div class="console-wrap reveal">
     <div class="conn">
       <div class="conn-dot off" id="cDot"></div>
       <span class="conn-lbl" id="cLbl">Disconnected</span>
@@ -688,43 +1073,43 @@ console.log((await analysis.json()).answer);</pre>
 
         <!-- Health View -->
         <div class="tp active" id="tp-health">
-          <div style="padding:1.1rem;display:flex;flex-direction:column;gap:.85rem;overflow-y:auto">
-            <div style="display:flex;align-items:center;justify-content:space-between">
-              <div><div style="font-size:1rem;font-weight:700;font-family:var(--head)">Good morning</div><div style="font-size:.72rem;color:#8888a0">Your digital twin &middot; Updated now</div></div>
-              <div style="width:34px;height:34px;border-radius:50%;background:rgba(16,185,129,.12);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:var(--em);font-family:var(--head)">82</div>
+          <div class="hv">
+            <div class="hv-top">
+              <div><div class="hv-greet">Good morning</div><div class="hv-sub">Your digital twin &middot; Updated now</div></div>
+              <div class="hv-score">82</div>
             </div>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem">
-              <div style="background:#10101a;border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.75rem">
-                <div style="font-size:.55rem;color:#55556e;text-transform:uppercase;letter-spacing:.08em;font-weight:600">Heart Rate</div>
-                <div style="display:flex;align-items:baseline;gap:.25rem;margin-top:.3rem"><span style="font-size:1.4rem;font-weight:800;color:var(--em)">72</span><span style="font-size:.65rem;color:#8888a0">bpm</span></div>
-                <div style="font-size:.55rem;color:#8888a0;margin-top:.2rem">Normal &middot; 8:30 AM</div>
+            <div class="hv-metrics">
+              <div class="hv-metric">
+                <div class="hv-mlabel">Heart Rate</div>
+                <div class="hv-mval"><span class="big" style="color:var(--em-soft)">72</span><span class="unit">bpm</span></div>
+                <div class="hv-mnote" style="color:var(--c-sub)">Normal &middot; 8:30 AM</div>
               </div>
-              <div style="background:#10101a;border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.75rem">
-                <div style="font-size:.55rem;color:#55556e;text-transform:uppercase;letter-spacing:.08em;font-weight:600">Blood Pressure</div>
-                <div style="display:flex;align-items:baseline;gap:.25rem;margin-top:.3rem"><span style="font-size:1.4rem;font-weight:800;color:var(--warn)">128</span><span style="font-size:.8rem;font-weight:600;color:#8888a0">/82</span></div>
-                <div style="font-size:.55rem;color:var(--warn);margin-top:.2rem">Elevated &middot; 8:30 AM</div>
+              <div class="hv-metric">
+                <div class="hv-mlabel">Blood Pressure</div>
+                <div class="hv-mval"><span class="big" style="color:#fbbf24">128</span><span class="unit" style="font-weight:600">/82</span></div>
+                <div class="hv-mnote" style="color:#fbbf24">Elevated &middot; 8:30 AM</div>
               </div>
-              <div style="background:#10101a;border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.75rem">
-                <div style="font-size:.55rem;color:#55556e;text-transform:uppercase;letter-spacing:.08em;font-weight:600">SpO2</div>
-                <div style="display:flex;align-items:baseline;gap:.25rem;margin-top:.3rem"><span style="font-size:1.4rem;font-weight:800;color:var(--em)">98</span><span style="font-size:.65rem;color:#8888a0">%</span></div>
-                <div style="font-size:.55rem;color:#8888a0;margin-top:.2rem">Normal &middot; 8:30 AM</div>
-              </div>
-            </div>
-            <div>
-              <div style="font-size:.6rem;font-weight:600;color:#55556e;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.08em;font-family:var(--head)">Active Conditions</div>
-              <div style="display:flex;flex-direction:column;gap:.3rem">
-                <div style="display:flex;align-items:center;gap:.5rem;padding:.5rem .65rem;background:#10101a;border:1px solid rgba(255,255,255,.06);border-radius:8px"><span style="font-size:.75rem;font-weight:500;flex:1">Type 2 Diabetes Mellitus</span><span style="font-size:.55rem;padding:.12rem .35rem;border-radius:4px;background:rgba(239,68,68,.1);color:var(--red);font-weight:600">Active</span></div>
-                <div style="display:flex;align-items:center;gap:.5rem;padding:.5rem .65rem;background:#10101a;border:1px solid rgba(255,255,255,.06);border-radius:8px"><span style="font-size:.75rem;font-weight:500;flex:1">Essential Hypertension</span><span style="font-size:.55rem;padding:.12rem .35rem;border-radius:4px;background:rgba(239,68,68,.1);color:var(--red);font-weight:600">Active</span></div>
+              <div class="hv-metric">
+                <div class="hv-mlabel">SpO2</div>
+                <div class="hv-mval"><span class="big" style="color:var(--em-soft)">98</span><span class="unit">%</span></div>
+                <div class="hv-mnote" style="color:var(--c-sub)">Normal &middot; 8:30 AM</div>
               </div>
             </div>
             <div>
-              <div style="font-size:.6rem;font-weight:600;color:#55556e;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.08em;font-family:var(--head)">Medications</div>
-              <div style="display:flex;flex-direction:column;gap:.3rem">
-                <div style="display:flex;align-items:center;gap:.5rem;padding:.5rem .65rem;background:#10101a;border:1px solid rgba(255,255,255,.06);border-radius:8px"><div style="width:28px;height:28px;border-radius:7px;background:rgba(99,102,241,.12);display:flex;align-items:center;justify-content:center;font-size:.6rem;color:#818cf8;font-weight:700;flex-shrink:0">Rx</div><div style="flex:1"><div style="font-size:.75rem;font-weight:500">Metformin 1000mg</div><div style="font-size:.6rem;color:#8888a0">Twice daily</div></div></div>
-                <div style="display:flex;align-items:center;gap:.5rem;padding:.5rem .65rem;background:#10101a;border:1px solid rgba(255,255,255,.06);border-radius:8px"><div style="width:28px;height:28px;border-radius:7px;background:rgba(99,102,241,.12);display:flex;align-items:center;justify-content:center;font-size:.6rem;color:#818cf8;font-weight:700;flex-shrink:0">Rx</div><div style="flex:1"><div style="font-size:.75rem;font-weight:500">Lisinopril 20mg</div><div style="font-size:.6rem;color:#8888a0">Once daily</div></div></div>
+              <div class="hv-section-h">Active Conditions</div>
+              <div class="hv-rows">
+                <div class="hv-row"><span class="label">Type 2 Diabetes Mellitus</span><span class="hv-tag active">Active</span></div>
+                <div class="hv-row"><span class="label">Essential Hypertension</span><span class="hv-tag active">Active</span></div>
               </div>
             </div>
-            <div style="font-size:.62rem;color:#55556e;text-align:center;padding:.4rem;border-top:1px solid rgba(255,255,255,.06);margin-top:.15rem">Simulated data &middot; Download the app or run locally to see your real digital twin</div>
+            <div>
+              <div class="hv-section-h">Medications</div>
+              <div class="hv-rows">
+                <div class="hv-row hv-med"><div class="hv-rx">Rx</div><div style="flex:1"><div class="name">Metformin 1000mg</div><div class="freq">Twice daily</div></div></div>
+                <div class="hv-row hv-med"><div class="hv-rx">Rx</div><div style="flex:1"><div class="name">Lisinopril 20mg</div><div class="freq">Once daily</div></div></div>
+              </div>
+            </div>
+            <div class="hv-foot">Simulated data &middot; Download the app or run locally to see your real digital twin</div>
           </div>
         </div>
 
@@ -742,7 +1127,7 @@ console.log((await analysis.json()).answer);</pre>
         </div>
 
         <!-- API Playground -->
-        <div class="tp" id="tp-apir"><div style="padding:.85rem" id="apiPG"></div></div>
+        <div class="tp" id="tp-apir"><div style="padding:.95rem" id="apiPG"></div></div>
 
         <!-- Code Generator -->
         <div class="tp" id="tp-cgen">
@@ -772,24 +1157,24 @@ console.log((await analysis.json()).answer);</pre>
 </section>
 
 <!-- ═══ MANIFESTO ═══ -->
-<section style="padding:5rem 0;text-align:center;background:var(--white)">
-<div class="w" style="max-width:640px">
-  <p style="font-size:.7rem;text-transform:uppercase;letter-spacing:.3em;color:var(--em);font-weight:600;margin-bottom:1.5rem">Zero Mile Health</p>
-  <h2 style="font-size:1.5rem;line-height:1.35;margin-bottom:1.25rem;font-weight:700">Your data. Your control. Your innovation.</h2>
-  <p style="font-size:.95rem;color:var(--sub);line-height:1.8;margin-bottom:1rem">Your health data has always been yours. The problem is no one lets you use it. It sits in portals you can barely access, locked in formats you can&rsquo;t read, controlled by systems that don&rsquo;t answer to you. Aion changes that. Your data lives on your device, encrypted, private, and queryable &mdash; a FHIR knowledge graph that you own completely. On-device AI gives you intelligence that works offline. Bridge to your PC for deeper analysis. Go online when <em>you</em> choose, with your own models, on your terms.</p>
-  <p style="font-size:.95rem;color:var(--sub);line-height:1.8;margin-bottom:1rem">But the real power isn&rsquo;t just access &mdash; it&rsquo;s what you build with it. A researcher could correlate medication adherence with sleep patterns. A developer could build a health dashboard for their family. A clinician could create a patient-facing risk visualization. A student could train a model on their own vitals. We don&rsquo;t know what you&rsquo;ll build. That&rsquo;s the point.</p>
-  <p style="font-size:.95rem;color:var(--sub);line-height:1.8;margin-bottom:1.75rem">We believe essential healthcare should be universal &mdash; meeting people where they are, not where systems demand they go. Aion is the start of something different. A digital twin that knows your complete story. AI that reasons about <em>you</em> &mdash; first on your device, then on your network, then with any model you trust. Health at zero miles &mdash; in your pocket, understanding you better every day.</p>
-  <p style="font-size:.88rem;color:var(--ink2);font-weight:500;margin-bottom:2rem">This is early. This is open. Build something amazing.</p>
-  <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+<section style="padding:6rem 0;text-align:center;background:var(--white)">
+<div class="w" style="max-width:660px">
+  <p style="font-size:.7rem;text-transform:uppercase;letter-spacing:.3em;color:var(--em-deep);font-weight:600;margin-bottom:1.5rem" class="reveal">Zero Mile Health</p>
+  <h2 style="font-size:clamp(1.5rem,3.5vw,1.9rem);line-height:1.3;margin-bottom:1.5rem;font-weight:700" class="reveal">Your data. Your control. Your innovation.</h2>
+  <p style="font-size:1rem;color:var(--sub);line-height:1.85;margin-bottom:1.1rem;font-weight:300" class="reveal">Your health data has always been yours. The problem is no one lets you use it. It sits in portals you can barely access, locked in formats you can&rsquo;t read, controlled by systems that don&rsquo;t answer to you. Aion changes that. Your data lives on your device, encrypted, private, and queryable &mdash; a FHIR knowledge graph that you own completely. On-device AI gives you intelligence that works offline. Bridge to your PC for deeper analysis. Go online when <em>you</em> choose, with your own models, on your terms.</p>
+  <p style="font-size:1rem;color:var(--sub);line-height:1.85;margin-bottom:1.1rem;font-weight:300" class="reveal">But the real power isn&rsquo;t just access &mdash; it&rsquo;s what you build with it. Correlate your own medication adherence with your sleep patterns. Build a personal health dashboard for yourself and your family. Visualize your own risk trends over time. Train a model on your own vitals. We don&rsquo;t know what you&rsquo;ll build for yourself. That&rsquo;s the point.</p>
+  <p style="font-size:1rem;color:var(--sub);line-height:1.85;margin-bottom:1.85rem;font-weight:300" class="reveal">We believe essential healthcare should be universal &mdash; meeting people where they are, not where systems demand they go. Aion is the start of something different. A digital twin that knows your complete story. AI that reasons about <em>you</em> &mdash; first on your device, then on your network, then with any model you trust. Health at zero miles &mdash; in your pocket, understanding you better every day.</p>
+  <p style="font-size:.92rem;color:var(--ink2);font-weight:500;margin-bottom:2rem" class="reveal">This is early. This is open. Build something amazing.</p>
+  <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap" class="reveal">
     <a href="https://github.com/easpencer/Aion/releases" class="btn btn-p">&#8595; Download Bridge App</a>
     <a href="https://github.com/easpencer/Aion" class="btn btn-s">View Source on GitHub</a>
     <a href="https://github.com/easpencer/aion-open" class="btn btn-s">Run the REST Bridge</a>
   </div>
-  <p style="font-size:.72rem;color:var(--dim);margin-top:1.25rem">Open source release coming soon &middot; Source available now at <a href="https://github.com/easpencer/Aion" style="color:var(--sub)">github.com/easpencer/Aion</a></p>
+  <p style="font-size:.72rem;color:var(--dim);margin-top:1.5rem;line-height:1.7">Free for personal &amp; non-commercial use under PolyForm-Noncommercial-1.0.0 &middot; Commercial licensing available &middot; Source at <a href="https://github.com/easpencer/Aion" style="color:var(--sub)">github.com/easpencer/Aion</a></p>
 </div>
 </section>
 
-<footer><div class="w"><strong style="color:var(--ink2);font-family:var(--head)">Aion</strong> &middot; Zero mile health &middot; <a href="https://github.com/easpencer/aion-open">GitHub</a> &middot; <a href="https://github.com/easpencer/Aion">Source</a></div></footer>
+<footer><div class="w"><strong>Aion</strong> &middot; Zero mile health &middot; <a href="https://github.com/easpencer/aion-open">GitHub</a> &middot; <a href="https://github.com/easpencer/Aion">Source</a></div></footer>
 
 <!-- Modal -->
 <div class="modal-ov" id="modal" onclick="closeM()"><div class="modal" onclick="event.stopPropagation()"><div class="modal-hd"><h3 id="mT">Detail</h3><button class="modal-x" onclick="closeM()">&times;</button></div><div class="modal-bd"><pre id="mJ"></pre></div></div></div>
@@ -801,12 +1186,12 @@ async function chk(){try{const r=await fetch('/api/status');const s=await r.json
 async function togConn(){const b=document.getElementById('cBtn');if(conn){b.disabled=true;await fetch('/api/disconnect',{method:'POST'});conn=false;updC(false);le('sys','Disconnected');b.disabled=false;return}const u=document.getElementById('bUrl').value.trim(),c=document.getElementById('bCode').value.trim();if(!u||!c){le('sys','Enter URL and code');return}b.disabled=true;b.textContent='...';updC(false,'Connecting...');try{const r=await fetch('/api/connect',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:u,code:c})});const d=await r.json();if(r.ok&&d.connected){conn=true;updC(true,null,d.deidentify);le('auth','Authenticated');rq()}else{updC(false,d.error||'Failed');le('sys','Failed: '+(d.error||''))}}catch(e){updC(false,e.message)}b.disabled=false}
 function updC(on,err,dei){const d=document.getElementById('cDot'),l=document.getElementById('cLbl'),b=document.getElementById('cBtn'),bg=document.getElementById('badges');d.className='conn-dot '+(on?'on':err?'err':'off');l.textContent=on?'Connected':(err||'Disconnected');l.style.color=on?'var(--em)':err?'var(--red)':'';b.textContent=on?'Disconnect':'Connect';b.className='conn-btn '+(on?'dc':'go');bg.innerHTML=on?'<span class="badge badge-tls">TLS</span>'+(dei!==false?'<span class="badge badge-deid">De-id</span>':''):''}
 
-async function rq(){if(!conn){showSim();return}const t=document.getElementById('qT').value,c=document.getElementById('qC').value,l=document.getElementById('qL').value||50,i=document.getElementById('qI'),res=document.getElementById('res'),st=Date.now();i.textContent='...';try{const p=new URLSearchParams({limit:l});if(c)p.set('category',c);const r=await fetch(`/api/${t}?${p}`);const d=await r.json();if(!r.ok){i.textContent=d.error||'Error';return}const ms=Date.now()-st,e=d.entry||[];lastR=e;i.textContent=`${e.length} \u00b7 ${ms}ms`;le('query',`${t} \u2192 ${e.length}`);if(!e.length){res.innerHTML='<div class="empty"><div class="ico">&#8709;</div><div>No resources</div></div>';return}res.innerHTML=e.map((x,j)=>`<div class="rr" onclick="sd(${j})"><span class="nm">${esc(gn(x.resource))}</span><span class="vl">${esc(gv(x.resource))}</span><span class="dt">${esc(gd(x.resource))}</span></div>`).join('')}catch(e){i.textContent=e.message}}
-function showSim(){const res=document.getElementById('res'),i=document.getElementById('qI'),bg=document.getElementById('badges');bg.innerHTML='<span class="badge badge-sim">Simulated</span>';const S={Observation:[{code:{text:'Heart Rate'},valueQuantity:{value:72,unit:'bpm'},effectiveDateTime:'2026-04-10T08:30:00Z',resourceType:'Observation'},{code:{text:'Blood Pressure'},valueQuantity:{value:128,unit:'mmHg'},effectiveDateTime:'2026-04-10T08:30:00Z',resourceType:'Observation'},{code:{text:'SpO2'},valueQuantity:{value:98,unit:'%'},effectiveDateTime:'2026-04-10T08:30:00Z',resourceType:'Observation'},{code:{text:'Steps'},valueQuantity:{value:8423,unit:'steps'},effectiveDateTime:'2026-04-09T23:59:00Z',resourceType:'Observation'}],Condition:[{code:{text:'Type 2 Diabetes Mellitus'},clinicalStatus:{coding:[{code:'active'}]},recordedDate:'2024-03-15',resourceType:'Condition'},{code:{text:'Essential Hypertension'},clinicalStatus:{coding:[{code:'active'}]},recordedDate:'2023-11-20',resourceType:'Condition'}],MedicationRequest:[{medicationCodeableConcept:{text:'Metformin 1000mg'},dosageInstruction:[{text:'Twice daily'}],authoredOn:'2024-03-15',resourceType:'MedicationRequest'},{medicationCodeableConcept:{text:'Lisinopril 20mg'},dosageInstruction:[{text:'Once daily'}],authoredOn:'2023-11-20',resourceType:'MedicationRequest'}]};const t=document.getElementById('qT').value,d=S[t]||[];lastR=d.map(r=>({resource:r}));i.textContent=`${d.length} \u00b7 simulated`;if(!d.length){res.innerHTML='<div class="empty"><div class="ico">&#8709;</div><div>No simulated data for this type</div></div>';return}res.innerHTML=d.map((r,j)=>`<div class="rr" onclick="sd(${j})"><span class="nm">${esc(gn(r))}</span><span class="vl">${esc(gv(r))}</span><span class="dt">${esc(gd(r))}</span></div>`).join('')}
+async function rq(){if(!conn){showSim();return}const t=document.getElementById('qT').value,c=document.getElementById('qC').value,l=document.getElementById('qL').value||50,i=document.getElementById('qI'),res=document.getElementById('res'),st=Date.now();i.textContent='...';try{const p=new URLSearchParams({limit:l});if(c)p.set('category',c);const r=await fetch(`/api/${t}?${p}`);const d=await r.json();if(!r.ok){i.textContent=d.error||'Error';return}const ms=Date.now()-st,e=d.entry||[];lastR=e;i.textContent=`${e.length} · ${ms}ms`;le('query',`${t} → ${e.length}`);if(!e.length){res.innerHTML='<div class="empty"><div class="ico">&#8709;</div><div>No resources</div></div>';return}res.innerHTML=e.map((x,j)=>`<div class="rr" onclick="sd(${j})"><span class="nm">${esc(gn(x.resource))}</span><span class="vl">${esc(gv(x.resource))}</span><span class="dt">${esc(gd(x.resource))}</span></div>`).join('')}catch(e){i.textContent=e.message}}
+function showSim(){const res=document.getElementById('res'),i=document.getElementById('qI'),bg=document.getElementById('badges');bg.innerHTML='<span class="badge badge-sim">Simulated</span>';const S={Observation:[{code:{text:'Heart Rate'},valueQuantity:{value:72,unit:'bpm'},effectiveDateTime:'2026-04-10T08:30:00Z',resourceType:'Observation'},{code:{text:'Blood Pressure'},valueQuantity:{value:128,unit:'mmHg'},effectiveDateTime:'2026-04-10T08:30:00Z',resourceType:'Observation'},{code:{text:'SpO2'},valueQuantity:{value:98,unit:'%'},effectiveDateTime:'2026-04-10T08:30:00Z',resourceType:'Observation'},{code:{text:'Steps'},valueQuantity:{value:8423,unit:'steps'},effectiveDateTime:'2026-04-09T23:59:00Z',resourceType:'Observation'}],Condition:[{code:{text:'Type 2 Diabetes Mellitus'},clinicalStatus:{coding:[{code:'active'}]},recordedDate:'2024-03-15',resourceType:'Condition'},{code:{text:'Essential Hypertension'},clinicalStatus:{coding:[{code:'active'}]},recordedDate:'2023-11-20',resourceType:'Condition'}],MedicationRequest:[{medicationCodeableConcept:{text:'Metformin 1000mg'},dosageInstruction:[{text:'Twice daily'}],authoredOn:'2024-03-15',resourceType:'MedicationRequest'},{medicationCodeableConcept:{text:'Lisinopril 20mg'},dosageInstruction:[{text:'Once daily'}],authoredOn:'2023-11-20',resourceType:'MedicationRequest'}]};const t=document.getElementById('qT').value,d=S[t]||[];lastR=d.map(r=>({resource:r}));i.textContent=`${d.length} · simulated`;if(!d.length){res.innerHTML='<div class="empty"><div class="ico">&#8709;</div><div>No simulated data for this type</div></div>';return}res.innerHTML=d.map((r,j)=>`<div class="rr" onclick="sd(${j})"><span class="nm">${esc(gn(r))}</span><span class="vl">${esc(gv(r))}</span><span class="dt">${esc(gd(r))}</span></div>`).join('')}
 function gn(r){if(!r)return'?';return r.code?.text||r.code?.coding?.[0]?.display||r.medicationCodeableConcept?.text||r.vaccineCode?.text||r.resourceType||'Resource'}
 function gv(r){if(r.valueQuantity)return r.valueQuantity.value+' '+(r.valueQuantity.unit||'');if(r.clinicalStatus?.coding?.[0]?.code)return r.clinicalStatus.coding[0].code;if(r.dosageInstruction?.[0]?.text)return r.dosageInstruction[0].text;return r.status||''}
 function gd(r){const d=r.effectiveDateTime||r.performedDateTime||r.recordedDate||r.authoredOn||'';if(!d)return'';try{return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}catch{return d.slice(0,10)}}
-function sd(i){const r=lastR[i]?.resource||lastR[i];if(!r)return;document.getElementById('mT').textContent=gn(r)+' \u2014 '+(r.resourceType||'');document.getElementById('mJ').textContent=JSON.stringify(r,null,2);document.getElementById('modal').classList.add('open')}
+function sd(i){const r=lastR[i]?.resource||lastR[i];if(!r)return;document.getElementById('mT').textContent=gn(r)+' — '+(r.resourceType||'');document.getElementById('mJ').textContent=JSON.stringify(r,null,2);document.getElementById('modal').classList.add('open')}
 function closeM(){document.getElementById('modal').classList.remove('open')}
 function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
 
@@ -821,7 +1206,13 @@ function stab(n){document.querySelectorAll('.tab').forEach((t,i)=>{const p=['hea
 function le(t,d){const el=document.getElementById('evts');const now=new Date().toTimeString().slice(0,8);el.innerHTML=`<div class="ev"><span class="ev-t">${now}</span><span class="ev-tp ${t}">${t}</span><span class="ev-d">${esc(d)}</span></div>`+el.innerHTML;while(el.children.length>60)el.removeChild(el.lastChild)}
 function cpb(b){const pre=b.closest('pre')||b.parentElement.querySelector('pre');if(!pre)return;const clone=pre.cloneNode(true);clone.querySelectorAll('button').forEach(x=>x.remove());const c=clone.textContent.trim();navigator.clipboard.writeText(c);b.textContent='Copied!';setTimeout(()=>b.textContent='Copy',1200)}
 
-document.addEventListener('DOMContentLoaded',()=>{buildAPI();genc();le('sys','Console ready');chk();poll=setInterval(chk,5000);showSim();document.getElementById('bCode').addEventListener('keydown',e=>{if(e.key==='Enter')togConn()});document.getElementById('bUrl').addEventListener('keydown',e=>{if(e.key==='Enter')togConn()})});
+document.addEventListener('DOMContentLoaded',()=>{buildAPI();genc();le('sys','Console ready');chk();poll=setInterval(chk,5000);showSim();document.getElementById('bCode').addEventListener('keydown',e=>{if(e.key==='Enter')togConn()});document.getElementById('bUrl').addEventListener('keydown',e=>{if(e.key==='Enter')togConn()});
+  // Scroll reveal (respects prefers-reduced-motion)
+  const rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const els=document.querySelectorAll('.reveal');
+  if(rm||!('IntersectionObserver'in window)){els.forEach(e=>e.classList.add('in'));}
+  else{const io=new IntersectionObserver((ents)=>{ents.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}})},{threshold:.12,rootMargin:'0px 0px -8% 0px'});els.forEach(e=>io.observe(e));}
+});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM()});
 
 // === Animated Health Graph Visualization ===
