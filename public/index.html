@@ -3,41 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aion — Your health, finally yours</title>
-<meta name="description" content="Aion is a privacy-first personal health companion. Your health data lives on your device — never leaves your network. You own your complete picture. A Bionic Light Industries brand.">
-
-<!--
-  TAGLINE (chosen):  Your health, finally yours.
-  ALTERNATES (swap in #tagline below):
-    1.  A personal health companion that never leaves home.
-    2.  Know yourself. Own everything. Arriving 2026.
--->
-
+<title>Aion — Your whole health, on your own hardware</title>
+<meta name="description" content="Aion — a private, on-device personal health companion. Your whole health, on your own hardware. Private by physics. A Bionic Light Industries brand.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#fcfcfb;
-  --ink:#15161c;
-  --ink2:#33343f;
-  --sub:#54566a;
-  --dim:#8a8c9e;
-  --line:#e8e8e4;
-  --em:#0e9f6e;
-  --em-deep:#0b7d57;
-  --em-soft:#10b981;
-
-  /* deep-ink splash surface (drawn from the /core console palette) */
-  --bg:#0b0c12;
-  --bg2:#11121b;
-  --bg3:#070810;
-  --on:#f3f3f1;          /* paper text on ink */
+  --bg:#06070d;
+  --bg2:#0b0c14;
+  --on:#f3f3f1;
   --on-sub:#a6a8b8;
   --on-dim:#6a6c80;
+  --em:#10b981;
+  --em-soft:#34d8a4;
   --hair:rgba(255,255,255,.10);
-  --hair2:rgba(255,255,255,.055);
-
   --head:'Instrument Sans',system-ui,-apple-system,sans-serif;
   --body:'IBM Plex Sans',system-ui,-apple-system,sans-serif;
   --mono:'IBM Plex Mono',ui-monospace,monospace;
@@ -47,310 +27,241 @@ html{-webkit-text-size-adjust:100%}
 html,body{overflow-x:hidden;max-width:100%}
 body{
   font-family:var(--body);
-  background:var(--bg);
+  background:radial-gradient(120% 90% at 50% 8%, #0d0f1a 0%, var(--bg) 55%, #030409 100%);
   color:var(--on);
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility;
   min-height:100svh;
-  display:flex;
-  flex-direction:column;
+  display:flex;flex-direction:column;
   position:relative;
 }
-::selection{background:rgba(16,185,129,.22);color:#eafff6}
-a{color:var(--em-soft);text-decoration:none;transition:color .15s}
+::selection{background:rgba(52,216,164,.22);color:#eafff6}
+a{color:var(--em-soft);text-decoration:none}
 
-/* ── refined background: a slow volumetric mesh + faint precise grid + a single emerald horizon ── */
-.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-/* soft emerald horizon glow + crown light (static base) */
-.bg::before{
-  content:'';position:absolute;inset:0;
-  background:
-    radial-gradient(130% 80% at 50% 116%, rgba(16,185,129,.16), rgba(16,185,129,0) 56%),
-    radial-gradient(100% 70% at 50% -20%, rgba(255,255,255,.045), transparent 60%);
-}
-/* faint precise grid, masked to a soft vignette */
-.bg::after{
-  content:'';position:absolute;inset:0;opacity:.5;
-  background-image:
-    linear-gradient(to right, rgba(255,255,255,.018) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,.018) 1px, transparent 1px);
-  background-size:64px 64px;
-  -webkit-mask-image:radial-gradient(80% 70% at 50% 50%, #000 30%, transparent 80%);
-          mask-image:radial-gradient(80% 70% at 50% 50%, #000 30%, transparent 80%);
-}
-/* quiet futurism: a wide, slow-drifting volumetric mesh — calm, never loud */
-.mesh{
-  position:fixed;inset:-20%;z-index:0;pointer-events:none;
-  background:
-    radial-gradient(38% 44% at 22% 30%, rgba(16,185,129,.085), transparent 60%),
-    radial-gradient(34% 40% at 80% 24%, rgba(86,120,255,.05), transparent 62%),
-    radial-gradient(46% 50% at 64% 82%, rgba(16,185,129,.07), transparent 64%);
-  filter:blur(28px);
+/* ── deep-space canvas: drifting dust + volumetric god-ray crown ── */
+#sky{position:fixed;inset:0;z-index:0;pointer-events:none;display:block}
+/* a single immense, slow crown of light from above — the "horizon" reborn as a sun above the void */
+.crown{
+  position:fixed;left:50%;top:-32vh;transform:translateX(-50%);
+  width:min(1100px,150vw);height:min(900px,120vh);z-index:0;pointer-events:none;
+  background:radial-gradient(50% 50% at 50% 50%, rgba(52,216,164,.16), rgba(16,185,129,.05) 38%, transparent 64%);
+  filter:blur(20px);
   opacity:0;
-  will-change:transform,opacity;
-  animation:meshIn 2s ease 1.2s forwards, meshDrift 34s ease-in-out 1.2s infinite alternate;
+  animation:crownIn 3s cubic-bezier(.22,.61,.36,1) .4s forwards, crownBreathe 11s ease-in-out 3.4s infinite alternate;
 }
-@keyframes meshIn{to{opacity:1}}
-@keyframes meshDrift{
-  0%{transform:translate3d(0,0,0) scale(1)}
-  100%{transform:translate3d(2.5%,-2%,0) scale(1.06)}
-}
-/* a faint, precise drifting starfield — sparse, premium, not sci-fi clutter */
-.stars{
-  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;
-  background-image:
-    radial-gradient(1px 1px at 14% 22%, rgba(255,255,255,.55), transparent),
-    radial-gradient(1px 1px at 68% 14%, rgba(255,255,255,.4), transparent),
-    radial-gradient(1px 1px at 82% 60%, rgba(16,185,129,.55), transparent),
-    radial-gradient(1px 1px at 33% 74%, rgba(255,255,255,.35), transparent),
-    radial-gradient(1px 1px at 52% 40%, rgba(255,255,255,.3), transparent),
-    radial-gradient(1px 1px at 90% 86%, rgba(255,255,255,.3), transparent),
-    radial-gradient(1px 1px at 8% 88%, rgba(16,185,129,.4), transparent);
-  -webkit-mask-image:radial-gradient(85% 80% at 50% 45%, #000 20%, transparent 85%);
-          mask-image:radial-gradient(85% 80% at 50% 45%, #000 20%, transparent 85%);
-  animation:starsIn 2.4s ease 1.6s forwards, starsTwinkle 7s ease-in-out 1.6s infinite alternate;
-}
-@keyframes starsIn{to{opacity:.7}}
-@keyframes starsTwinkle{0%{opacity:.42}100%{opacity:.8}}
-/* the single confident accent: a thin emerald horizon line, slowly breathing */
-.horizon{
-  position:fixed;left:50%;bottom:0;width:min(680px,86vw);height:1px;z-index:0;pointer-events:none;
-  transform:translateX(-50%);
-  background:linear-gradient(90deg,transparent,var(--em-soft),transparent);
-  opacity:.0;
-  animation:horizonIn 1.4s cubic-bezier(.22,.61,.36,1) 1.9s forwards;
-}
-.horizon::after{
-  content:'';position:absolute;left:50%;bottom:0;transform:translateX(-50%);
-  width:240px;height:120px;
-  background:radial-gradient(60% 100% at 50% 100%, rgba(16,185,129,.30), transparent 70%);
-  filter:blur(8px);
-}
-@keyframes horizonIn{to{opacity:.7}}
+@keyframes crownIn{to{opacity:1}}
+@keyframes crownBreathe{0%{opacity:.78;transform:translateX(-50%) scale(1)}100%{opacity:1;transform:translateX(-50%) scale(1.05)}}
+/* faint atmospheric vignette to seat the type in deep space */
+.vignette{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(75% 60% at 50% 46%, transparent 40%, rgba(3,4,9,.6) 100%);}
 
-/* ── layout shell ── */
+/* ── layout ── */
 .shell{
-  position:relative;z-index:2;flex:1;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;
+  position:relative;z-index:3;flex:1;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
   padding:clamp(4rem,12vh,8rem) clamp(1.1rem,5vw,2rem) clamp(3rem,8vh,5rem);
   width:100%;
 }
+.topline{position:absolute;top:clamp(1.2rem,4vh,2.2rem);left:0;right:0;z-index:4;display:flex;justify-content:center;
+  opacity:0;animation:soft 1s ease 2.4s forwards;}
+.topline span{font-family:var(--mono);font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--on-dim);
+  display:inline-flex;align-items:center;gap:.6rem;}
+.topline .pip{width:5px;height:5px;border-radius:50%;background:var(--em-soft);box-shadow:0 0 12px rgba(52,216,164,.6)}
 
-/* ── top byline / brand parent ── */
-.topline{
-  position:absolute;top:clamp(1.2rem,4vh,2.2rem);left:0;right:0;z-index:3;
-  display:flex;justify-content:center;
-  opacity:0;animation:soft .9s ease 2.5s forwards;
-}
-.topline span{
-  font-family:var(--mono);
-  font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;
-  color:var(--on-dim);
-  display:inline-flex;align-items:center;gap:.6rem;
-}
-.topline .pip{width:5px;height:5px;border-radius:50%;background:var(--em-soft);box-shadow:0 0 0 3px rgba(16,185,129,.14)}
-
-/* ── wordmark: vertical lockup — AION block caps, 'health' centered beneath ── */
-.mark{
-  display:flex;flex-direction:column;align-items:center;gap:clamp(.5rem,1.6vh,.95rem);
-  line-height:1;
-}
+/* ── wordmark: light passes THROUGH the letters — animated gradient sweep + glow lift ── */
+.mark{display:flex;flex-direction:column;align-items:center;gap:clamp(.55rem,1.8vh,1.05rem);line-height:1}
 .aion{
-  font-family:var(--head);
-  font-weight:700;
-  font-size:clamp(3.6rem,18vw,10rem);
-  letter-spacing:clamp(-.015em,-.4vw,.04em);
-  color:var(--on);
-  text-transform:uppercase;
-  display:inline-flex;
-  position:relative;
+  font-family:var(--head);font-weight:700;
+  font-size:clamp(3.8rem,19vw,11rem);
+  letter-spacing:clamp(-.02em,-.4vw,.02em);
+  text-transform:uppercase;display:inline-flex;position:relative;
 }
 .aion .ch{
-  display:inline-block;
-  opacity:0;
-  transform:translateY(.46em);
-  filter:blur(6px);
-  animation:chIn .9s cubic-bezier(.16,.84,.3,1) both;
+  display:inline-block;position:relative;
+  /* light-through-glass: a bright emerald-tinted core fading to cool white edges, lit from the crown above */
+  color:transparent;
+  background:linear-gradient(180deg,#ffffff 0%, #eafff6 30%, #b9f3df 58%, #79e3c3 100%);
+  -webkit-background-clip:text;background-clip:text;
+  text-shadow:0 0 38px rgba(52,216,164,.0);
+  opacity:0;transform:translateY(.32em) scale(.96);
+  filter:blur(10px);
+  animation:chIn 1.3s cubic-bezier(.16,.84,.3,1) both;
 }
-.aion .ch:nth-child(1){animation-delay:.20s}
-.aion .ch:nth-child(2){animation-delay:.32s}
-.aion .ch:nth-child(3){animation-delay:.44s}
-.aion .ch:nth-child(4){animation-delay:.56s}
+.aion .ch:nth-child(1){animation-delay:.55s}
+.aion .ch:nth-child(2){animation-delay:.70s}
+.aion .ch:nth-child(3){animation-delay:.85s}
+.aion .ch:nth-child(4){animation-delay:1.00s}
 @keyframes chIn{
-  0%{opacity:0;transform:translateY(.46em);filter:blur(6px)}
-  60%{filter:blur(0)}
-  100%{opacity:1;transform:translateY(0);filter:blur(0)}
-}
-/* hairline divider between the two lines of the lockup — draws in, advanced detail */
-.mark .rule{
-  width:0;height:1px;align-self:center;
-  background:linear-gradient(90deg,transparent,rgba(16,185,129,.55),transparent);
-  animation:ruleIn 1s cubic-bezier(.22,.61,.36,1) .96s forwards;
-}
-@keyframes ruleIn{to{width:min(58%,15rem)}}
-/* lowercase 'health' — refined subtitle BENEATH AION, letter-spaced to optically span the mark */
-.health{
-  font-family:var(--head);
-  font-weight:300;
-  font-size:clamp(1rem,4.2vw,2.1rem);
-  letter-spacing:clamp(.34em,1.5vw,.62em);
-  /* trailing space-compensation so the wide tracking stays optically centered */
-  text-indent:clamp(.34em,1.5vw,.62em);
-  color:var(--em-soft);
-  text-transform:lowercase;
-  opacity:0;
-  transform:translateY(.3em);
-  filter:blur(4px);
-  animation:healthIn 1s cubic-bezier(.22,.61,.36,1) 1.12s forwards;
-  position:relative;
-}
-@keyframes healthIn{
-  0%{opacity:0;transform:translateY(.3em);filter:blur(4px)}
+  0%{opacity:0;transform:translateY(.32em) scale(.96);filter:blur(10px)}
+  55%{filter:blur(0)}
   100%{opacity:1;transform:none;filter:blur(0)}
 }
-
-/* ── tagline ── */
-.tagline{
-  margin-top:clamp(1.4rem,4vh,2.1rem);
-  font-size:clamp(.95rem,2.4vw,1.18rem);
-  font-weight:300;
-  color:var(--on-sub);
-  letter-spacing:.005em;
-  max-width:34ch;
-  opacity:0;
-  transform:translateY(8px);
-  animation:soft .95s cubic-bezier(.22,.61,.36,1) 1.55s forwards;
+/* a specular highlight sweeps across the whole word once it lands — the "expensive material" moment */
+.aion::after{
+  content:'';position:absolute;inset:-6% -10%;pointer-events:none;
+  background:linear-gradient(105deg,transparent 38%, rgba(255,255,255,.55) 48%, rgba(52,216,164,.4) 51%, transparent 62%);
+  mix-blend-mode:screen;opacity:0;
+  -webkit-mask-image:linear-gradient(180deg,#000,#000);
+  transform:translateX(-30%);
+  animation:sweep 2.6s cubic-bezier(.4,0,.2,1) 1.5s forwards;
 }
-.tagline b{color:var(--on);font-weight:500}
+@keyframes sweep{0%{opacity:0;transform:translateX(-40%)}30%{opacity:1}70%{opacity:1}100%{opacity:0;transform:translateX(40%)}}
+/* after arrival, the word breathes a faint glow forever — quiet ongoing life */
+/* .live is added AFTER the intro completes (~2.6s); the letters are already at
+   their final state (chIn used `both`), so we only layer the perpetual glow —
+   no re-declaration of chIn (that restart was leaving I/O/N stuck hidden). */
+/* Swapping chIn → glow drops chIn's `both`-held final state, so pin the
+   visible state explicitly here or the letters snap back to opacity:0. */
+.aion.live .ch{
+  opacity:1;transform:none;filter:none;
+  animation:glow 9s ease-in-out infinite alternate;
+}
+.aion.live .ch:nth-child(n){animation-delay:0s}
+@keyframes glow{0%{text-shadow:0 0 28px rgba(16,185,129,.12)}100%{text-shadow:0 0 46px rgba(16,185,129,.32)}}
+
+.mark .rule{width:0;height:1px;align-self:center;
+  background:linear-gradient(90deg,transparent,rgba(52,216,164,.6),transparent);
+  box-shadow:0 0 10px rgba(52,216,164,.35);
+  animation:ruleIn 1.2s cubic-bezier(.22,.61,.36,1) 1.5s forwards;}
+@keyframes ruleIn{to{width:min(58%,15rem)}}
+.health{
+  font-family:var(--head);font-weight:300;
+  font-size:clamp(1rem,4.2vw,2.15rem);
+  letter-spacing:clamp(.34em,1.5vw,.62em);text-indent:clamp(.34em,1.5vw,.62em);
+  color:var(--em-soft);text-transform:lowercase;
+  opacity:0;transform:translateY(.3em);filter:blur(5px);
+  animation:healthIn 1.2s cubic-bezier(.22,.61,.36,1) 1.7s forwards;
+}
+@keyframes healthIn{to{opacity:1;transform:none;filter:blur(0)}}
+
+.tagline{margin-top:clamp(1.4rem,4vh,2.1rem);font-size:clamp(.95rem,2.4vw,1.18rem);font-weight:300;
+  color:var(--on-sub);max-width:34ch;opacity:0;transform:translateY(8px);
+  animation:soft 1s cubic-bezier(.22,.61,.36,1) 2.0s forwards;}
+
+.doors{margin-top:clamp(2.2rem,6vh,3.4rem);display:flex;gap:.85rem;flex-wrap:wrap;justify-content:center;width:100%;max-width:560px}
+.door{flex:1 1 220px;min-width:0;display:flex;flex-direction:column;gap:.18rem;text-align:left;
+  padding:1.05rem 1.2rem;border:1px solid var(--hair);border-radius:14px;
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.012));
+  color:var(--on);transition:border-color .2s,transform .2s,background .2s,box-shadow .2s;
+  opacity:0;transform:translateY(12px);}
+.door:nth-of-type(1){animation:soft .9s cubic-bezier(.22,.61,.36,1) 2.35s forwards}
+.door:nth-of-type(2){animation:soft .9s cubic-bezier(.22,.61,.36,1) 2.5s forwards}
+.door:hover{border-color:rgba(52,216,164,.5);transform:translateY(-2px);
+  background:linear-gradient(180deg, rgba(52,216,164,.1), rgba(52,216,164,.03));
+  box-shadow:0 10px 40px -20px rgba(52,216,164,.5);}
+.door .eyebrow{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--em-soft)}
+.door .dt{font-family:var(--head);font-weight:600;font-size:1.02rem;letter-spacing:-.01em}
+.door .dd{font-size:.78rem;color:var(--on-sub);font-weight:300;line-height:1.5}
+.door .arrow{margin-top:.45rem;font-size:.74rem;color:var(--on-dim);font-family:var(--mono);
+  display:inline-flex;align-items:center;gap:.35rem;transition:color .2s,gap .2s}
+.door:hover .arrow{color:var(--em-soft);gap:.55rem}
+
+.footline{position:relative;z-index:3;padding:1.6rem 1.25rem 2rem;text-align:center;opacity:0;animation:soft 1s ease 2.7s forwards}
+.footline p{font-size:.68rem;color:var(--on-dim);letter-spacing:.04em}
+.footline .em{color:var(--em-soft)}
+.footline .vision{margin-top:.7rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--on-dim);opacity:.72}
 
 @keyframes soft{to{opacity:1;transform:none}}
 
-/* ── the two doors ── */
-.doors{
-  margin-top:clamp(2.2rem,6vh,3.4rem);
-  display:flex;gap:.85rem;flex-wrap:wrap;justify-content:center;
-  width:100%;max-width:560px;
-}
-.door{
-  flex:1 1 220px;
-  min-width:0;
-  display:flex;flex-direction:column;gap:.18rem;
-  text-align:left;
-  padding:1.05rem 1.2rem;
-  border:1px solid var(--hair);
-  border-radius:14px;
-  background:linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
-  color:var(--on);
-  transition:border-color .2s, transform .2s, background .2s;
-  opacity:0;transform:translateY(12px);
-}
-.door:nth-of-type(1){animation:soft .8s cubic-bezier(.22,.61,.36,1) 2.05s forwards}
-.door:nth-of-type(2){animation:soft .8s cubic-bezier(.22,.61,.36,1) 2.18s forwards}
-.door:hover{
-  border-color:rgba(16,185,129,.5);
-  background:linear-gradient(180deg, rgba(16,185,129,.10), rgba(16,185,129,.03));
-  transform:translateY(-2px);
-  color:var(--on);
-}
-.door .eyebrow{
-  font-family:var(--mono);
-  font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--em-soft);
-}
-.door .dt{font-family:var(--head);font-weight:600;font-size:1.02rem;letter-spacing:-.01em;color:var(--on)}
-.door .dd{font-size:.78rem;color:var(--on-sub);font-weight:300;line-height:1.5}
-.door .arrow{
-  margin-top:.45rem;font-size:.74rem;color:var(--on-dim);font-family:var(--mono);
-  display:inline-flex;align-items:center;gap:.35rem;transition:color .2s, gap .2s;
-}
-.door:hover .arrow{color:var(--em-soft);gap:.55rem}
-
-/* ── footer byline ── */
-.footline{
-  position:relative;z-index:2;
-  padding:1.6rem 1.25rem 2rem;
-  text-align:center;
-  opacity:0;animation:soft .9s ease 2.6s forwards;
-}
-.footline p{
-  font-size:.68rem;color:var(--on-dim);letter-spacing:.04em;
-}
-.footline p .em{color:var(--em-soft)}
-/* quiet visionary grace note — spare mono, dimmer than the byline */
-.footline .vision{
-  margin-top:.7rem;
-  font-family:var(--mono);
-  font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--on-dim);opacity:.72;
-}
-
-/* ── reduced motion: show final state, no movement ── */
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
-  .aion .ch{opacity:1;transform:none;filter:none}
-  .health,.tagline,.topline,.doors .door,.footline{opacity:1;transform:none;filter:none}
+  .aion .ch,.health,.tagline,.topline,.door,.footline{opacity:1!important;transform:none!important;filter:none!important}
   .mark .rule{width:min(58%,15rem)}
-  .horizon{opacity:.7}
-  .mesh{opacity:1;transform:none}
-  .stars{opacity:.6}
+  .crown{opacity:1}
+  #sky{display:none}
 }
-
-/* ── no-JS: identical (all animation is CSS on real DOM text). nothing required ── */
-
-/* ── small-screen tuning ── */
-@media(max-width:560px){
-  .doors{flex-direction:column;max-width:340px}
-  .door{flex:1 1 auto}
-}
-@media(max-width:380px){
-  .door{padding:.95rem 1rem}
-}
+@media(max-width:560px){.doors{flex-direction:column;max-width:340px}.door{flex:1 1 auto}}
+@media(max-width:380px){.door{padding:.95rem 1rem}}
 </style>
 </head>
 <body>
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="crown" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
 
-<div class="bg" aria-hidden="true"></div>
-<div class="mesh" aria-hidden="true"></div>
-<div class="stars" aria-hidden="true"></div>
-<div class="horizon" aria-hidden="true"></div>
-
-<!-- parent brand byline -->
 <div class="topline"><span><span class="pip" aria-hidden="true"></span>Bionic Light Industries</span></div>
 
 <main class="shell">
-
-  <!-- Wordmark: real, selectable text. AION animates per-character; 'health' reveals after. -->
   <h1 class="mark" aria-label="Aion health">
-    <span class="aion" aria-hidden="true"><span class="ch">A</span><span class="ch">I</span><span class="ch">O</span><span class="ch">N</span></span>
+    <span class="aion" id="aion" aria-hidden="true"><span class="ch">A</span><span class="ch">I</span><span class="ch">O</span><span class="ch">N</span></span>
     <span class="rule" aria-hidden="true"></span>
     <span class="health" aria-hidden="true">health</span>
   </h1>
-
-  <p class="tagline" id="tagline">Your health, <b>finally yours.</b> Intelligence that lives with you.</p>
-
+  <p class="tagline">Your whole health, on your own hardware.</p>
   <nav class="doors" aria-label="Primary">
-    <a class="door" href="/app">
-      <span class="eyebrow">The companion</span>
-      <span class="dt">The app</span>
-      <span class="dd">A private health companion that lives on your device.</span>
-      <span class="arrow">Enter &rarr;</span>
-    </a>
-    <a class="door" href="/core">
-      <span class="eyebrow">Source-available</span>
-      <span class="dt">Aion Open</span>
-      <span class="dd">FHIR bridge, REST API, and MCP for any AI assistant.</span>
-      <span class="arrow">For developers &rarr;</span>
-    </a>
+    <a class="door" href="/app" target="_top"><span class="eyebrow">The companion</span><span class="dt">Aion</span><span class="dd">Your personal health system. Coming to Earth first.</span><span class="arrow">Enter &rarr;</span></a>
+    <a class="door" href="/core" target="_top"><span class="eyebrow">Source-available</span><span class="dt">Aion Core</span><span class="dd">Your health as a graph — open to any AI, closed to everyone else.</span><span class="arrow">For developers &rarr;</span></a>
   </nav>
-
 </main>
 
 <div class="footline">
-  <p>A <span class="em">Bionic Light Industries</span> brand &middot; Private by default &middot; Your data never leaves your network</p>
+  <p>A <span class="em">Bionic Light Industries</span> brand &middot; Private by physics</p>
   <p class="vision">Essential health — on world, or off</p>
 </div>
 
+<script>
+(function(){
+  var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // promote wordmark to "live" idle glow after intro lands
+  var aion = document.getElementById('aion');
+  if(aion && !rm){ setTimeout(function(){ aion.classList.add('live'); }, 2600); }
+  if(rm) return;
+
+  var c = document.getElementById('sky'), ctx = c.getContext('2d');
+  var dpr = Math.min(window.devicePixelRatio||1, 2);
+  var W=0,H=0, stars=[], dust=[];
+  function resize(){
+    W=c.clientWidth=window.innerWidth; H=c.clientHeight=window.innerHeight;
+    c.width=W*dpr; c.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+    seed();
+  }
+  function seed(){
+    // sparse premium starfield with parallax depth
+    var n = Math.round(Math.min(140, (W*H)/14000));
+    stars=[]; for(var i=0;i<n;i++){
+      stars.push({x:Math.random()*W,y:Math.random()*H,z:Math.random(),
+        r:Math.random()*1.2+.2, tw:Math.random()*Math.PI*2, sp:Math.random()*.9+.3,
+        em:Math.random()<.12});
+    }
+    // a few slow drifting motes of light (volumetric dust) near the crown
+    var m = Math.round(Math.min(22,(W*H)/90000));
+    dust=[]; for(var j=0;j<m;j++){
+      dust.push({x:Math.random()*W,y:Math.random()*H*.5, r:Math.random()*40+30,
+        vx:(Math.random()-.5)*.08, vy:(Math.random()-.5)*.05, a:Math.random()*.05+.015});
+    }
+  }
+  var t=0, running=true, mx=.5, my=.4;
+  window.addEventListener('mousemove',function(e){ mx=e.clientX/W; my=e.clientY/H; },{passive:true});
+  function frame(){
+    if(!running) return;
+    t+=0.016;
+    ctx.clearRect(0,0,W,H);
+    // volumetric dust (additive)
+    ctx.globalCompositeOperation='screen';
+    for(var j=0;j<dust.length;j++){var d=dust[j];
+      d.x+=d.vx; d.y+=d.vy;
+      if(d.x<-80)d.x=W+80; if(d.x>W+80)d.x=-80; if(d.y<-80)d.y=H*.6; if(d.y>H*.6)d.y=-80;
+      var g=ctx.createRadialGradient(d.x,d.y,0,d.x,d.y,d.r);
+      g.addColorStop(0,'rgba(52,216,164,'+d.a+')'); g.addColorStop(1,'rgba(52,216,164,0)');
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(d.x,d.y,d.r,0,6.2832); ctx.fill();
+    }
+    // stars with parallax tied to pointer + gentle twinkle
+    for(var i=0;i<stars.length;i++){var s=stars[i];
+      var px=(mx-.5)*(s.z*26), py=(my-.5)*(s.z*18);
+      var tw=0.55+0.45*Math.sin(t*s.sp+s.tw);
+      ctx.globalAlpha=(0.25+0.55*s.z)*tw;
+      ctx.fillStyle=s.em?'rgba(52,216,164,1)':'rgba(255,255,255,1)';
+      ctx.beginPath(); ctx.arc(s.x+px,s.y+py,s.r,0,6.2832); ctx.fill();
+    }
+    ctx.globalAlpha=1; ctx.globalCompositeOperation='source-over';
+    requestAnimationFrame(frame);
+  }
+  document.addEventListener('visibilitychange',function(){
+    running=!document.hidden; if(running) requestAnimationFrame(frame);
+  });
+  window.addEventListener('resize',resize,{passive:true});
+  resize(); requestAnimationFrame(frame);
+})();
+</script>
 </body>
 </html>
