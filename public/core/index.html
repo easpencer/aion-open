@@ -1093,7 +1093,12 @@ function stab(n){document.querySelectorAll('.tab').forEach((t,i)=>{const p=['hea
 function le(t,d){const el=document.getElementById('evts');const now=new Date().toTimeString().slice(0,8);el.innerHTML=`<div class="ev"><span class="ev-t">${now}</span><span class="ev-tp ${t}">${t}</span><span class="ev-d">${esc(d)}</span></div>`+el.innerHTML;while(el.children.length>60)el.removeChild(el.lastChild)}
 function cpb(b){const pre=b.closest('pre')||b.parentElement.querySelector('pre');if(!pre)return;const clone=pre.cloneNode(true);clone.querySelectorAll('button').forEach(x=>x.remove());const c=clone.textContent.trim();navigator.clipboard.writeText(c);b.textContent='Copied!';setTimeout(()=>b.textContent='Copy',1200)}
 
-document.addEventListener('DOMContentLoaded',()=>{buildAPI();genc();le('sys','Console ready');chk();poll=setInterval(chk,5000);showSim();document.getElementById('bCode').addEventListener('keydown',e=>{if(e.key==='Enter')togConn()});document.getElementById('bUrl').addEventListener('keydown',e=>{if(e.key==='Enter')togConn()});
+document.addEventListener('DOMContentLoaded',()=>{
+  // The live dev console was removed from the hosted /core page (it needs a
+  // phone bridge on the local network, unreachable from the cloud). Its init
+  // calls — buildAPI/genc/chk/showSim and the bUrl/bCode listeners — referenced
+  // elements that no longer exist and threw, halting the rest of this handler
+  // (including the scroll-reveal below, which left the page blank). Removed.
   // Scroll reveal (respects prefers-reduced-motion)
   const rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const els=document.querySelectorAll('.reveal');
