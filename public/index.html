@@ -60,14 +60,16 @@ body{
 ::selection{background:rgba(16,185,129,.22);color:#eafff6}
 a{color:var(--em-soft);text-decoration:none;transition:color .15s}
 
-/* ── refined background: a single soft emerald horizon + faint grid, no loud gradient ── */
+/* ── refined background: a slow volumetric mesh + faint precise grid + a single emerald horizon ── */
 .bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+/* soft emerald horizon glow + crown light (static base) */
 .bg::before{
   content:'';position:absolute;inset:0;
   background:
     radial-gradient(130% 80% at 50% 116%, rgba(16,185,129,.16), rgba(16,185,129,0) 56%),
     radial-gradient(100% 70% at 50% -20%, rgba(255,255,255,.045), transparent 60%);
 }
+/* faint precise grid, masked to a soft vignette */
 .bg::after{
   content:'';position:absolute;inset:0;opacity:.5;
   background-image:
@@ -77,6 +79,40 @@ a{color:var(--em-soft);text-decoration:none;transition:color .15s}
   -webkit-mask-image:radial-gradient(80% 70% at 50% 50%, #000 30%, transparent 80%);
           mask-image:radial-gradient(80% 70% at 50% 50%, #000 30%, transparent 80%);
 }
+/* quiet futurism: a wide, slow-drifting volumetric mesh — calm, never loud */
+.mesh{
+  position:fixed;inset:-20%;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(38% 44% at 22% 30%, rgba(16,185,129,.085), transparent 60%),
+    radial-gradient(34% 40% at 80% 24%, rgba(86,120,255,.05), transparent 62%),
+    radial-gradient(46% 50% at 64% 82%, rgba(16,185,129,.07), transparent 64%);
+  filter:blur(28px);
+  opacity:0;
+  will-change:transform,opacity;
+  animation:meshIn 2s ease 1.2s forwards, meshDrift 34s ease-in-out 1.2s infinite alternate;
+}
+@keyframes meshIn{to{opacity:1}}
+@keyframes meshDrift{
+  0%{transform:translate3d(0,0,0) scale(1)}
+  100%{transform:translate3d(2.5%,-2%,0) scale(1.06)}
+}
+/* a faint, precise drifting starfield — sparse, premium, not sci-fi clutter */
+.stars{
+  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;
+  background-image:
+    radial-gradient(1px 1px at 14% 22%, rgba(255,255,255,.55), transparent),
+    radial-gradient(1px 1px at 68% 14%, rgba(255,255,255,.4), transparent),
+    radial-gradient(1px 1px at 82% 60%, rgba(16,185,129,.55), transparent),
+    radial-gradient(1px 1px at 33% 74%, rgba(255,255,255,.35), transparent),
+    radial-gradient(1px 1px at 52% 40%, rgba(255,255,255,.3), transparent),
+    radial-gradient(1px 1px at 90% 86%, rgba(255,255,255,.3), transparent),
+    radial-gradient(1px 1px at 8% 88%, rgba(16,185,129,.4), transparent);
+  -webkit-mask-image:radial-gradient(85% 80% at 50% 45%, #000 20%, transparent 85%);
+          mask-image:radial-gradient(85% 80% at 50% 45%, #000 20%, transparent 85%);
+  animation:starsIn 2.4s ease 1.6s forwards, starsTwinkle 7s ease-in-out 1.6s infinite alternate;
+}
+@keyframes starsIn{to{opacity:.7}}
+@keyframes starsTwinkle{0%{opacity:.42}100%{opacity:.8}}
 /* the single confident accent: a thin emerald horizon line, slowly breathing */
 .horizon{
   position:fixed;left:50%;bottom:0;width:min(680px,86vw);height:1px;z-index:0;pointer-events:none;
@@ -116,48 +152,64 @@ a{color:var(--em-soft);text-decoration:none;transition:color .15s}
 }
 .topline .pip{width:5px;height:5px;border-radius:50%;background:var(--em-soft);box-shadow:0 0 0 3px rgba(16,185,129,.14)}
 
-/* ── wordmark ── */
+/* ── wordmark: vertical lockup — AION block caps, 'health' centered beneath ── */
 .mark{
-  display:inline-flex;align-items:baseline;gap:clamp(.32rem,1.4vw,.7rem);
+  display:flex;flex-direction:column;align-items:center;gap:clamp(.5rem,1.6vh,.95rem);
   line-height:1;
 }
 .aion{
   font-family:var(--head);
   font-weight:700;
-  font-size:clamp(3.4rem,17vw,9.5rem);
-  letter-spacing:clamp(-.02em,-.5vw,.02em);
+  font-size:clamp(3.6rem,18vw,10rem);
+  letter-spacing:clamp(-.015em,-.4vw,.04em);
   color:var(--on);
   text-transform:uppercase;
   display:inline-flex;
+  position:relative;
 }
 .aion .ch{
   display:inline-block;
   opacity:0;
-  transform:translateY(.42em);
-  animation:chIn .82s cubic-bezier(.16,.84,.3,1) both;
+  transform:translateY(.46em);
+  filter:blur(6px);
+  animation:chIn .9s cubic-bezier(.16,.84,.3,1) both;
 }
-.aion .ch:nth-child(1){animation-delay:.18s}
-.aion .ch:nth-child(2){animation-delay:.30s}
-.aion .ch:nth-child(3){animation-delay:.42s}
-.aion .ch:nth-child(4){animation-delay:.54s}
+.aion .ch:nth-child(1){animation-delay:.20s}
+.aion .ch:nth-child(2){animation-delay:.32s}
+.aion .ch:nth-child(3){animation-delay:.44s}
+.aion .ch:nth-child(4){animation-delay:.56s}
 @keyframes chIn{
-  0%{opacity:0;transform:translateY(.42em)}
-  100%{opacity:1;transform:translateY(0)}
+  0%{opacity:0;transform:translateY(.46em);filter:blur(6px)}
+  60%{filter:blur(0)}
+  100%{opacity:1;transform:translateY(0);filter:blur(0)}
 }
-/* lowercase 'health' — lighter, smaller, set close, a refined counter to the block AION */
+/* hairline divider between the two lines of the lockup — draws in, advanced detail */
+.mark .rule{
+  width:0;height:1px;align-self:center;
+  background:linear-gradient(90deg,transparent,rgba(16,185,129,.55),transparent);
+  animation:ruleIn 1s cubic-bezier(.22,.61,.36,1) .96s forwards;
+}
+@keyframes ruleIn{to{width:min(58%,15rem)}}
+/* lowercase 'health' — refined subtitle BENEATH AION, letter-spaced to optically span the mark */
 .health{
   font-family:var(--head);
-  font-weight:400;
-  font-size:clamp(1.1rem,4.6vw,2.4rem);
-  letter-spacing:-.01em;
+  font-weight:300;
+  font-size:clamp(1rem,4.2vw,2.1rem);
+  letter-spacing:clamp(.34em,1.5vw,.62em);
+  /* trailing space-compensation so the wide tracking stays optically centered */
+  text-indent:clamp(.34em,1.5vw,.62em);
   color:var(--em-soft);
   text-transform:lowercase;
   opacity:0;
-  transform:translateY(.2em);
-  animation:healthIn .9s cubic-bezier(.22,.61,.36,1) 1.0s forwards;
+  transform:translateY(.3em);
+  filter:blur(4px);
+  animation:healthIn 1s cubic-bezier(.22,.61,.36,1) 1.12s forwards;
   position:relative;
 }
-@keyframes healthIn{to{opacity:1;transform:none}}
+@keyframes healthIn{
+  0%{opacity:0;transform:translateY(.3em);filter:blur(4px)}
+  100%{opacity:1;transform:none;filter:blur(0)}
+}
 
 /* ── tagline ── */
 .tagline{
@@ -226,13 +278,23 @@ a{color:var(--em-soft);text-decoration:none;transition:color .15s}
   font-size:.68rem;color:var(--on-dim);letter-spacing:.04em;
 }
 .footline p .em{color:var(--em-soft)}
+/* quiet visionary grace note — spare mono, dimmer than the byline */
+.footline .vision{
+  margin-top:.7rem;
+  font-family:var(--mono);
+  font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--on-dim);opacity:.72;
+}
 
 /* ── reduced motion: show final state, no movement ── */
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
-  .aion .ch{opacity:1;transform:none}
-  .health,.tagline,.topline,.doors .door,.footline{opacity:1;transform:none}
+  .aion .ch{opacity:1;transform:none;filter:none}
+  .health,.tagline,.topline,.doors .door,.footline{opacity:1;transform:none;filter:none}
+  .mark .rule{width:min(58%,15rem)}
   .horizon{opacity:.7}
+  .mesh{opacity:1;transform:none}
+  .stars{opacity:.6}
 }
 
 /* ── no-JS: identical (all animation is CSS on real DOM text). nothing required ── */
@@ -250,6 +312,8 @@ a{color:var(--em-soft);text-decoration:none;transition:color .15s}
 <body>
 
 <div class="bg" aria-hidden="true"></div>
+<div class="mesh" aria-hidden="true"></div>
+<div class="stars" aria-hidden="true"></div>
 <div class="horizon" aria-hidden="true"></div>
 
 <!-- parent brand byline -->
@@ -260,10 +324,11 @@ a{color:var(--em-soft);text-decoration:none;transition:color .15s}
   <!-- Wordmark: real, selectable text. AION animates per-character; 'health' reveals after. -->
   <h1 class="mark" aria-label="Aion health">
     <span class="aion" aria-hidden="true"><span class="ch">A</span><span class="ch">I</span><span class="ch">O</span><span class="ch">N</span></span>
+    <span class="rule" aria-hidden="true"></span>
     <span class="health" aria-hidden="true">health</span>
   </h1>
 
-  <p class="tagline" id="tagline">Your health, <b>finally yours.</b></p>
+  <p class="tagline" id="tagline">Your health, <b>finally yours.</b> Intelligence that lives with you.</p>
 
   <nav class="doors" aria-label="Primary">
     <a class="door" href="/app">
@@ -284,6 +349,7 @@ a{color:var(--em-soft);text-decoration:none;transition:color .15s}
 
 <div class="footline">
   <p>A <span class="em">Bionic Light Industries</span> brand &middot; Private by default &middot; Your data never leaves your network</p>
+  <p class="vision">Essential health — on world, or off</p>
 </div>
 
 </body>
