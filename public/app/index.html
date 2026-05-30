@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aion — The health companion that's yours alone</title>
+<meta name="description" content="Aion is a personal health companion that lives on your device. Your complete health picture, owned by you, private by default — and any AI can reason over it, only with your permission. Arriving 2026.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --white:#ffffff;
+  --paper:#fcfcfb;
+  --paper2:#f6f6f4;
+  --ink:#15161c;
+  --ink2:#33343f;
+  --sub:#54566a;
+  --dim:#8a8c9e;
+  --faint:#c2c3cf;
+  --line:#e8e8e4;
+  --line2:#d6d6d0;
+  --em:#0e9f6e;
+  --em-deep:#0b7d57;
+  --em-soft:#10b981;
+  --em-bg:rgba(14,159,110,.06);
+  --em-bdr:rgba(14,159,110,.22);
+
+  --r:10px;
+  --r-lg:16px;
+  --r-xl:22px;
+
+  --head:'Instrument Sans',system-ui,-apple-system,sans-serif;
+  --body:'IBM Plex Sans',system-ui,-apple-system,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+
+  --shadow:0 1px 2px rgba(20,22,40,.04),0 1px 3px rgba(20,22,40,.05);
+  --shadow2:0 2px 6px rgba(20,22,40,.05),0 8px 24px rgba(20,22,40,.06);
+  --glow:0 8px 28px rgba(14,159,110,.16);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+html,body{overflow-x:hidden;max-width:100%}
+body{
+  font-family:var(--body);background:var(--paper);color:var(--ink);
+  line-height:1.7;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  font-size:15px;min-height:100svh;display:flex;flex-direction:column;
+}
+body::before{
+  content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(circle at 50% -8%,rgba(14,159,110,.05),transparent 52%),
+    radial-gradient(circle,rgba(20,22,40,.025) .5px,transparent .6px);
+  background-size:auto,26px 26px;
+}
+::selection{background:rgba(14,159,110,.14);color:var(--em-deep)}
+a{color:var(--em-deep);text-decoration:none;font-weight:500;transition:color .15s}
+a:hover{color:var(--em)}
+h1,h2,h3{font-family:var(--head);color:var(--ink);letter-spacing:-.022em;line-height:1.12}
+
+.w{max-width:880px;margin:0 auto;padding:0 clamp(1.1rem,5vw,2rem);width:100%}
+
+/* ── top nav ── */
+.nav{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:1.3rem 0;
+}
+.brand{
+  display:inline-flex;align-items:baseline;gap:.4rem;font-family:var(--head);
+}
+.brand .a{font-weight:700;letter-spacing:-.01em;font-size:1.02rem;color:var(--ink);text-transform:uppercase}
+.brand .h{font-weight:400;font-size:.82rem;color:var(--em-deep);text-transform:lowercase}
+.nav-links{display:flex;align-items:center;gap:.4rem;font-size:.78rem}
+.nav-links a{
+  color:var(--sub);font-weight:500;padding:.4rem .7rem;border-radius:8px;transition:background .15s,color .15s;
+}
+.nav-links a:hover{color:var(--ink);background:var(--paper2)}
+
+/* ── hero ── */
+.hero{padding:clamp(3rem,9vh,6rem) 0 clamp(2rem,5vh,3.5rem);text-align:center}
+.badge{
+  display:inline-flex;align-items:center;gap:.55rem;
+  font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--em-deep);font-weight:500;
+  padding:.42rem .9rem;border:1px solid var(--em-bdr);border-radius:999px;background:var(--white);
+  box-shadow:var(--shadow);margin-bottom:1.6rem;
+}
+.badge .pip{width:6px;height:6px;border-radius:50%;background:var(--em);box-shadow:0 0 0 3px var(--em-bg)}
+.hero h1{
+  font-size:clamp(2rem,6.5vw,3.4rem);font-weight:700;letter-spacing:-.035em;line-height:1.07;
+  margin-bottom:1.25rem;overflow-wrap:break-word;
+}
+.hero h1 em{font-style:normal;color:var(--em-deep)}
+.hero p.sub{
+  font-size:clamp(1rem,2vw,1.16rem);color:var(--sub);font-weight:300;line-height:1.6;
+  max-width:560px;margin:0 auto 2.2rem;
+}
+.cta{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;align-items:center}
+.btn{
+  padding:.72rem 1.5rem;border-radius:var(--r);font-weight:600;font-size:.85rem;cursor:pointer;
+  border:1px solid transparent;transition:all .2s;display:inline-flex;align-items:center;gap:.45rem;
+  font-family:var(--head);letter-spacing:-.01em;
+}
+.btn-p{background:var(--em-deep);color:#fff;box-shadow:0 1px 2px rgba(11,125,87,.25)}
+.btn-p:hover{background:var(--em);transform:translateY(-1px);box-shadow:var(--glow);color:#fff}
+.btn-s{background:var(--white);color:var(--ink);border-color:var(--line2)}
+.btn-s:hover{border-color:var(--dim);transform:translateY(-1px);color:var(--ink)}
+
+/* ── the differentiator block ── */
+.diff{
+  margin:0 auto;max-width:620px;
+  background:var(--white);border:1px solid var(--line);border-radius:var(--r-xl);
+  box-shadow:var(--shadow2);padding:clamp(1.6rem,4vw,2.4rem);text-align:left;
+  position:relative;overflow:hidden;
+}
+.diff::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--em),var(--em-soft))}
+.diff .lbl{
+  font-size:.6rem;text-transform:uppercase;letter-spacing:.2em;color:var(--em-deep);font-weight:700;margin-bottom:.7rem;
+}
+.diff h2{font-size:clamp(1.3rem,3vw,1.65rem);font-weight:700;line-height:1.2;margin-bottom:.7rem}
+.diff p{font-size:.92rem;color:var(--sub);font-weight:300;line-height:1.7}
+.diff p strong{color:var(--ink);font-weight:600}
+
+/* ── value points ── */
+.points{
+  display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.3rem;
+}
+@media(max-width:600px){.points{grid-template-columns:1fr}}
+.pt{
+  border:1px solid var(--line);border-radius:var(--r-lg);background:var(--paper);
+  padding:1.1rem 1.2rem;
+}
+.pt .k{
+  font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--em-deep);font-weight:600;margin-bottom:.45rem;display:flex;align-items:center;gap:.4rem;
+}
+.pt .k::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--em);flex-shrink:0}
+.pt h3{font-size:.95rem;font-weight:600;margin-bottom:.3rem}
+.pt p{font-size:.8rem;color:var(--sub);font-weight:300;line-height:1.6}
+
+/* ── notify / coming-soon affordance ── */
+.notify{
+  margin:clamp(2.4rem,6vh,3.5rem) auto 0;max-width:520px;text-align:center;
+}
+.notify h2{font-size:clamp(1.2rem,3vw,1.5rem);font-weight:700;margin-bottom:.5rem}
+.notify p.lead{font-size:.92rem;color:var(--sub);font-weight:300;margin-bottom:1.4rem}
+.notify-form{
+  display:flex;gap:.55rem;background:var(--white);border:1px solid var(--line2);border-radius:var(--r-lg);
+  padding:.4rem;box-shadow:var(--shadow);max-width:440px;margin:0 auto;
+}
+.notify-form input{
+  flex:1;min-width:0;border:none;outline:none;background:transparent;color:var(--ink);
+  font-family:var(--body);font-size:.88rem;padding:.55rem .75rem;
+}
+.notify-form input::placeholder{color:var(--dim)}
+.notify-form button{
+  flex-shrink:0;border:none;cursor:pointer;background:var(--em-deep);color:#fff;
+  font-family:var(--head);font-weight:600;font-size:.82rem;padding:.55rem 1.15rem;border-radius:8px;
+  transition:background .2s;
+}
+.notify-form button:hover{background:var(--em)}
+.notify .micro{font-size:.68rem;color:var(--dim);margin-top:.85rem;font-family:var(--mono);letter-spacing:.02em}
+.notify .ok{display:none;color:var(--em-deep);font-weight:500;margin-top:.85rem;font-size:.85rem}
+.notify.sent .notify-form{display:none}
+.notify.sent .micro{display:none}
+.notify.sent .ok{display:block}
+@media(max-width:440px){
+  .notify-form{flex-direction:column}
+  .notify-form button{width:100%}
+}
+
+/* ── footer ── */
+footer{
+  margin-top:auto;padding:2.4rem 0;border-top:1px solid var(--line);background:var(--white);
+}
+footer .w{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+footer .bli{font-size:.7rem;color:var(--dim);letter-spacing:.04em}
+footer .bli b{color:var(--ink2);font-family:var(--head);font-weight:600}
+footer .flinks{display:flex;gap:1rem;font-size:.74rem}
+footer .flinks a{color:var(--sub)}
+footer .flinks a:hover{color:var(--ink)}
+
+/* ── reveal (enhancement only; readable without JS / reduced-motion) ── */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s cubic-bezier(.22,.61,.36,1),transform .6s cubic-bezier(.22,.61,.36,1)}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important}
+  .reveal{opacity:1;transform:none;transition:none}
+  .btn:hover{transform:none}
+}
+</style>
+</head>
+<body>
+
+<header class="w">
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="/" aria-label="Aion health — home">
+      <span class="a">Aion</span><span class="h">health</span>
+    </a>
+    <div class="nav-links">
+      <a href="/core">For developers</a>
+      <a href="/">Home</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- ── HERO ── -->
+  <section class="hero w">
+    <span class="badge"><span class="pip" aria-hidden="true"></span>Arriving 2026</span>
+    <h1>The health companion<br>that's <em>yours alone.</em></h1>
+    <p class="sub">Apple Health, Oura, your clinic's portal — they each hold a sliver of you, on someone else's servers. Aion holds the whole picture, on your device, owned by you.</p>
+    <div class="cta">
+      <a href="#notify" class="btn btn-p">Get notified at launch</a>
+      <a href="/core" class="btn btn-s">Explore Aion Open &rarr;</a>
+    </div>
+  </section>
+
+  <!-- ── THE DIFFERENTIATOR ── -->
+  <section class="w" style="padding-bottom:1rem">
+    <div class="diff reveal">
+      <div class="lbl">Why Aion is different</div>
+      <h2>Your complete health picture lives with you — not in the cloud.</h2>
+      <p>Aion assembles your vitals, labs, medications, conditions and daily signals into one private knowledge graph that <strong>never leaves your network</strong>. You own it. And when you want intelligence, <strong>any AI model can reason over your data — only with your permission, only for you.</strong> No account harvesting your health. No data broker in the middle. Just you, and an assistant that finally knows your whole story.</p>
+
+      <div class="points">
+        <div class="pt">
+          <div class="k">On-device</div>
+          <h3>Private by default</h3>
+          <p>Your data stays on your phone and your network. It works offline. Nothing is uploaded anywhere.</p>
+        </div>
+        <div class="pt">
+          <div class="k">You own it</div>
+          <h3>One complete picture</h3>
+          <p>Every source — clinical, wearable, lifestyle — in a single FHIR graph that belongs to you.</p>
+        </div>
+        <div class="pt">
+          <div class="k">Any model</div>
+          <h3>AI on your terms</h3>
+          <p>Bring Claude, a local model, or none at all. You choose what reasons over your health, and when.</p>
+        </div>
+        <div class="pt">
+          <div class="k">Open core</div>
+          <h3>Built in the open</h3>
+          <p>The foundation is source-available. Inspect it, run it yourself, extend it. No black box.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── NOTIFY ── -->
+  <section class="w" id="notify">
+    <div class="notify reveal">
+      <h2>Be there when it arrives.</h2>
+      <p class="lead">Aion for iOS and Android lands in 2026. Leave an email and we'll tell you the day it's ready — nothing else.</p>
+      <form class="notify-form" id="nf" novalidate>
+        <input type="email" id="ne" placeholder="you@example.com" aria-label="Email address" autocomplete="email">
+        <button type="submit">Notify me</button>
+      </form>
+      <p class="micro">Placeholder only &middot; not yet wired to a backend &middot; nothing is sent</p>
+      <p class="ok">Thanks — this is a teaser, so nothing was actually submitted. See you in 2026.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="w">
+    <span class="bli">A <b>Bionic Light Industries</b> brand &middot; Private by default</span>
+    <span class="flinks">
+      <a href="/">Home</a>
+      <a href="/core">Aion Open</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+// Enhancement only — page is fully readable/usable with JS off.
+(function(){
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var els = document.querySelectorAll('.reveal');
+  if(rm || !('IntersectionObserver' in window)){
+    els.forEach(function(e){e.classList.add('in')});
+  } else {
+    var io = new IntersectionObserver(function(ents){
+      ents.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
+    },{threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(e){io.observe(e)});
+  }
+  // Non-functional notify form: clearly marked, never submits anywhere.
+  var nf = document.getElementById('nf');
+  if(nf){ nf.addEventListener('submit', function(e){ e.preventDefault(); document.querySelector('.notify').classList.add('sent'); }); }
+})();
+</script>
+</body>
+</html>
