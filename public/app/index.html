@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aion — Universal essential health. Coming to Earth first.</title>
-<meta name="description" content="Aion. Universal essential health. Coming to Earth first. Arriving 2026. A Bionic Light Industries brand.">
+<title>Aion — Your health, as a digital twin. Arriving 2026.</title>
+<meta name="description" content="Aion builds a private health record on your phone — your labs, wearables, and clinical data — and lets the AI you trust reason over it. Private by physics. Arriving 2026. A Bionic Light Industries brand.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -71,8 +71,14 @@ main{
 .line .accent{color:var(--em);font-weight:600}
 
 .sub{
-  font-size:clamp(.85rem,2.2vw,1.02rem);font-weight:300;color:var(--on-sub);max-width:34ch;
+  font-size:clamp(.85rem,2.2vw,1.02rem);font-weight:300;color:var(--on-sub);max-width:42ch;
   opacity:0;animation:rise 1s cubic-bezier(.22,.61,.36,1) 1.25s forwards;
+}
+.sub strong{color:var(--em-soft);font-weight:500}
+/* the cosmic signature — rewarded after the plain explanation, never before */
+.cosmic{
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--on-dim);
+  opacity:0;animation:rise 1s ease 1.55s forwards;
 }
 
 /* — footer — */
@@ -111,8 +117,9 @@ main{
 
 <main>
   <p class="eyebrow"><span class="pip" aria-hidden="true"></span>Arriving 2026</p>
-  <h1 class="line">Universal essential health.<br><span class="accent">Coming to Earth first.</span></h1>
-  <p class="sub">A personal health system that lives with you — private by physics, yours alone.</p>
+  <h1 class="line">Your health, as a <span class="accent">digital twin.</span></h1>
+  <p class="sub">Aion builds a private health record on your phone &mdash; from your labs, wearables, and clinical data &mdash; and lets the AI you trust reason over it. Yours alone, <strong>private by physics</strong>.</p>
+  <p class="cosmic">Universal essential health &mdash; coming to Earth first.</p>
 </main>
 
 <footer class="foot">
