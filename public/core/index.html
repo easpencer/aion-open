@@ -178,22 +178,34 @@ hr.sep{border:none;border-top:1px solid var(--line);margin:0}
 .check{color:var(--em);margin-right:.35rem;font-weight:600}
 .cross{color:var(--red);margin-right:.35rem}
 
-/* ── store buttons (App Store / Play — coming soon stub) ── */
-.stores{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
-.store-btn{
-  display:inline-flex;align-items:center;gap:.7rem;padding:.7rem 1.3rem;border-radius:var(--r);
-  background:var(--white);border:1px solid var(--line2);box-shadow:var(--shadow);
-  cursor:not-allowed;position:relative;opacity:.92;
+/* ── top nav (brand + home link — page is no longer an orphan) ── */
+.nav{
+  position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:.85rem 2rem;background:rgba(252,252,251,.82);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
 }
-.store-btn .glyph{font-size:1.45rem;line-height:1;color:var(--ink)}
-.store-btn .st-txt{display:flex;flex-direction:column;line-height:1.1;text-align:left}
-.store-btn .st-small{font-size:.58rem;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
-.store-btn .st-big{font-size:.95rem;color:var(--ink);font-weight:600;font-family:var(--head)}
-.store-btn .soon{
-  margin-left:.35rem;font-size:.54rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;
-  background:var(--em-bg);color:var(--em-deep);border:1px solid var(--em-bdr);padding:.18rem .42rem;border-radius:999px;
+.nav-brand{font-family:var(--head);font-weight:700;font-size:1.05rem;color:var(--ink);letter-spacing:-.02em}
+.nav-brand:hover{color:var(--ink)}
+.nav-brand .nav-h{color:var(--em-deep);font-weight:400;margin-left:.1rem}
+.nav-links{display:flex;gap:1.4rem}
+.nav-links a{font-size:var(--t-small);color:var(--sub);font-weight:500}
+.nav-links a:hover{color:var(--em-deep)}
+@media(max-width:560px){.nav{padding:.75rem 1.25rem}.nav-links{gap:1rem}.nav-links a{font-size:.74rem}}
+
+/* ── hero command + buttons (the live action while the app is pre-launch) ── */
+.hero-cmd{max-width:540px;margin:0 auto}
+.hero-cmd .universe-pre{font-size:.95rem;padding:.95rem 1.3rem}
+.hero-btns{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin-top:1.1rem}
+.avail{
+  margin-top:1.9rem;font-size:var(--t-small);color:var(--sub);line-height:1.7;
+  display:inline-flex;align-items:center;gap:.55rem;flex-wrap:wrap;justify-content:center;max-width:560px;
 }
-.stores-note{margin-top:1rem;font-size:var(--t-meta);color:var(--dim);text-align:center}
+.avail strong{color:var(--em-deep);font-weight:600}
+.avail-stores{display:inline-flex;gap:.4rem}
+.soon-pill{
+  font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);
+  background:var(--paper2);border:1px solid var(--line2);padding:.22rem .55rem;border-radius:999px;white-space:nowrap;
+}
 
 /* ── HERO ── */
 .hero{padding:7rem 0 4.5rem;text-align:center;position:relative;overflow:hidden}
@@ -350,8 +362,8 @@ footer a{color:var(--sub)}footer a:hover{color:var(--ink)}
 @media(max-width:480px){
   body{font-size:14px}
   .w{padding:0 1.1rem}
-  .stores{flex-direction:column;align-items:stretch}
-  .store-btn{justify-content:center}
+  .hero-btns{flex-direction:column;align-items:stretch}
+  .hero-btns .btn{width:100%;justify-content:center}
   .viz{height:300px}
   .hero h1{letter-spacing:-.02em}
 }
@@ -359,32 +371,43 @@ footer a{color:var(--sub)}footer a:hover{color:var(--ink)}
 </head>
 <body>
 
+<!-- ═══ NAV (brand + home) ═══ -->
+<header class="nav">
+  <a class="nav-brand" href="/" aria-label="Aion — home">Aion<span class="nav-h">health</span></a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="#get-started">How it works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="https://github.com/easpencer/Aion">GitHub</a>
+  </nav>
+</header>
+
 <!-- ═══ HERO ═══ -->
 <section class="hero">
 <div class="w">
   <div class="hero-tag"><span class="pip"></span> Zero Mile Health &middot; <a href="https://github.com/easpencer/Aion">Source-Available &rarr;</a></div>
-  <h1>Know yourself.<br><em>Change your life.</em></h1>
-  <p class="hero-p">Aion builds a private FHIR knowledge graph from every health source &mdash; vitals, labs, medications, conditions, wearables, daily life. It lives on your phone. Connect any AI assistant or your terminal with a single command. Your data never leaves your network.</p>
+  <h1>Your health data, as a private <em>knowledge graph</em> you can actually use.</h1>
+  <p class="hero-p">Aion turns every source &mdash; labs, vitals, meds, wearables &mdash; into a FHIR graph that lives on your phone. Connect any AI assistant or your terminal with one command. Nothing ever leaves your network.</p>
 
-  <!-- App Store / Play — coming soon stub -->
-  <div class="stores">
-    <span class="store-btn" aria-disabled="true" title="Coming soon to the App Store">
-      <span class="glyph">&#63743;</span>
-      <span class="st-txt"><span class="st-small">Download on the</span><span class="st-big">App Store</span></span>
-      <span class="soon">Coming soon</span>
-    </span>
-    <span class="store-btn" aria-disabled="true" title="Coming soon to Google Play">
-      <span class="glyph">&#9654;</span>
-      <span class="st-txt"><span class="st-small">Get it on</span><span class="st-big">Google Play</span></span>
-      <span class="soon">Coming soon</span>
-    </span>
+  <!-- Live action: the npx command works the moment the app is on your phone -->
+  <div class="hero-cmd reveal">
+    <div class="universe-pre" style="text-align:left"><button class="cpb" onclick="cpb(this)">Copy</button><span class="cmd">npx</span> <span class="str">@aion-health/bridge</span> <span class="flag">setup</span></div>
+    <div class="hero-btns">
+      <a href="#get-started" class="btn btn-p">See how it works</a>
+      <a href="https://github.com/easpencer/Aion" class="btn btn-s">Browse the source</a>
+    </div>
   </div>
-  <p class="stores-note">The Aion app is the heart of everything here &mdash; it holds your data and runs the bridge. Store launch is coming soon. In the meantime, explore the source on <a href="https://github.com/easpencer/Aion">GitHub</a>.</p>
+
+  <!-- App availability — one honest line, stores pending -->
+  <p class="avail">
+    The Aion app holds your data and runs the bridge.
+    <strong>iOS &amp; Android &mdash; coming soon.</strong>
+    <span class="avail-stores"><span class="soon-pill">App&nbsp;Store</span><span class="soon-pill">Google&nbsp;Play</span></span>
+  </p>
 
   <div class="hero-license">
     <b>Free for personal &amp; non-commercial use</b>
     <span class="dot">&middot;</span>
-    <span>Source available at <a href="https://github.com/easpencer/Aion">github.com/easpencer/Aion</a></span>
+    <span>PolyForm-Noncommercial &middot; Node 18+ &middot; MCP-native</span>
   </div>
 </div>
 </section>
@@ -436,16 +459,16 @@ footer a{color:var(--sub)}footer a:hover{color:var(--ink)}
   <div class="sec-head reveal">
     <div class="lbl">How it works</div>
     <h2>Four ways to use Aion</h2>
-    <p class="lead" style="margin-top:.75rem">Start with the app &mdash; that alone is a complete, private health companion. Everything else is optional, and each piece works on its own.</p>
+    <p class="lead" style="margin-top:.75rem">Start with the app &mdash; on its own it&rsquo;s a complete, private health companion. The other three extend it, and each works independently.</p>
   </div>
 
   <div class="grid-2" style="margin-bottom:2.5rem">
 
     <!-- 1. The App -->
     <div class="card card-accent card-em reveal">
-      <div class="kicker em">Start here &middot; No code</div>
+      <div class="kicker em">Way 1 &middot; Start here, no code</div>
       <h3>The Aion App</h3>
-      <p class="card-body">Your health dashboard, knowledge graph, and on-device AI &mdash; entirely on your phone. <strong>Nothing ever leaves your device.</strong> Everything below extends this; none of it is required.</p>
+      <p class="card-body">Your health dashboard, knowledge graph, and on-device AI &mdash; entirely on your phone. <strong>Nothing ever leaves your device.</strong></p>
       <div class="feat">
         <span><span class="check">&#10003;</span> HealthKit / Health Connect sync</span>
         <span><span class="check">&#10003;</span> Vitals, conditions, medications, labs</span>
@@ -457,7 +480,7 @@ footer a{color:var(--sub)}footer a:hover{color:var(--ink)}
 
     <!-- 2. CLI + MCP (the headline workflow) -->
     <div class="card card-accent card-code reveal">
-      <div class="kicker code">One command &middot; No install, no server</div>
+      <div class="kicker code">Way 2 &middot; One command, no server</div>
       <h3>Your AI &amp; Terminal</h3>
       <p class="card-body">A single <code>npx</code> command connects any MCP-compatible AI assistant &mdash; and your terminal &mdash; straight to your phone&rsquo;s live FHIR data. No server to run. Ask <em>&ldquo;What&rsquo;s my BP trend?&rdquo;</em> and get answers grounded in your real records.</p>
       <div class="feat">
@@ -472,7 +495,7 @@ footer a{color:var(--sub)}footer a:hover{color:var(--ink)}
 
     <!-- 3. Bridge REST server (demoted, optional/power-user) -->
     <div class="card card-accent card-warn reveal">
-      <div class="kicker warn">Optional &middot; Power users</div>
+      <div class="kicker warn">Way 3 &middot; Optional, power users</div>
       <h3>REST Bridge &amp; Local Models</h3>
       <p class="card-body">Want a standing HTTP API and a browser console? Run the open-source <a href="https://github.com/easpencer/aion-open">aion-open</a> server on your PC and point any tool &mdash; <code>curl</code>, notebooks, your own apps &mdash; at <code>localhost:3000</code>. Run <strong>local models</strong> with Ollama. Still fully private.</p>
       <div class="feat">
@@ -485,7 +508,7 @@ footer a{color:var(--sub)}footer a:hover{color:var(--ink)}
 
     <!-- 4. Desktop companion -->
     <div class="card card-accent card-pink reveal">
-      <div class="kicker pink">Mac &amp; Windows &middot; <span class="badge badge-dev">In development</span></div>
+      <div class="kicker pink">Way 4 &middot; Mac &amp; Windows &middot; <span class="badge badge-dev">In development</span></div>
       <h3>Desktop Companion</h3>
       <p class="card-body">A tray app that sends your <strong>computer activity to your health graph</strong> &mdash; anonymized, categories only, on-device. Your phone finally knows your whole story, so the graph can surface correlations like <em>&ldquo;BP higher on weeks with &gt;6h meetings.&rdquo;</em></p>
       <div class="feat">
@@ -566,18 +589,18 @@ footer a{color:var(--sub)}footer a:hover{color:var(--ink)}
 <hr class="sep">
 
 <!-- ═══ TIERS ═══ -->
-<section style="background:var(--paper2)">
+<section id="pricing" style="background:var(--paper2);scroll-margin-top:3.5rem">
 <div class="w">
   <div class="sec-head reveal">
     <div class="lbl">Get Aion</div>
-    <h2>Three tiers, all run on your devices</h2>
-    <p class="lead" style="margin-top:.6rem">Start with Core for free. Everything runs locally &mdash; you stay in control.</p>
+    <h2>Three tiers. All run on your devices.</h2>
+    <p class="lead" style="margin-top:.6rem">Start free with Core. The paid tiers differ on one thing: <strong>who supplies the AI</strong> &mdash; your keys, or ours.</p>
   </div>
   <div class="grid-3">
-    <div class="card tier featured reveal">
-      <div class="tier-price em">Free</div>
+    <div class="card tier reveal">
+      <div class="tier-price em">Free &middot; source-available</div>
       <h3>Core</h3>
-      <p class="tier-desc">The source-available foundation. Health data store, bridge, simple UI, CLI + MCP.</p>
+      <p class="tier-desc">The foundation. Health graph, bridge (CLI + MCP + REST), simple dashboard. Bring your own AI.</p>
       <div class="feat">
         <span><span class="check">&#10003;</span>FHIR R4 knowledge graph</span>
         <span><span class="check">&#10003;</span>Bridge: CLI + MCP + REST</span>
@@ -587,9 +610,9 @@ footer a{color:var(--sub)}footer a:hover{color:var(--ink)}
       </div>
     </div>
     <div class="card tier reveal">
-      <div class="tier-price code">Upgrade</div>
+      <div class="tier-price code">Bring your own keys</div>
       <h3>Elite</h3>
-      <p class="tier-desc">Full app. Everything runs locally &mdash; add your own API keys for the AI Chorus.</p>
+      <p class="tier-desc">The full app. Multi-model AI Chorus, clinical reasoning, voice &mdash; you supply the API keys.</p>
       <div class="feat">
         <span><span class="check">&#10003;</span>Everything in Core</span>
         <span><span class="check">&#10003;</span>Health briefings + clinical reasoning</span>
@@ -598,10 +621,10 @@ footer a{color:var(--sub)}footer a:hover{color:var(--ink)}
         <span style="color:var(--dim)">&#8211; You provide API keys</span>
       </div>
     </div>
-    <div class="card tier reveal">
-      <div class="tier-price warn">Subscription</div>
+    <div class="card tier featured reveal">
+      <div class="tier-price warn">Models included &middot; subscription</div>
       <h3>Concierge</h3>
-      <p class="tier-desc">Full app plus all AI models included. No keys needed &mdash; everything works out of the box.</p>
+      <p class="tier-desc">Same full app, zero setup. All AI models included and the Chorus pre-configured &mdash; no keys.</p>
       <div class="feat">
         <span><span class="check">&#10003;</span>Everything in Elite</span>
         <span><span class="check">&#10003;</span>All AI models included</span>
