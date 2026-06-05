@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Aion</title>
+<meta name="description" content="How Aion handles your health data. Built private by design: your data stays on your device unless you explicitly choose otherwise.">
+<link rel="stylesheet" href="/legal/legal.css">
+</head>
+<body>
+<main class="wrap">
+  <nav class="topnav">
+    <span class="pip"></span>
+    <a href="/">Aion</a><span class="sep">/</span><span>Privacy</span>
+  </nav>
+
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated: May 31, 2026</p>
+
+  <div class="callout">
+    <strong>The short version.</strong> Aion is built to keep your health data on your
+    device, under your control. We do not sell your data, we do not use it for advertising,
+    and we never use your health data to train AI models. Cloud features that send data off
+    your device are optional and ask for your explicit permission first, naming exactly who
+    receives it.
+  </div>
+
+  <p>
+    This policy explains what data Aion collects, how it is used and stored, when (and with
+    whom) it is shared, and the choices and rights you have. It applies to the Aion mobile
+    app (the “App”) and the Aion website. Aion is operated by <strong>[LEGAL ENTITY NAME]</strong>
+    (“Aion,” “we,” “us”).
+  </p>
+
+  <h2>1. Our privacy principles</h2>
+  <ul>
+    <li><strong>On-device first.</strong> Your raw health records are stored on your device and encrypted at rest. They do not leave your device unless you explicitly export them or enable an optional cloud feature.</li>
+    <li><strong>No advertising, ever.</strong> We do not use your health, fitness, or any other personal data for advertising, marketing, or use-based data mining — including by third parties.</li>
+    <li><strong>No model training on your data.</strong> Health data sent to an AI provider (only in optional cloud modes, only with your consent) is processed to answer your request and is not used to train that provider’s models.</li>
+    <li><strong>No third-party tracking.</strong> The App contains no advertising SDKs, no third-party analytics trackers, and no cross-app tracking. We do not ask for permission to track you because we don’t.</li>
+    <li><strong>You can leave.</strong> You can delete your account and associated data from within the App at any time.</li>
+  </ul>
+
+  <h2>2. The two tiers, and what leaves your device</h2>
+  <p>Aion has two experiences with different data behavior. Knowing which you use tells you exactly what happens to your data.</p>
+
+  <h3>Aion Core (open-source, on-device)</h3>
+  <p>
+    Core aggregates your health data into one secure place on your device and lets you share
+    it with <strong>your own computer</strong>, over <strong>your own local network</strong>, using
+    the Aion Bridge. In Core, your health data is <strong>not sent to Aion’s servers, to any AI
+    provider, or to any third party</strong>. The bridge connection is local to your network and
+    protected by a one-time pairing code.
+  </p>
+
+  <h3>Aion Standard (full features)</h3>
+  <p>
+    Standard adds optional cloud-powered features — most notably the conversational and voice
+    health assistant. When you use a cloud assistant mode, relevant health context and your
+    messages are sent to the AI provider that powers that mode so it can respond. Before any
+    such sharing happens, the App tells you who the data goes to and asks for your explicit
+    permission. You can use an on-device assistant mode instead, which keeps everything local.
+  </p>
+
+  <h2>3. Data we collect</h2>
+  <table class="tbl">
+    <thead><tr><th>Category</th><th>Examples</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Health &amp; clinical data</strong></td><td>Vitals, lab results, conditions, medications, allergies, immunizations, activity, symptom logs, mental-health screening responses (e.g. PHQ-9/GAD-7), and data you import from Apple Health (including Clinical Health Records), connected devices, or files.</td><td>To provide the App’s core functionality — organizing and presenting your health information to you.</td></tr>
+      <tr><td><strong>Account data</strong></td><td>Name and email address (when you create an account).</td><td>To create and secure your account, and to sync settings.</td></tr>
+      <tr><td><strong>Audio &amp; speech</strong></td><td>Microphone audio and transcripts when you use the voice assistant.</td><td>To understand and respond to voice requests. On-device modes keep this local; cloud voice sends audio/transcripts to the provider powering that mode.</td></tr>
+      <tr><td><strong>Location</strong></td><td>Device location, only when you use a feature that needs it (e.g. emergency assistance, nearby-care).</td><td>Only used for the specific feature you invoke; you control access in system settings and in the App.</td></tr>
+      <tr><td><strong>Device &amp; app data</strong></td><td>App settings, preferences, and basic diagnostic information you choose to share.</td><td>To run the App and, if you opt in, to fix bugs.</td></tr>
+    </tbody>
+  </table>
+  <p>
+    We collect health data <strong>directly from you</strong> and from sources <strong>you connect</strong>
+    (Apple Health, connected devices, or files you import). We do not compile your personal
+    information from public databases or other sources without your consent.
+  </p>
+
+  <h2>4. How your data is stored and protected</h2>
+  <ul>
+    <li><strong>Encryption at rest.</strong> Health data stored on your device is encrypted (AES). On supported devices, encryption keys are held in the secure device keystore (e.g. iOS Keychain).</li>
+    <li><strong>No personal health information in iCloud.</strong> We do not store your personal health information in iCloud.</li>
+    <li><strong>De-identification before cloud processing.</strong> When an optional cloud feature is used, direct identifiers (such as name, email, and record identifiers) are stripped before transmission. Note that clinical values themselves (for example, a lab result) are part of what you’re asking the assistant about and may be included in the request you authorize.</li>
+    <li><strong>Local bridge security.</strong> The Aion Bridge serves your data only over your local network and only to a device you pair using a one-time code; the pairing is rate-limited and cleared when you stop the bridge.</li>
+  </ul>
+
+  <h2>5. When data is shared — and with whom</h2>
+  <p>We do not sell your personal data. We share it only in these cases:</p>
+  <h3>Service providers that power features you use</h3>
+  <table class="tbl">
+    <thead><tr><th>Provider</th><th>Purpose</th><th>When</th></tr></thead>
+    <tbody>
+      <tr><td>Anthropic (Claude)</td><td>Conversational/voice health assistant</td><td>Standard, cloud assistant mode, with your consent</td></tr>
+      <tr><td>OpenAI</td><td>Real-time voice assistant, voice transcription (speech-to-text), and text-to-speech</td><td>Standard, cloud voice modes, with your consent</td></tr>
+      <tr><td>Google (Sign-in)</td><td>Optional account sign-in</td><td>Only if you choose Google sign-in</td></tr>
+      <tr><td>Aion backend (hosted on Railway)</td><td>Account, sync, and routing for cloud features</td><td>When you use account-based or cloud features</td></tr>
+      <tr><td>Health data sources you connect</td><td>Importing your own records (e.g. Apple Health, Dexcom, Oura, Whoop, Withings, Strava, CMS Blue Button)</td><td>Only the sources you explicitly connect, via their official authorization</td></tr>
+    </tbody>
+  </table>
+  <p>
+    These providers act as data processors: they process your data to deliver the requested
+    feature and are not permitted to use your health data for their own advertising or to train
+    their models on it. If you supply your own AI provider API key in Standard, your requests go
+    directly to <strong>whatever endpoint you configure</strong> — which may be a third party we
+    have no agreement with (for example OpenAI, Groq, Together, or a self-hosted server) — under
+    your own account and that provider's terms. Choose such endpoints with care.
+  </p>
+  <h3>Other limited cases</h3>
+  <ul>
+    <li><strong>At your direction</strong> — e.g. when you export your data or share it with your own computer via the bridge.</li>
+    <li><strong>Legal requirements</strong> — if required by law, with notice where permitted.</li>
+    <li><strong>Business transfers</strong> — if Aion is involved in a merger or acquisition, with continued protection of your data and notice to you.</li>
+  </ul>
+
+  <div class="callout">
+    <strong>Health data is never used for advertising, marketing, or use-based data mining</strong>,
+    by us or by any third party. This includes any data obtained from Apple Health / HealthKit
+    and the Clinical Health Records API.
+  </div>
+
+  <h2>6. Your choices and rights</h2>
+  <ul>
+    <li><strong>Permissions.</strong> You control access to your camera, microphone, location, Bluetooth, calendar, Apple Health, and local network in your device settings, and you can change them at any time. Features degrade gracefully if you decline.</li>
+    <li><strong>Consent for cloud AI.</strong> Cloud assistant features ask for explicit permission before sending any data, and you can revoke it.</li>
+    <li><strong>Access &amp; export.</strong> You can view and export your health data from within the App.</li>
+    <li><strong>Account &amp; data deletion.</strong> You can delete your account and associated data from within the App (Settings → Account). Deletion removes your account and the health data we hold for it.</li>
+    <li><strong>Withdraw consent.</strong> You can turn off optional data uses (such as diagnostics or cloud modes) in Settings → Privacy.</li>
+  </ul>
+  <p>Depending on where you live, you may have additional rights (access, correction, deletion, portability, objection). Contact us to exercise them.</p>
+
+  <h2>7. Data retention</h2>
+  <p>
+    Health data stays on your device until you delete it or uninstall the App. Account data and
+    any data synced for cloud features are retained while your account is active and deleted when
+    you delete your account, except where we must retain limited records to comply with law.
+    Cloud AI requests are processed to answer you and are not retained by us to build a profile of you.
+  </p>
+
+  <h2>8. Children</h2>
+  <p>
+    Aion is not directed to children under 13 (or the equivalent minimum age in your region) and
+    we do not knowingly collect their data. If you believe a child has provided us data, contact us
+    and we will delete it.
+  </p>
+
+  <h2>9. Not medical advice</h2>
+  <div class="callout warn">
+    <strong>Aion is a wellness and personal health-information tool — not a medical device and
+    not a substitute for professional care.</strong> Aion does not provide diagnosis or treatment.
+    Always consult a qualified healthcare provider before making medical decisions, and call your
+    local emergency number for emergencies.
+  </div>
+
+  <h2>10. Changes to this policy</h2>
+  <p>
+    We will update this policy as the App evolves and post the new “Last updated” date here. Material
+    changes will be communicated in-app where appropriate.
+  </p>
+
+  <h2>11. Contact us</h2>
+  <div class="contact">
+    [LEGAL ENTITY NAME]<br>
+    Privacy: <a href="mailto:privacy@aionhealthware.com">privacy@aionhealthware.com</a><br>
+    Support: <a href="/support">aionhealthware.com/app/support</a>
+  </div>
+
+  <footer>
+    <span>© 2026 Aion</span>
+    <a href="/privacy">Privacy</a>
+    <a href="/terms">Terms</a>
+    <a href="/support">Support</a>
+  </footer>
+</main>
+</body>
+</html>

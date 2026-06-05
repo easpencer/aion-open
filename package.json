@@ -2,6 +2,7 @@
   "name": "aion-open",
   "version": "2.0.0",
   "private": true,
+  "license": "PolyForm-Noncommercial-1.0.0",
   "type": "module",
   "description": "Aion Bridge — Developer console, REST API, and CLI for your health data",
   "bin": {
@@ -9,7 +10,9 @@
   },
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "sync:core": "bash scripts/sync-bridge-core.sh",
+    "check:core": "bash scripts/check-bridge-core-fresh.sh"
   },
   "dependencies": {
     "express": "^4.21.0",

@@ -17,9 +17,12 @@
  */
 
 import express from 'express';
-import { WebSocket } from 'ws';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+// Vendored, self-contained copy of the shared bridge core (see
+// scripts/sync-bridge-core.sh). Explicit dist/index.js path + extension is
+// required — a bare directory path won't resolve `main` under ESM.
+import { BridgeClient, BRIDGE_CORE_VERSION } from './vendor/aion-health-core/dist/index.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -27,119 +30,71 @@ app.use(express.json());
 app.use(express.static(join(__dirname, 'public')));
 
 const PORT = process.env.PORT || 3000;
+// Bind to loopback by default — the dev console holds an *authenticated* bridge
+// socket, so exposing it on 0.0.0.0 would let any LAN host read health data
+// with no pairing code. Override with HOST=0.0.0.0 only behind your own auth.
+const HOST = process.env.HOST || '127.0.0.1';
 
 // ---- Bridge Connection State ----
 
 let bridgeUrl = process.env.BRIDGE_URL || '';
 let pairingCode = process.env.PAIRING_CODE || '';
-let ws = null;
-let authenticated = false;
-let pending = new Map();
-let counter = 0;
+let bridge = null;        // shared BridgeClient instance
 let connectError = null;
 
 function isConnected() {
-  return ws && ws.readyState === WebSocket.OPEN && authenticated;
+  return !!bridge && bridge.isConnected();
 }
 
+/** Send a raw protocol message and return the response message. */
 function bridgeSend(msg) {
-  return new Promise((resolve, reject) => {
-    if (!isConnected()) {
-      reject(new Error('Not connected to bridge. POST /api/connect first or set BRIDGE_URL + PAIRING_CODE env vars.'));
-      return;
-    }
-    const id = `rest-${++counter}`;
-    const timeout = setTimeout(() => {
-      pending.delete(id);
-      reject(new Error('Bridge request timed out (30s)'));
-    }, 30000);
-    pending.set(id, { resolve: (m) => { clearTimeout(timeout); resolve(m); }, reject: (e) => { clearTimeout(timeout); reject(e); } });
-    try {
-      ws.send(JSON.stringify({ ...msg, id }));
-    } catch (e) {
-      clearTimeout(timeout);
-      pending.delete(id);
-      reject(new Error('Failed to send: ' + e.message));
-    }
-  });
+  if (!isConnected()) {
+    return Promise.reject(new Error(
+      'Not connected to bridge. POST /api/connect first or set BRIDGE_URL + PAIRING_CODE env vars.'
+    ));
+  }
+  return bridge.send(msg);
 }
 
-function connectToBridge(url, code) {
-  return new Promise((resolve, reject) => {
-    // Validate URL scheme
-    if (!url.startsWith('ws://') && !url.startsWith('wss://')) {
-      reject(new Error('Invalid URL scheme. Use ws:// or wss://'));
-      return;
-    }
-    if (ws) { try { ws.close(); } catch {} }
-    authenticated = false;
-    connectError = null;
-    bridgeUrl = url;
-    pairingCode = code;
+async function connectToBridge(url, code) {
+  if (!url.startsWith('ws://') && !url.startsWith('wss://')) {
+    throw new Error('Invalid URL scheme. Use ws:// or wss://');
+  }
+  // Tear down any previous connection. autoReconnect:false — a long-lived dev
+  // server shouldn't silently resurrect a connection the user closed via
+  // POST /api/disconnect; reconnection is an explicit POST /api/connect.
+  if (bridge) { try { bridge.disconnect(); } catch {} }
+  connectError = null;
+  bridgeUrl = url;
+  pairingCode = code;
 
-    const timeout = setTimeout(() => reject(new Error('Connection timed out (10s)')), 10000);
-
-    try {
-      ws = new WebSocket(url, { rejectUnauthorized: false });
-    } catch (e) {
-      clearTimeout(timeout);
-      connectError = e.message;
-      reject(e);
-      return;
-    }
-
-    ws.on('open', () => {
-      const authId = `auth-${++counter}`;
-      pending.set(authId, {
-        resolve: (msg) => {
-          clearTimeout(timeout);
-          if (msg.payload?.authenticated) {
-            authenticated = true;
-            connectError = null;
-            console.log(`[aion] Connected to ${url}`);
-            resolve({ connected: true, deidentify: msg.payload.deidentify });
-          } else {
-            connectError = 'Authentication failed — wrong pairing code';
-            reject(new Error(connectError));
-          }
-        },
-        reject: (e) => { clearTimeout(timeout); reject(e); },
-      });
-      ws.send(JSON.stringify({ type: 'auth', id: authId, payload: { pairingCode: code } }));
-    });
-
-    ws.on('message', (data) => {
-      try {
-        const msg = JSON.parse(data.toString());
-        if (msg.id && pending.has(msg.id)) {
-          const { resolve } = pending.get(msg.id);
-          pending.delete(msg.id);
-          resolve(msg);
-        }
-      } catch (e) {
-        console.error('[aion] Failed to parse bridge message:', e.message);
-      }
-    });
-
-    ws.on('error', (e) => {
-      connectError = e.message;
-      if (!authenticated) { clearTimeout(timeout); reject(e); }
-    });
-
-    ws.on('close', () => {
-      authenticated = false;
-      for (const [, { reject }] of pending) reject(new Error('Connection closed'));
-      pending.clear();
-    });
-  });
+  bridge = new BridgeClient(url, code, { autoReconnect: false });
+  try {
+    await bridge.connect();
+    console.log(`[aion] Connected to ${url}`);
+    // Surface the bridge's de-identify mode (from the auth result) so the dev
+    // console can show an accurate privacy badge.
+    return { connected: true, deidentify: bridge.deidentify };
+  } catch (e) {
+    connectError = e.message;
+    bridge = null;
+    throw e;
+  }
 }
 
 // ---- CORS ----
+// Default to same-origin only (the bundled dev console is served from this
+// origin, so it needs no cross-origin grant). Set CORS_ORIGIN to allow a
+// specific origin, or "*" to opt into the old wildcard behaviour — do that
+// only when the server is bound behind your own auth.
+const CORS_ORIGIN = process.env.CORS_ORIGIN || '';
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  if (CORS_ORIGIN) {
+    res.header('Access-Control-Allow-Origin', CORS_ORIGIN);
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+  }
   if (req.method === 'OPTIONS') return res.sendStatus(200);
   next();
 });
@@ -171,9 +126,8 @@ app.post('/api/connect', async (req, res) => {
 
 // Disconnect
 app.post('/api/disconnect', (req, res) => {
-  if (ws) { try { ws.close(); } catch {} }
-  ws = null;
-  authenticated = false;
+  if (bridge) { try { bridge.disconnect(); } catch {} }
+  bridge = null;
   res.json({ disconnected: true });
 });
 
@@ -293,16 +247,15 @@ app.get('/api/:resourceType/:id', async (req, res) => {
 
 // ---- Start ----
 
-app.listen(PORT, async () => {
+app.listen(PORT, HOST, async () => {
   console.log(`
   ╔══════════════════════════════════════════════════╗
   ║          Aion Bridge — Developer Console         ║
-  ╠══════════════════════════════════════════════════╣
-  ║                                                  ║
-  ║  Console:  http://localhost:${String(PORT).padEnd(24)}║
-  ║  REST API: http://localhost:${String(PORT).padEnd(8)}/api/{type}     ║
-  ║                                                  ║
   ╚══════════════════════════════════════════════════╝
+
+  Console:  http://${HOST}:${PORT}
+  REST API: http://${HOST}:${PORT}/api/{type}
+  bridge-core: v${BRIDGE_CORE_VERSION}
   `);
 
   // Auto-connect if env vars provided
@@ -323,9 +276,7 @@ app.listen(PORT, async () => {
 // Graceful shutdown
 function shutdown() {
   console.log('\n[aion] Shutting down...');
-  if (ws) { try { ws.close(); } catch {} }
-  for (const [, { reject }] of pending) reject(new Error('Server shutting down'));
-  pending.clear();
+  if (bridge) { try { bridge.disconnect(); } catch {} }
   process.exit(0);
 }
 process.on('SIGTERM', shutdown);
