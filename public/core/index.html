@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aion — Know your health. Act with confidence.</title>
-<meta name="description" content="Aion builds a private health record on your phone, reasons over it with a panel of frontier AIs (the Chorus), and talks you through real medical procedures using the devices you own. Private by design. Source-available.">
+<title>Aion Core — Your health data, open to the tools you trust</title>
+<meta name="description" content="Aion Core is the open foundation under the Aion app: a private FHIR knowledge graph on your phone, served to any AI assistant, your terminal, or your own code with one command. Free, source-available, MCP-native.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -375,10 +375,9 @@ footer a{color:var(--sub)}footer a:hover{color:var(--ink)}
 <header class="nav">
   <a class="nav-brand" href="/" aria-label="Aion — home">Aion<span class="nav-h">health</span></a>
   <nav class="nav-links" aria-label="Primary">
-    <a href="#know">Know</a>
-    <a href="#kit">Act</a>
-    <a href="#think">Think</a>
-    <a href="#pricing">Plans</a>
+    <a href="#graph">The graph</a>
+    <a href="#connect">Connect</a>
+    <a href="#security">Security</a>
     <a href="https://github.com/easpencer/Aion">GitHub</a>
   </nav>
 </header>
@@ -386,37 +385,33 @@ footer a{color:var(--sub)}footer a:hover{color:var(--ink)}
 <!-- ═══ HERO ═══ -->
 <section class="hero">
 <div class="w">
-  <div class="hero-tag"><span class="pip"></span> Zero Mile Health &middot; <a href="https://github.com/easpencer/Aion">Source-Available &rarr;</a></div>
-  <h1><em>Know</em> your health. <em>Act</em> with confidence.</h1>
-  <p class="hero-p">Aion builds a private health record on your phone, reasons over it with a panel of frontier AIs, and can talk you through real medical procedures &mdash; using the devices you already own. All on your device. Nothing leaves your network unless you say so.</p>
+  <div class="hero-tag"><span class="pip"></span> Aion Core &middot; <a href="/">&larr; Aion home</a></div>
+  <h1>Your health data, <em>open to the tools you trust.</em></h1>
+  <p class="hero-p">Aion Core is the open foundation under the Aion app: a private FHIR knowledge graph on your phone, and a local bridge that serves it to any AI assistant, your terminal, or your own code &mdash; with one command, no server, nothing leaving your network. Free and source-available.</p>
 
-  <div class="hero-btns">
-    <a href="#know" class="btn btn-p">See how it works</a>
-    <a href="#pricing" class="btn btn-s">Plans</a>
+  <div class="hero-cmd reveal">
+    <div class="universe-pre" style="text-align:left;max-width:540px;margin:0 auto"><button class="cpb" onclick="cpb(this)">Copy</button><span class="cmd">npx</span> <span class="str">@aion-health/bridge</span> <span class="flag">setup</span></div>
+    <div class="hero-btns">
+      <a href="#connect" class="btn btn-p">See how it works</a>
+      <a href="https://github.com/easpencer/Aion" class="btn btn-s">Browse the source</a>
+    </div>
   </div>
 
-  <!-- App availability — one honest line, stores pending -->
-  <p class="avail">
-    One app, free to start &mdash; it grows as you do.
-    <strong>iOS &amp; Android coming soon.</strong>
-    <span class="avail-stores"><span class="soon-pill">App&nbsp;Store</span><span class="soon-pill">Google&nbsp;Play</span></span>
-  </p>
-
   <div class="hero-license">
-    <b>Free for personal &amp; non-commercial use</b>
+    <b>Free &amp; source-available</b>
     <span class="dot">&middot;</span>
-    <span>Private by design &middot; Source-available</span>
+    <span>PolyForm-Noncommercial &middot; Node 18+ &middot; MCP-native</span>
   </div>
 </div>
 </section>
 
-<!-- ═══ KNOW — the knowledge graph ═══ -->
-<section id="know" style="padding-top:1rem;scroll-margin-top:1rem">
+<!-- ═══ THE GRAPH — the data model ═══ -->
+<section id="graph" style="padding-top:1rem;scroll-margin-top:1rem">
 <div class="w">
   <div class="sec-head center reveal">
-    <div class="lbl">Know &mdash; your digital twin</div>
-    <h2>Every health source, woven into one private graph</h2>
-    <p class="lead" style="margin:.75rem auto 0">Labs, vitals, meds, conditions, wearables, daily life &mdash; unified into a FHIR knowledge graph that lives on your phone and surfaces the connections no single record shows.</p>
+    <div class="lbl">The data model</div>
+    <h2>One private FHIR graph &mdash; queryable, yours</h2>
+    <p class="lead" style="margin:.75rem auto 0">Every source &mdash; labs, vitals, meds, conditions, wearables &mdash; is normalized into a FHIR R4 knowledge graph on your phone. Standard resources, standard codes (LOINC, SNOMED, ICD-10), 20 resource types &mdash; ready to query from anything that speaks HTTP, MCP, or WebSocket.</p>
   </div>
 
   <!-- Animated graph visualization -->
@@ -452,70 +447,13 @@ footer a{color:var(--sub)}footer a:hover{color:var(--ink)}
 </section>
 <hr class="sep">
 
-<!-- ═══ ACT — the Kit (protocol walkthroughs) ═══ -->
-<section id="kit" style="scroll-margin-top:1rem">
-<div class="w">
-  <div class="sec-head center reveal">
-    <div class="lbl">Act &mdash; your Kit</div>
-    <h2>When it matters, Aion talks you through it</h2>
-    <p class="lead" style="margin:.75rem auto 0">Register the medical gear you actually own &mdash; a tourniquet, an AED, an EpiPen, a glucose meter. When you need it, Aion walks you through the procedure step by step, by voice, using <strong>validated clinical protocols</strong> &mdash; not improvised AI advice. Works fully offline, when the moment is real.</p>
-  </div>
-
-  <div class="grid-3" style="margin-bottom:1.5rem">
-    <div class="card card-accent card-em reveal">
-      <div class="kicker em">Your equipment</div>
-      <h3 style="font-size:1rem">Your kit, recognized</h3>
-      <p class="card-body" style="margin-bottom:0">Tell Aion what&rsquo;s in your bag, your home, your car. It identifies each device and tailors every instruction to the gear in your hands &mdash; <em>&ldquo;where&rsquo;s my gauze?&rdquo;</em>, <em>&ldquo;how do I use this?&rdquo;</em></p>
-    </div>
-    <div class="card card-accent card-pink reveal">
-      <div class="kicker pink">Validated protocols</div>
-      <h3 style="font-size:1rem">Guided, by voice</h3>
-      <p class="card-body" style="margin-bottom:0">Say <em>&ldquo;I&rsquo;m bleeding badly&rdquo;</em> and Aion starts the right walkthrough &mdash; one safety-gated step at a time. AED + CPR, tourniquet, anaphylaxis, choking, burns, wound care, and more.</p>
-    </div>
-    <div class="card card-accent card-code reveal">
-      <div class="kicker code">Curated knowledge</div>
-      <h3 style="font-size:1rem">Trustworthy, not invented</h3>
-      <p class="card-body" style="margin-bottom:0">Every step comes from authored, reviewed clinical content graded against CDC, WHO, FDA and NIH guidance &mdash; not a model guessing. Offline-ready, so it works when the network doesn&rsquo;t.</p>
-    </div>
-  </div>
-  <p class="note" style="text-align:center">Aion guides; it does not replace emergency services. In a life-threatening emergency, call your local emergency number.</p>
-</div>
-</section>
-<hr class="sep">
-
-<!-- ═══ THINK — the multi-LLM Chorus ═══ -->
-<section id="think" style="background:var(--paper2);scroll-margin-top:1rem">
-<div class="w">
-  <div class="sec-head center reveal">
-    <div class="lbl">Think &mdash; the Chorus</div>
-    <h2>Not one AI&rsquo;s opinion &mdash; a panel of them, in agreement</h2>
-    <p class="lead" style="margin:.75rem auto 0">Ask a health question and Aion&rsquo;s <strong>Chorus</strong> consults multiple frontier models at once &mdash; Claude, GPT, Gemini and more &mdash; weighs them against graded medical evidence, and returns the consensus. Your data is de-identified before it ever leaves the device.</p>
-  </div>
-  <div class="grid-3">
-    <div class="card reveal">
-      <h3 style="font-size:1rem">Multi-model consensus</h3>
-      <p class="card-body" style="margin-bottom:0">Several leading models answer independently; Aion reconciles them into one grounded response, so no single model&rsquo;s blind spot becomes yours.</p>
-    </div>
-    <div class="card reveal">
-      <h3 style="font-size:1rem">Evidence-graded</h3>
-      <p class="card-body" style="margin-bottom:0">Answers are weighed against tiered sources &mdash; CDC / WHO / FDA / NIH first, then peer-reviewed studies, then expert consensus.</p>
-    </div>
-    <div class="card reveal">
-      <h3 style="font-size:1rem">Private &amp; offline-ready</h3>
-      <p class="card-body" style="margin-bottom:0">PHI is stripped before any cloud call. No connection? An on-device Chorus answers from local models and your local graph.</p>
-    </div>
-  </div>
-</div>
-</section>
-<hr class="sep">
-
-<!-- ═══ CONNECT — bridge / CLI / MCP (one capability, demoted) ═══ -->
-<section id="get-started" style="scroll-margin-top:2rem">
+<!-- ═══ CONNECT — bridge / CLI / MCP (the heart of Core) ═══ -->
+<section id="connect" style="scroll-margin-top:2rem">
 <div class="w">
   <div class="sec-head reveal">
-    <div class="lbl">Connect &mdash; for developers</div>
-    <h2>Your health data, open to the tools you trust</h2>
-    <p class="lead" style="margin-top:.75rem">Core ships a local bridge: query your own FHIR record from any AI assistant, your terminal, or your own code &mdash; over your LAN, with one command, no server.</p>
+    <div class="lbl">Connect</div>
+    <h2>One command. Any AI, your terminal, your own code.</h2>
+    <p class="lead" style="margin-top:.75rem">Query your own FHIR record from any AI assistant, your shell, or your own scripts &mdash; over your LAN, with one command, no server.</p>
   </div>
 
   <div class="hero-cmd reveal" style="margin:0 0 2rem">
@@ -580,59 +518,8 @@ footer a{color:var(--sub)}footer a:hover{color:var(--ink)}
 </section>
 <hr class="sep">
 
-<!-- ═══ TIERS ═══ -->
-<section id="pricing" style="background:var(--paper2);scroll-margin-top:3.5rem">
-<div class="w">
-  <div class="sec-head center reveal">
-    <div class="lbl">Get Aion</div>
-    <h2>One app that grows with you</h2>
-    <p class="lead" style="margin:.6rem auto 0">Download once. It starts free as <strong>Core</strong>, becomes the full <strong>Companion</strong> the moment you&rsquo;re ready, and steps up to <strong>Concierge</strong> when you&rsquo;d rather we handle the AI. Same app, same private-by-design foundation &mdash; no migration, no second download.</p>
-  </div>
-  <div class="grid-3">
-    <div class="card tier reveal">
-      <div class="tier-price em">Download &middot; free</div>
-      <h3>Core</h3>
-      <p class="tier-desc">The private foundation, free with no account. Your health graph, on-device AI, offline Kit walkthroughs, and the developer bridge.</p>
-      <div class="feat">
-        <span><span class="check">&#10003;</span>FHIR knowledge graph, on your phone</span>
-        <span><span class="check">&#10003;</span>Kit: offline protocol walkthroughs</span>
-        <span><span class="check">&#10003;</span>On-device AI &middot; works offline</span>
-        <span><span class="check">&#10003;</span>Developer bridge (CLI + MCP + REST)</span>
-        <span style="color:var(--dim)">&#8211; No account, no cloud, nothing to pay</span>
-      </div>
-    </div>
-    <div class="card tier featured reveal">
-      <div class="tier-price code">Add a key &middot; the full app</div>
-      <h3>Companion</h3>
-      <p class="tier-desc">The complete experience. The multi-model <strong>Chorus</strong>, health briefings, clinical reasoning and voice &mdash; running on AI provider keys you add.</p>
-      <div class="feat">
-        <span><span class="check">&#10003;</span>Everything in Core</span>
-        <span><span class="check">&#10003;</span>Chorus &mdash; multi-LLM consensus</span>
-        <span><span class="check">&#10003;</span>Health briefings + clinical reasoning</span>
-        <span><span class="check">&#10003;</span>Agentic tool calling + full voice</span>
-        <span style="color:var(--dim)">&#8211; Runs on your AI provider keys</span>
-      </div>
-    </div>
-    <div class="card tier reveal">
-      <div class="tier-price warn">Subscribe &middot; nothing to set up</div>
-      <h3>Concierge</h3>
-      <p class="tier-desc">The same full app, with the Chorus fully managed. All AI models included and tuned by us &mdash; no keys to find, add, or pay separately.</p>
-      <div class="feat">
-        <span><span class="check">&#10003;</span>Everything in Companion</span>
-        <span><span class="check">&#10003;</span>All AI models included &amp; managed</span>
-        <span><span class="check">&#10003;</span>Chorus pre-configured &amp; tuned</span>
-        <span><span class="check">&#10003;</span>Priority support</span>
-        <span style="color:var(--warn)">Monthly subscription</span>
-      </div>
-    </div>
-  </div>
-  <p class="note" style="text-align:center;margin-top:1.5rem">Every plan de-identifies your data before any model sees it &mdash; no health data ever lives on our servers.</p>
-</div>
-</section>
-<hr class="sep">
-
 <!-- ═══ SECURITY ═══ -->
-<section>
+<section id="security">
 <div class="w">
   <div class="sec-head reveal">
     <div class="lbl">Security</div>
