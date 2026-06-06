@@ -58,6 +58,26 @@ const MDNS_TIMEOUT_MS = 3500;
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
+/**
+ * Reject addresses that are syntactically an IPv4 but not actually reachable:
+ * the unspecified/bind-all `0.0.0.0`, loopback `127.x`, broadcast `*.255`, and
+ * empty. The phone's native bridge can advertise its listen address as
+ * `0.0.0.0` over Bonjour (seen on USB / tethered setups); without this guard
+ * the mDNS phase returns `0.0.0.0`, the client tries `wss://0.0.0.0:8420`, and
+ * every connect fails with a misleading "same WiFi?" error instead of falling
+ * through to the ARP / TCP-scan phases that can find the real address.
+ */
+function isUsableIPv4(ip) {
+    if (!ip)
+        return false;
+    if (ip === '0.0.0.0' || ip.startsWith('127.') || ip.endsWith('.255'))
+        return false;
+    // basic shape check (four 0-255 octets)
+    const m = ip.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
+    if (!m)
+        return false;
+    return m.slice(1).every((o) => Number(o) <= 255);
+}
 function probePort(ip) {
     return new Promise((resolve) => {
         const socket = new net.Socket();
@@ -152,6 +172,15 @@ function discoverViaMDNS() {
                         const m3 = rbuf.match(/Add\s+\d+\s+\d+\s+[\w.-]+\s+([\d.]+)/);
                         if (!m3)
                             return;
+                        // The phone may advertise 0.0.0.0 (bind-all) over Bonjour — that's not
+                        // a reachable address. Reject it and let discovery fall through to the
+                        // ARP cache / TCP-scan phases rather than returning a dead URL.
+                        if (!isUsableIPv4(m3[1])) {
+                            resolve4.kill();
+                            clearTimeout(rt);
+                            finish(null);
+                            return;
+                        }
                         resolve4.kill();
                         clearTimeout(rt);
                         finish({ url: `wss://${m3[1]}:${port}`, ip: m3[1], port, method: 'mdns' });

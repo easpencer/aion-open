@@ -191,9 +191,16 @@ class BridgeClient {
                 // is the only place the connect promise's caller hears about the error;
                 // the onError hook is for *observers* (e.g. UI), not the promise path.
                 clearTimeout(timeout);
+                // The `ws` library often emits an error with an EMPTY message when a
+                // wss:// client hits a plain-ws server (TLS handshake gets a non-TLS
+                // reply) or the peer resets mid-handshake. Surface the error `code`
+                // and a hint so the failure isn't an uninformative "WebSocket error:".
                 if (!settled) {
                     settled = true;
-                    reject(new Error(`WebSocket error: ${err.message}`));
+                    const code = err.code;
+                    const detail = err.message || (code ? `${code}` : '')
+                        || 'no details — usually a TLS mismatch (the server may be plain ws://) or the bridge isn’t listening';
+                    reject(new Error(`WebSocket error: ${detail}`));
                 }
                 emitErrorOnce(err);
             });
