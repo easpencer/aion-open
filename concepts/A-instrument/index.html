@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AION — an instrument for private health</title>
+<meta name="description" content="Aion. A Bionic Light Industries brand. Arriving 2026." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;1,400&family=Archivo+Expanded:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     AION — Concept A: "THE INSTRUMENT"
+     Precision-apparatus elegance. Restraint as luxury.
+     Type: Archivo Expanded (engraved wordmark) / Archivo (body)
+           / IBM Plex Mono (instrument data-readout)
+     One accent: ultramarine ink / calibration-LED  #2B45FF
+     ============================================================ */
+
+  :root{
+    --void:        #08090B;   /* the unlit panel */
+    --panel:       #0C0E11;   /* faint raised surface */
+    --etch:        #15181D;   /* engraved groove */
+    --rule:        rgba(255,255,255,0.07);
+    --rule-2:      rgba(255,255,255,0.12);
+    --ink:         #ECEEF1;   /* primary etched light */
+    --ink-dim:     #8A9099;   /* secondary readout */
+    --ink-faint:   #4A4F57;   /* tertiary / calibration text */
+    --led:         #2B45FF;   /* the single accent — ultramarine */
+    --led-glow:    rgba(43,69,255,0.55);
+
+    --grid:        72px;      /* the apparatus module */
+    --bezel:       clamp(20px, 4.5vw, 64px);
+
+    --t-fast: 220ms cubic-bezier(.2,.7,.2,1);
+    --t-slow: 900ms cubic-bezier(.16,.84,.24,1);
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--void);
+    color:var(--ink);
+    font-family:'Archivo', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    min-height:100vh;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* ---- The instrument enclosure: faint engraved grid + calibration field ---- */
+  .field{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(var(--rule) 1px, transparent 1px),
+      linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+    background-size:var(--grid) var(--grid);
+    mask-image:radial-gradient(120% 90% at 50% 38%, #000 35%, transparent 88%);
+    -webkit-mask-image:radial-gradient(120% 90% at 50% 38%, #000 35%, transparent 88%);
+    opacity:.55;
+  }
+  /* fine calibration sub-ticks along the top + left bezel */
+  .field::after{
+    content:""; position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, var(--rule) 0 1px, transparent 1px calc(var(--grid)/6)),
+      repeating-linear-gradient(0deg,  var(--rule) 0 1px, transparent 1px calc(var(--grid)/6));
+    background-size:100% 9px, 9px 100%;
+    background-repeat:no-repeat;
+    background-position:0 0, 0 0;
+    opacity:.6;
+  }
+  /* grain — the matte machined surface */
+  .grain{
+    position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode:overlay;
+  }
+  /* a single calibration vignette / power-on bloom centered behind the mark */
+  .bloom{
+    position:fixed; left:50%; top:36%; z-index:0; pointer-events:none;
+    width:60vmax; height:60vmax; translate:-50% -50%;
+    background:radial-gradient(circle, var(--led-glow) 0%, transparent 62%);
+    opacity:0; filter:blur(38px);
+    animation:bloom-in 2400ms var(--t-slow) 300ms forwards;
+  }
+  @keyframes bloom-in{ to{ opacity:.16; } }
+
+  /* ============================= LAYOUT ============================= */
+  .shell{
+    position:relative; z-index:2;
+    min-height:100vh;
+    display:flex; flex-direction:column;
+    padding:var(--bezel);
+    max-width:1500px; margin-inline:auto;
+  }
+
+  /* ---- Top bezel: maker's plate, status, serial ---- */
+  .bezel-top{
+    display:flex; align-items:flex-start; justify-content:space-between;
+    gap:24px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+  .plate{ display:flex; flex-direction:column; gap:6px; }
+  .plate .maker{ color:var(--ink-dim); }
+  .plate .reg{ color:var(--ink-faint); }
+
+  .status{
+    display:flex; align-items:center; gap:10px;
+    color:var(--ink-dim);
+  }
+  .led{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--led);
+    box-shadow:0 0 0 0 var(--led-glow);
+    animation:pulse 3.4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ box-shadow:0 0 0 0 var(--led-glow); opacity:.9; }
+    50%    { box-shadow:0 0 10px 2px var(--led-glow); opacity:1; }
+  }
+
+  /* ---- Center: the wordmark + held breath ---- */
+  .core{
+    flex:1;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    text-align:center;
+    padding:8vh 0;
+    gap:clamp(28px,5vh,56px);
+  }
+
+  .preline{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:clamp(10px,1.4vw,12px);
+    letter-spacing:.42em; text-transform:uppercase;
+    color:var(--ink-faint);
+    padding-left:.42em; /* optical: balance trailing tracking */
+  }
+
+  /* the engraved wordmark — built from per-letter spans for the etch reveal */
+  .wordmark{
+    font-family:'Archivo Expanded', sans-serif;
+    font-weight:700;
+    font-size:clamp(58px, 19vw, 280px);
+    line-height:.82;
+    letter-spacing:.02em;
+    display:flex; gap:.02em;
+    color:transparent;
+    /* engraved: dark fill, light top-edge, deep bottom shadow */
+    background:linear-gradient(180deg,#fff 0%, var(--ink) 30%, #6c727b 100%);
+    -webkit-background-clip:text; background-clip:text;
+    -webkit-text-fill-color:transparent;
+    filter:drop-shadow(0 1px 0 rgba(255,255,255,.10)) drop-shadow(0 -1px 1px rgba(0,0,0,.9));
+    position:relative;
+  }
+  .wordmark span{
+    display:inline-block;
+    opacity:0;
+    transform:translateY(0.14em);
+    animation:etch 1100ms var(--t-slow) forwards;
+  }
+  .wordmark span:nth-child(1){ animation-delay:.55s; }
+  .wordmark span:nth-child(2){ animation-delay:.66s; }
+  .wordmark span:nth-child(3){ animation-delay:.77s; }
+  .wordmark span:nth-child(4){ animation-delay:.88s; }
+  @keyframes etch{ to{ opacity:1; transform:translateY(0); } }
+
+  /* a hairline rule that "scans" beneath the mark on power-on */
+  .scanline{
+    width:min(560px,72vw); height:1px;
+    background:linear-gradient(90deg, transparent, var(--rule-2) 18%, var(--rule-2) 82%, transparent);
+    position:relative;
+    opacity:0; animation:fade-in 900ms var(--t-slow) 1.3s forwards;
+  }
+  .scanline::before{
+    content:""; position:absolute; top:-1px; left:0; height:3px; width:46px;
+    background:linear-gradient(90deg, transparent, var(--led), transparent);
+    filter:drop-shadow(0 0 6px var(--led-glow));
+    animation:scan 6.5s cubic-bezier(.5,0,.5,1) 2s infinite;
+  }
+  @keyframes scan{
+    0%   { left:-10%; opacity:0; }
+    8%   { opacity:1; }
+    50%  { left:calc(100% - 36px); opacity:1; }
+    58%  { opacity:0; }
+    100% { left:-10%; opacity:0; }
+  }
+
+  .breath{
+    max-width:30ch;
+    font-size:clamp(15px,1.7vw,19px);
+    line-height:1.5;
+    color:var(--ink-dim);
+    font-weight:400;
+    opacity:0; animation:fade-in 1100ms var(--t-slow) 1.55s forwards;
+  }
+  .breath em{
+    font-style:italic;
+    color:var(--ink);
+  }
+  @keyframes fade-in{ from{opacity:0} to{opacity:1} }
+
+  /* ---- The two quiet doors ---- */
+  .doors{
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:1px; /* shared engraved seam */
+    background:var(--rule);
+    border:1px solid var(--rule);
+    border-radius:3px;
+    overflow:hidden;
+    width:min(820px,100%);
+    margin-inline:auto;
+    opacity:0; animation:fade-in 1100ms var(--t-slow) 1.85s forwards;
+  }
+  .door{
+    position:relative;
+    background:var(--panel);
+    padding:clamp(22px,3.2vw,34px) clamp(22px,3.4vw,38px);
+    text-decoration:none; color:inherit;
+    display:flex; flex-direction:column; gap:14px;
+    min-height:148px;
+    transition:background var(--t-fast);
+    isolation:isolate;
+  }
+  .door:hover, .door:focus-visible{ background:var(--etch); outline:none; }
+  .door .idx{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--ink-faint);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .door .name{
+    font-family:'Archivo Expanded', sans-serif;
+    font-weight:600; font-size:clamp(19px,2.3vw,26px);
+    letter-spacing:.01em; color:var(--ink);
+  }
+  .door .sub{
+    font-size:13.5px; color:var(--ink-dim); line-height:1.45; max-width:30ch;
+  }
+  /* the actuator: a hairline that extends + LED dot on hover */
+  .door .actuate{
+    margin-top:auto; display:flex; align-items:center; gap:12px;
+    font-family:'IBM Plex Mono', monospace; font-size:11px;
+    letter-spacing:.2em; text-transform:uppercase; color:var(--ink-dim);
+  }
+  .door .actuate .line{
+    height:1px; flex:1; background:var(--rule-2);
+    transform-origin:left; transition:background var(--t-fast);
+  }
+  .door .actuate .tip{
+    width:6px; height:6px; border-radius:50%; background:var(--ink-faint);
+    transition:background var(--t-fast), box-shadow var(--t-fast), transform var(--t-fast);
+  }
+  .door:hover .actuate .tip, .door:focus-visible .actuate .tip{
+    background:var(--led); box-shadow:0 0 8px var(--led-glow); transform:translateX(3px);
+  }
+  .door:hover .actuate .line, .door:focus-visible .actuate .line{
+    background:var(--led-glow);
+  }
+  /* registration corner ticks on each door */
+  .door::before, .door::after{
+    content:""; position:absolute; width:8px; height:8px; pointer-events:none;
+    border-color:var(--rule-2); opacity:0; transition:opacity var(--t-fast);
+  }
+  .door::before{ top:10px; left:10px; border-top:1px solid; border-left:1px solid; }
+  .door::after { bottom:10px; right:10px; border-bottom:1px solid; border-right:1px solid; }
+  .door:hover::before, .door:hover::after,
+  .door:focus-visible::before, .door:focus-visible::after{ opacity:1; }
+
+  /* ---- Bottom bezel ---- */
+  .bezel-bottom{
+    display:flex; align-items:flex-end; justify-content:space-between;
+    gap:20px; padding-top:28px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--ink-faint);
+    opacity:0; animation:fade-in 1100ms var(--t-slow) 2.1s forwards;
+  }
+  .bezel-bottom .col{ display:flex; flex-direction:column; gap:5px; }
+  .bezel-bottom .right{ text-align:right; }
+  .bezel-bottom a{ color:var(--ink-dim); text-decoration:none; transition:color var(--t-fast); }
+  .bezel-bottom a:hover{ color:var(--ink); }
+
+  /* a measured tick legend across the very bottom */
+  .legend{
+    display:flex; align-items:center; gap:0; margin-top:20px;
+    height:14px; opacity:0; animation:fade-in 1100ms var(--t-slow) 2.25s forwards;
+  }
+  .legend .tick{ flex:1; border-left:1px solid var(--rule); height:6px; align-self:flex-end; }
+  .legend .tick:nth-child(5n+1){ height:14px; border-color:var(--rule-2); }
+
+  /* ============================= RESPONSIVE ============================= */
+  @media (max-width:680px){
+    .doors{ grid-template-columns:1fr; }
+    .bezel-top{ flex-direction:row; }
+    .breath{ max-width:26ch; }
+    .status .label{ display:none; }
+    .bezel-bottom{ font-size:10px; }
+  }
+
+  /* ============================= REDUCED MOTION ============================= */
+  @media (prefers-reduced-motion:reduce){
+    *{ animation:none !important; transition:none !important; }
+    .bloom, .wordmark span, .scanline, .breath, .doors, .bezel-bottom, .legend{ opacity:1 !important; }
+    .wordmark span{ transform:none !important; }
+    .bloom{ opacity:.14 !important; }
+    .scanline::before{ display:none; }
+  }
+
+  /* focus visibility for keyboard users everywhere */
+  a:focus-visible{ outline:1px solid var(--led); outline-offset:3px; }
+</style>
+</head>
+<body>
+  <div class="field" aria-hidden="true"></div>
+  <div class="bloom" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <main class="shell">
+
+    <!-- maker's plate / status bezel -->
+    <header class="bezel-top">
+      <div class="plate">
+        <span class="maker">Bionic Light Industries</span>
+        <span class="reg">Reg. No. BLI-001 · Aion™</span>
+      </div>
+      <div class="status">
+        <span class="led" aria-hidden="true"></span>
+        <span class="label">Instrument — standby</span>
+      </div>
+    </header>
+
+    <!-- the held breath -->
+    <section class="core">
+      <p class="preline">Private by physics</p>
+
+      <h1 class="wordmark" aria-label="Aion">
+        <span>A</span><span>i</span><span>o</span><span>n</span>
+      </h1>
+
+      <div class="scanline" aria-hidden="true"></div>
+
+      <p class="breath">
+        An instrument for your health.<br />
+        It lives on your phone. <em>Nothing leaves.</em>
+      </p>
+    </section>
+
+    <!-- two quiet doors -->
+    <nav class="doors" aria-label="Entries">
+      <a class="door" href="/app">
+        <span class="idx"><span>App</span><span>01</span></span>
+        <span class="name">The instrument</span>
+        <span class="sub">Universal essential health — coming to Earth first.</span>
+        <span class="actuate">
+          <span class="line" aria-hidden="true"></span>
+          <span>Enter</span>
+          <span class="tip" aria-hidden="true"></span>
+        </span>
+      </a>
+
+      <a class="door" href="/core">
+        <span class="idx"><span>Core</span><span>02</span></span>
+        <span class="name">The foundation</span>
+        <span class="sub">An open, source-available foundation for builders.</span>
+        <span class="actuate">
+          <span class="line" aria-hidden="true"></span>
+          <span>Enter</span>
+          <span class="tip" aria-hidden="true"></span>
+        </span>
+      </a>
+    </nav>
+
+    <!-- bottom bezel -->
+    <footer>
+      <div class="bezel-bottom">
+        <div class="col">
+          <span>Arriving 2026</span>
+          <span>iOS · Android · Free to start</span>
+        </div>
+        <div class="col right">
+          <span>On this world, and the next</span>
+          <span><a href="mailto:hello@bioniclight.com">hello@bioniclight.com</a></span>
+        </div>
+      </div>
+      <div class="legend" aria-hidden="true" id="legend"></div>
+    </footer>
+
+  </main>
+
+  <script>
+    // build the bottom calibration legend — a measured ruler edge
+    (function(){
+      var legend = document.getElementById('legend');
+      if(!legend) return;
+      var n = 60;
+      var frag = document.createDocumentFragment();
+      for(var i=0;i<n;i++){
+        var t = document.createElement('span');
+        t.className = 'tick';
+        frag.appendChild(t);
+      }
+      legend.appendChild(frag);
+    })();
+
+    // pointer-reactive bloom — the instrument tracks the operator's attention.
+    // Mechanical, damped, no whimsy. Disabled for reduced-motion + touch.
+    (function(){
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var coarse = window.matchMedia('(pointer: coarse)').matches;
+      if(reduce || coarse) return;
+      var bloom = document.querySelector('.bloom');
+      if(!bloom) return;
+      var tx=50, ty=36, cx=50, cy=36, raf;
+      window.addEventListener('pointermove', function(e){
+        tx = (e.clientX / window.innerWidth) * 100;
+        ty = (e.clientY / window.innerHeight) * 100;
+        if(!raf) raf = requestAnimationFrame(tick);
+      });
+      function tick(){
+        cx += (tx - cx) * 0.045;     // heavy damping = precision feel
+        cy += (ty - cy) * 0.045;
+        bloom.style.left = cx + '%';
+        bloom.style.top  = cy + '%';
+        if(Math.abs(tx-cx) > 0.1 || Math.abs(ty-cy) > 0.1){
+          raf = requestAnimationFrame(tick);
+        } else { raf = null; }
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+# Concept D — "The Living Instrument"
+
+A hybrid stealth/teaser system for **Aion**, a Bionic Light Industries brand. Three pages. The fusion of Concept A ("The Instrument") and Concept B ("The Living Signal").
+
+## Design thesis
+The synthesis is literal: **a precision medical instrument that happens to be alive.** From **A** it inherits the discipline — the near-black calibrated field, the masked engraving grid and fine sub-ticks, the maker's-plate / status-LED bezel, the hairline scan rule, the ruler legend, the registration corner ticks on each door, and the measured, damped power-on staging. From **B** it inherits the soul — the single breathing organism on a `<canvas>`, the shared ~4.6s heartbeat / ~5.5s respiration that drives the diodes and the bloom, the bioluminescent motes, and B's intimate copy (eyebrow "Private by physics," headline *"Health, alive."*, the door voice "For everyone / For builders," "Coming to Earth first"). The page reads as a dark, exact apparatus that has been switched on and is now quietly *breathing* — the heartbeat rendered as **B's breathing organism**: a warm living form (concentric breathing membrane around a hot nucleus) that respires and flushes warm on each systole, recolored to D's ember/rose, seated inside A's fine calibration ring.
+
+## Type choices (Google Fonts — a deliberate fusion of both systems)
+- **Display — Fraunces** (`opsz 9..144`, 300/400, italic) — kept from **B**. It is the one humane, optical, "breathing" voice, and it carries the headline and door names. The italic on *alive* is the single living flourish; everything else around it is mechanical.
+- **Body — Archivo** (400/500) — kept from **A**. A drafted, neutral grotesque that reads as the instrument's structural voice beneath Fraunces; carries the breath line.
+- **Readout — IBM Plex Mono** (400/500) — kept from **A**. Every data-readout: maker's plate, reg number, status, the "Subject 001 · resting" coordinate framing, door indices/actuators, the ruler legend.
+
+Pairing decision: **Fraunces (the living serif) for what is alive; Archivo + IBM Plex Mono (the instrument voices) for everything that is measured.** The type system itself enacts the thesis — one warm humane face surrounded by two cool technical ones. This keeps B's warmth where it matters (the headline, the doors) while A's two-family rigor governs the apparatus chrome.
+
+## Color tokens (exact hex)
+| Token | Hex | Role |
+|---|---|---|
+| `--void` | `#070809` | unlit panel / page ground — A's near-black, warmed a half-degree |
+| `--void-2` | `#0c0d0f` | faint raised surface |
+| `--etch` | `#14161a` | engraved groove / hover state |
+| `--rule` | `rgba(231,224,214,0.06)` | calibration grid / hairlines (warm-tinted, not blue) |
+| `--rule-2` | `rgba(231,224,214,0.12)` | brighter rule / seams |
+| `--ink` | `#ece6dd` | primary etched light (warm bone) |
+| `--ink-dim` | `#8d8b85` | secondary readout |
+| `--ink-faint` | `#54534f` | tertiary / calibration micro-text |
+| `--ember` | **`#ff6b57`** | **the single living accent — the diode that is alive** |
+| `--rose` | `#e8607a` | blood-warm systolic peak (footer live-tick, bloom edge) |
+| `--ember-glow` | `rgba(255,107,87,0.55)` | LED halo / trace glow |
+| `--ember-haze` | `rgba(255,107,87,0.16)` | hover wash |
+
+## The accent decision (the A-vs-B tension, resolved)
+**The single accent is B's warm living ember `#FF6B57` (peaking to rose `#E8607A`), not A's ultramarine `#2B45FF`.** Justification: the entire premise of the hybrid is that the instrument is *alive* — and life, breath, and blood read warm, never electric-blue. Ultramarine would re-assert "cold measurement apparatus" and quietly defeat the fusion; ember lets A's restraint stand on its own (the discipline is carried by geometry, type, and near-black, not by color) while reserving the one chromatic event for the living pulse. The discipline is preserved by **scarcity**: ember appears in perhaps 1–2% of the surface — the standby diode (beating, not machine-pulsing), the scan-rule sweep tip, the actuator dot on hover, the word *alive*, and the ECG trace itself. Crucially this is **not** the old emerald `#10b981` on near-black; ember on `#070809` glows like a single warm calibrated diode, carrying blood/life/warmth semantics rather than generic "health green." A's near-black is warmed only a half-degree (`#070809`) and the hairlines are a warm bone tint rather than pure white, so the cold field and the warm pulse share one temperature lineage.
+
+## The motion idea
+A single **power-on sequence** (A's staging, damped and mechanical): the bezel readouts fade up, the engraved wordmark **etches in** word-by-word, the hairline **scan rule** fades in and an ember sweep traces it on a long eased loop, then copy / doors / ruler resolve in measured steps. Underneath, a generative `<canvas>` runs **one living instrument**: a warm core **bloom** that breathes on a ~5.5s respiration cycle and flushes on each beat; a single fine **calibration ring** with N/E/S/W registration ticks that brighten on the systole; a field of **bioluminescent motes** drifting near the heart; and the centerpiece — **B's breathing organism** (recolored from B's amber to D's ember/rose, not the ECG trace): a hot nucleus wrapped in a concentric **breathing membrane** of rings that expand on the ~5.5s respiration and flush warm on the ~4.6s systolic spike, a soft living pulse rather than a clinical line. The same ~4.6s `beat` envelope is shared by the standby diode and the footer live-tick (CSS), so the whole apparatus shares one pulse — B's idea, executed with A's restraint. Full `prefers-reduced-motion` path: the canvas draws one static breathing frame and never loops, the scan sweep is disabled, all entrance animations resolve to their final state, and the living word is fixed at its lit color; animation also pauses on tab-hide.
+
+## Gateway content (intentionally minimal / stealth)
+The gateway is deliberately stealthy and bare: a wordmark, one breath paragraph, a spec strip, and two doors — nothing more. Earlier exploration added a KNOW / THINK / ACT card trio, but it was **removed** as too revealing/busy; the page returns to a quiet single-screen apparatus that intrigues without explaining. All additions/removals stayed strictly inside the existing instrument idiom — no change to art direction, palette, type, canvas animation, grid/calibration system, or motion language; only blocks and a rebalanced vertical rhythm (tighter `.core` gap, `4vh` padding) so it reads as a single composed gateway rather than a scrolling page.
+- **Sub-paragraph (expanded `.breath`):** the single "Nothing leaves" line became a 2–3 line prose sub-paragraph in A's quiet body voice — *a private health intelligence that lives entirely on your phone; it knows your whole story, reasons over it, and is there in the moment you need care* — closing on the kept italic beat *"Nothing leaves your hands."* Intimate and confident (B's soul), not a bulleted feature list.
+- **Readout strip (`.readout`):** a spec-plate row of terse uppercase Plex Mono micro-specs separated by hairline dots — `ON-DEVICE · FHIR KNOWLEDGE GRAPH · NOTHING LEAVES YOUR NETWORK · iOS + ANDROID · ARRIVING 2026` — treated like the engraved spec plate on a real instrument (last item brightens to `--ink`).
+- **Hierarchy (final, minimal):** maker's plate → preline "Private by physics" → coordinate + engraved wordmark *"Health, alive."* → scanline → sub-paragraph → readout strip → the two doors (primary) → footer bezel + ruler legend. The remaining blocks ride one clean staged power-on fade timeline (… breath 1.7s → readout 1.85s → doors 2.05s → footer 2.25s → legend 2.4s) with no dead delay where the trio was, plus the full `prefers-reduced-motion` reset.
+
+## Stealth specs for `/app` and `/core`
+
+**`/app` — VERY stealthy.** Same void, calibration field, bezel, Plex Mono readouts, and the living ECG/bloom organism — but enlarged and quieter, with the two-door split dropped. It centers a single Fraunces line over the breathing form — *"Your whole health. In your hands. And nowhere else."* — with the three-beat product cadence whispered as mono coordinates that fade in on the pulse (`KNOW · THINK · ACT`) and the "Private by physics" preline. It **shows**: the cadence as pure rhythm and the plate "Arriving 2026 · iOS · Android · Free to start." It **withholds**: all pricing, features, screenshots, and any Chorus/FHIR mechanics. **One CTA:** a single email field styled as an instrument serial field — *"Be there when it wakes →"* — that pulses ember once on focus. Back to the gateway via the maker's plate.
+
+**`/core` — stealthy teaser that points outward.** Same enclosure, but the organism is rendered colder and more skeletal: the ECG trace drawn as a faint wireframe lattice (the on-device FHIR *graph*), signaling the developer foundation beneath the living app — ember reduced to a blinking caret. It **shows**: one terse Fraunces line — *"The foundation is open."* — and exactly one mono, copy-on-click line of truth framed as an instrument prompt, `npx @aion-health/bridge setup`, with the quiet descriptors "Source-available · Local bridge · MCP-native." It **withholds**: docs, API surface, architecture, and license specifics. **One CTA:** the single quiet outbound door — *"Read the open page → aion-open"* — the only link that leaves the stealth world, pointing to the fuller **aion-open** page going live later.
