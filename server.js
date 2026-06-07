@@ -27,6 +27,25 @@ import { BridgeClient, BRIDGE_CORE_VERSION } from './vendor/aion-health-core/dis
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 app.use(express.json());
+
+// ---- Host-based landing routing ----
+// One service, three public hostnames, each landing on a different subpage:
+//   aionhealthware.com       → /            (teaser)
+//   app.aionhealthware.com   → /app/        (companion)
+//   core.aionhealthware.com  → /core/       (core / developers)
+// A CNAME only maps the hostname; the path still arrives as "/". So when a
+// subdomain requests the bare root, internally rewrite to its subpage. Shared
+// paths (/privacy, /terms, /support, assets) are untouched and resolve on every
+// host — important because OAuth reviewers may hit any hostname's /privacy.
+app.use((req, res, next) => {
+  if (req.path === '/' || req.path === '') {
+    const host = (req.hostname || '').toLowerCase();
+    if (host.startsWith('app.')) { req.url = '/app/'; }
+    else if (host.startsWith('core.')) { req.url = '/core/'; }
+  }
+  next();
+});
+
 app.use(express.static(join(__dirname, 'public')));
 
 const PORT = process.env.PORT || 3000;
