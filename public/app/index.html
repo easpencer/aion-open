@@ -10,8 +10,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0b0c12; --on:#f3f3f1; --on-sub:#a6a8b8; --on-dim:#6a6c80;
-  --em:#10b981; --em-soft:#34d8a4;
+  --bg:#060A0C; --on:#e9f2f1; --on-sub:#9aa6a5; --on-dim:#647271;
+  --em:#2dd4bf; --em-soft:#38e1ff;
   --head:'Instrument Sans',system-ui,-apple-system,sans-serif;
   --body:'IBM Plex Sans',system-ui,sans-serif;
   --mono:'IBM Plex Mono',ui-monospace,monospace;
@@ -27,14 +27,14 @@ body{
 }
 a{color:var(--em-soft);text-decoration:none;transition:color .15s}
 a:hover{color:var(--em)}
-::selection{background:rgba(16,185,129,.22);color:#eafff6}
+::selection{background:rgba(45,212,191,.22);color:#dffaf6}
 
 /* — restrained atmosphere: one soft emerald horizon, faint vignette — */
 .bg{position:fixed;inset:0;z-index:0;pointer-events:none}
 .bg::before{
   content:'';position:absolute;inset:0;
   background:
-    radial-gradient(130% 84% at 50% 118%, rgba(16,185,129,.15), rgba(16,185,129,0) 56%),
+    radial-gradient(130% 84% at 50% 118%, rgba(45,212,191,.15), rgba(45,212,191,0) 56%),
     radial-gradient(100% 70% at 50% -16%, rgba(255,255,255,.04), transparent 60%);
 }
 
@@ -60,7 +60,7 @@ main{
   display:inline-flex;align-items:center;gap:.6rem;
   opacity:0;animation:rise .9s cubic-bezier(.22,.61,.36,1) .3s forwards;
 }
-.eyebrow .pip{width:5px;height:5px;border-radius:50%;background:var(--em-soft);box-shadow:0 0 0 3px rgba(16,185,129,.16)}
+.eyebrow .pip{width:5px;height:5px;border-radius:50%;background:var(--em-soft);box-shadow:0 0 0 3px rgba(45,212,191,.16)}
 
 .line{
   font-family:var(--head);font-weight:600;letter-spacing:-.025em;line-height:1.08;
@@ -93,7 +93,7 @@ main{
 .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
 @media(max-width:760px){.trio{grid-template-columns:1fr}}
 .tile{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:1.5rem;transition:border-color .2s,transform .2s,background .2s}
-.tile:hover{border-color:rgba(52,216,164,.4);transform:translateY(-2px);background:rgba(52,216,164,.04)}
+.tile:hover{border-color:rgba(45,212,191,.4);transform:translateY(-2px);background:rgba(45,212,191,.04)}
 .tile .k{font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--em-soft);margin-bottom:.6rem}
 .tile h3{font-family:var(--head);font-weight:600;font-size:1.05rem;margin-bottom:.5rem;color:var(--on)}
 .tile p{font-size:.84rem;font-weight:300;color:var(--on-sub);line-height:1.6}
@@ -105,7 +105,7 @@ main{
 .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
 @media(max-width:760px){.plans{grid-template-columns:1fr}}
 .plan{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:1.5rem;display:flex;flex-direction:column;gap:.5rem}
-.plan.feat{border-color:rgba(52,216,164,.45);background:rgba(52,216,164,.05)}
+.plan.feat{border-color:rgba(45,212,191,.45);background:rgba(45,212,191,.05)}
 .plan .step{font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--em-soft)}
 .plan h3{font-family:var(--head);font-weight:600;font-size:1.2rem;color:var(--on)}
 .plan .pd{font-size:.82rem;font-weight:300;color:var(--on-sub);line-height:1.55}
@@ -140,7 +140,7 @@ main{
   <a class="brand" href="/" aria-label="Aion — home">Aion<span class="h">health</span></a>
   <nav aria-label="Primary">
     <a href="/">Home</a>
-    <a href="/core">For developers</a>
+    <a href="/core">Core</a>
   </nav>
 </header>
 

@@ -28,11 +28,11 @@
   --line2:#d6d6d0;        /* stronger borders */
 
   /* — accents — */
-  --em:#0e9f6e;           /* emerald (AA on white) */
-  --em-deep:#0b7d57;
-  --em-soft:#10b981;
-  --em-bg:rgba(14,159,110,.06);
-  --em-bdr:rgba(14,159,110,.22);
+  --em:#0d9488;           /* deep teal (AA on white) — same hue as Companion's live teal */
+  --em-deep:#0b766c;
+  --em-soft:#14b8a6;
+  --em-bg:rgba(13,148,136,.06);
+  --em-bdr:rgba(13,148,136,.22);
   --code:#5b5fe0;         /* indigo */
   --code-bg:#f2f2fd;
   --code-bdr:rgba(91,95,224,.16);
@@ -65,7 +65,7 @@
   --shadow:0 1px 2px rgba(20,22,40,.04),0 1px 3px rgba(20,22,40,.05);
   --shadow2:0 2px 6px rgba(20,22,40,.05),0 8px 24px rgba(20,22,40,.06);
   --shadow3:0 4px 12px rgba(20,22,40,.06),0 20px 48px rgba(20,22,40,.09);
-  --glow:0 8px 28px rgba(14,159,110,.16);
+  --glow:0 8px 28px rgba(13,148,136,.16);
 
   /* — terminal palette — */
   --c-bg:#0b0c12;
@@ -83,13 +83,13 @@ body{
 body::before{
   content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
   background:
-    radial-gradient(circle at 50% 0%,rgba(14,159,110,.04),transparent 55%),
+    radial-gradient(circle at 50% 0%,rgba(13,148,136,.04),transparent 55%),
     radial-gradient(circle,rgba(20,22,40,.025) .5px,transparent .6px);
   background-size:auto,26px 26px;
 }
 a{color:var(--em-deep);text-decoration:none;font-weight:500;transition:color .15s}
 a:hover{color:var(--em);text-decoration:none}
-::selection{background:rgba(14,159,110,.14);color:var(--em-deep)}
+::selection{background:rgba(13,148,136,.14);color:var(--em-deep)}
 h1,h2,h3,h4{font-family:var(--head);color:var(--ink);letter-spacing:-.022em;line-height:1.15}
 strong{color:var(--ink);font-weight:600}
 em{font-style:italic}
@@ -167,7 +167,7 @@ hr.sep{border:none;border-top:1px solid var(--line);margin:0}
   border:1px solid transparent;transition:all .2s;display:inline-flex;align-items:center;gap:.45rem;
   text-decoration:none;font-family:var(--head);letter-spacing:-.01em;white-space:nowrap;
 }
-.btn-p{background:var(--em-deep);color:#fff;box-shadow:0 1px 2px rgba(11,125,87,.25)}
+.btn-p{background:var(--em-deep);color:#fff;box-shadow:0 1px 2px rgba(11,118,108,.25)}
 .btn-p:hover{background:var(--em);transform:translateY(-1px);box-shadow:var(--glow);color:#fff}
 .btn-s{background:var(--white);color:var(--ink);border-color:var(--line2)}
 .btn-s:hover{border-color:var(--dim);transform:translateY(-1px);background:var(--white);color:var(--ink)}
@@ -378,6 +378,7 @@ footer a{color:var(--sub)}footer a:hover{color:var(--ink)}
     <a href="#graph">The graph</a>
     <a href="#connect">Connect</a>
     <a href="#security">Security</a>
+    <a href="/app">Companion</a>
     <a href="https://github.com/easpencer/Aion">GitHub</a>
   </nav>
 </header>
